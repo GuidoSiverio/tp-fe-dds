@@ -1,6 +1,6 @@
 import React from "react";
 
-function Login({ user, handleChange, login, register }) {
+function Login({ user, handleChange, login, register, error }) {
   return (
     <div>
       <h1>Login</h1>
@@ -31,6 +31,7 @@ function Login({ user, handleChange, login, register }) {
         <button type="button" onClick={register}>
           Register
         </button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );

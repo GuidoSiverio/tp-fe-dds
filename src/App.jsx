@@ -5,8 +5,6 @@ import Home from "./Home";
 import Login from "./Login";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [data, setData] = useState("");
   const [error, setError] = useState(null);
   const [user, setUser] = useState({
     username: "",
@@ -18,7 +16,7 @@ function App() {
   async function login() {
     //e.preventDefault();
     try {
-      const response = fetch(localhost + "/login", {
+      const response = await fetch(localhost + "/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,8 +24,15 @@ function App() {
         body: JSON.stringify(user),
       });
 
-      console.log("Login response:", response);
-      navigate("/home");
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Login response:", data);
+        navigate("/home");
+      } else {
+        const errorData = await response.json();
+        console.error("Error during login:", errorData);
+        setError(errorData.message);
+      }
     } catch (error) {
       console.error("Error during login:", error);
       setError(error);
@@ -83,6 +88,7 @@ function App() {
             handleChange={handleChange}
             login={login}
             register={register}
+            error={error}
           />
         }
       />
