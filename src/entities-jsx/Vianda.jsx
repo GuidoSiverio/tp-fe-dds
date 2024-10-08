@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 
 function Vianda() {
+  const [vianda, setVianda] = useState({
+    comida: "",
+    fechaCaducidad: "",
+    fechaDonacion: "",
+    calorias: "",
+    peso: "",
+    fechaEntrega: "",
+    fueEntregada: "",
+    colaborador: "",
+  });
+  const localhost = "http://localhost:8080";
+
+  async function addVianda() {
+    //e.preventDefault();
+    try {
+      const response = fetch(localhost + "/vianda", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(vianda),
+      });
+
+      console.log("Register response:", response);
+    } catch (error) {
+      console.error("Error during register:", error);
+      setError(error);
+    }
+  }
+
+  const handleChange = (key, value) => {
+    setVianda({
+      ...vianda,
+      [key]: value,
+    });
+  };
+
   return (
     <div className="Vianda">
       <Sidebar />
@@ -19,6 +56,7 @@ function Vianda() {
                 id="comida"
                 placeholder="Comida"
                 required
+                onChange={(e) => handleChange("comida", e.target.value)}
               />
               <div className="invalid-feedback">
                 Nombre de la comida requerida.
@@ -29,7 +67,13 @@ function Vianda() {
               <label htmlFor="date" className="form-label">
                 Fecha de caducidad
               </label>
-              <input type="date" className="form-control" id="date" required />
+              <input
+                type="date"
+                className="form-control"
+                id="date"
+                required
+                onChange={(e) => handleChange("fechaCaducidad", e.target.value)}
+              />
               <div className="invalid-feedback">
                 Fecha de caducidad requerida.
               </div>
@@ -46,6 +90,7 @@ function Vianda() {
                   id="calorias"
                   placeholder="Calorias"
                   required
+                  onChange={(e) => handleChange("calorias", e.target.value)}
                 />
                 <div className="invalid-feedback">Calorias requeridas.</div>
               </div>
@@ -61,6 +106,7 @@ function Vianda() {
                 id="peso"
                 placeholder="Peso"
                 required
+                onChange={(e) => handleChange("peso", e.target.value)}
               />
               <div className="invalid-feedback">Peso requerido</div>
             </div>
@@ -69,7 +115,12 @@ function Vianda() {
               <label htmlFor="colaborador" className="form-label">
                 Colaboador
               </label>
-              <select className="form-select" id="country" required>
+              <select
+                className="form-select"
+                id="country"
+                required
+                onChange={(e) => handleChange("colaborador", e.target.value)}
+              >
                 <option value="">Choose...</option>
                 <option>Guido</option>
               </select>
@@ -80,7 +131,12 @@ function Vianda() {
               <label htmlFor="heladera" className="form-label">
                 Heladera
               </label>
-              <select className="form-select" id="country" required>
+              <select
+                className="form-select"
+                id="country"
+                required
+                onChange={(e) => handleChange("heladera", e.target.value)}
+              >
                 <option value="">Choose...</option>
                 <option>Heladera1</option>
               </select>
@@ -90,7 +146,11 @@ function Vianda() {
 
           <hr className="my-4" />
 
-          <button className="w-100 btn btn-primary btn-lg" type="submit">
+          <button
+            className="w-100 btn btn-primary btn-lg"
+            type="submit"
+            onClick={addVianda}
+          >
             Save
           </button>
         </form>
