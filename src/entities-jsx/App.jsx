@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import "./App.css";
+import "../entities-css/App.css";
 import Home from "./Home";
 import Login from "./Login";
+import Vianda from "./Vianda";
 
 function App() {
   const [error, setError] = useState(null);
@@ -94,6 +95,7 @@ function App() {
       />
       {/* Renderiza el componente Home en la ruta "/home" */}
       <Route path="/home" element={<Home />} />
+      <Route path="/viandas" element={<Vianda />} />
     </Routes>
   );
 }

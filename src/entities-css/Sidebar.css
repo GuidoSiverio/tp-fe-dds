@@ -1,0 +1,15 @@
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Ajusta el contenido principal */
+.content {
+  margin-left: 4.5rem; /* Ajusta este valor según el ancho del sidebar */
+  padding: 20px;
+}
