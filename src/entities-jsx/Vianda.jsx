@@ -43,6 +43,8 @@ function Vianda() {
     <div className="Vianda">
       <Sidebar />
       <div className="content">
+        <h1 class="display-4 fw-normal">Vianda</h1>
+        <br />
         {/* Aquí puedes agregar el contenido principal de tu aplicación */}
         <form className="needs-validation" noValidate>
           <div className="row g-3">

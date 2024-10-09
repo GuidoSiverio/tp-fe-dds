@@ -16,7 +16,10 @@ function Sidebar() {
         title=""
       >
         {/* Icono principal */}
-        <i className="bi bi-bootstrap" style={{ fontSize: "2rem" }}></i>
+        <i
+          className="bi bi-person-raised-hand"
+          style={{ fontSize: "2rem" }}
+        ></i>
         <span className="visually-hidden">Icon-only</span>
       </a>
       <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">
