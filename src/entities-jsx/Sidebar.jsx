@@ -1,61 +1,96 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../entities-css/Sidebar.css";
 
 function Sidebar() {
+  const location = useLocation();
+  const [activeLink, setActiveLink] = useState(location.pathname);
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
+
   return (
     <div
       className="d-flex flex-column flex-shrink-0 bg-light sidebar"
       style={{ width: "4.5rem" }}
     >
-      <a
-        href="/"
+      <Link
+        to="/"
         className="d-block p-3 link-dark text-decoration-none"
         title=""
       >
-        {/* Icono principal */}
         <i
           className="bi bi-person-raised-hand"
           style={{ fontSize: "2rem" }}
         ></i>
-        <span className="visually-hidden">Icon-only</span>
-      </a>
-      <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">
+      </Link>
+      <ul
+        className="nav nav-pills nav-flush flex-column mb-auto text-center"
+        style={{ zIndex: 1001 }}
+      >
         <li className="nav-item">
-          <a
-            href="/home"
-            className="nav-link active py-3 border-bottom"
-            aria-current="page"
+          <Link
+            to="/home"
+            className={`nav-link py-3 border-bottom ${
+              activeLink === "/home" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/home")}
             title="Home"
           >
-            <i className="bi bi-house"></i>
-          </a>
+            <i className="bi bi-house-fill"></i>
+          </Link>
         </li>
         <li>
-          <a
-            href="/colaboradores"
-            className="nav-link py-3 border-bottom"
-            title="Colaborador"
+          <Link
+            to="/colaboradores"
+            className={`nav-link py-3 border-bottom ${
+              activeLink === "/colaboradores" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/colaboradores")}
+            title="Colaboradores"
           >
             <i className="bi bi-people-fill"></i>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/viandas" className="nav-link py-3 border-bottom" title="">
+          <Link
+            to="/viandas"
+            className={`nav-link py-3 border-bottom ${
+              activeLink === "/viandas" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/viandas")}
+            title="Viandas"
+          >
             <i className="bi bi-bag-check-fill"></i>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="nav-link py-3 border-bottom" title="">
-            <i className="bi bi-grid"></i>
-          </a>
+          <Link
+            to="/heladeras"
+            className={`nav-link py-3 border-bottom ${
+              activeLink === "/heladeras" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/heladeras")}
+            title="Heladeras"
+          >
+            <i className="bi bi-h-square-fill"></i>
+          </Link>
         </li>
         <li>
-          <a href="#" className="nav-link py-3 border-bottom" title="">
+          <Link
+            to="#"
+            className={`nav-link py-3 border-bottom ${
+              activeLink === "#" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("#")}
+            title="Personas"
+          >
             <i className="bi bi-people-circle"></i>
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="dropdown border-top">
