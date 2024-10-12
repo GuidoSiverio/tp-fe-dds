@@ -37,6 +37,11 @@ function Heladera() {
     });
   };
 
+  const handleDateChange = (field, value) => {
+    const formattedDate = new Date(value).toISOString().slice(0, -1);
+    handleChange(field, formattedDate);
+  };
+
   return (
     <div className="Heladera">
       <Sidebar />
@@ -133,7 +138,7 @@ function Heladera() {
                 id="date"
                 required
                 onChange={(e) =>
-                  handleChange("fechaFuncionamiento", e.target.value)
+                  handleDateChange("fechaFuncionamiento", e.target.value)
                 }
               />
               <div className="invalid-feedback">

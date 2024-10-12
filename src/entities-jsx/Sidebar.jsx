@@ -58,18 +58,6 @@ function Sidebar() {
         </li>
         <li>
           <Link
-            to="/viandas"
-            className={`nav-link py-3 border-bottom ${
-              activeLink === "/viandas" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/viandas")}
-            title="Viandas"
-          >
-            <i className="bi bi-bag-check-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/heladeras"
             className={`nav-link py-3 border-bottom ${
               activeLink === "/heladeras" ? "active" : ""
@@ -78,6 +66,18 @@ function Sidebar() {
             title="Heladeras"
           >
             <i className="bi bi-h-square-fill"></i>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/contribuciones"
+            className={`nav-link py-3 border-bottom ${
+              activeLink === "/contribuciones" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/contribuciones")}
+            title="Contribuciones"
+          >
+            <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
         <li>
