@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
+import MapComponent from "./MapComponent";
 
 function Heladera() {
   const [heladera, setHeladera] = useState({
@@ -10,7 +11,15 @@ function Heladera() {
     capacidad: "",
     fechaFuncionamiento: "",
   });
+  const [heladeras, setHeladeras] = useState([]);
+  const [markers, setMarkers] = useState([]);
   const localhost = "http://localhost:8080";
+
+  function getHeladeras() {
+    return fetch(localhost + "/heladeras", {
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => response.json());
+  }
 
   async function addHeladera() {
     //e.preventDefault();
@@ -42,10 +51,30 @@ function Heladera() {
     handleChange(field, formattedDate);
   };
 
+  useEffect(() => {
+    getHeladeras().then((data) => {
+      setHeladeras(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    // Solo se ejecuta cuando heladeras cambia y recalcula markers
+    if (heladeras.length > 0) {
+      const newMarkers = heladeras.map((heladera) => ({
+        position: [parseFloat(heladera.latitud), parseFloat(heladera.longitud)],
+        popupText: heladera.nombre,
+      }));
+      setMarkers(newMarkers); // Actualizamos el estado de markers
+    }
+  }, [heladeras]);
+
   return (
     <div className="Heladera">
       <Sidebar />
       <div className="content">
+        <div id="map">
+          <MapComponent markers={markers} />
+        </div>
         <h1 class="display-4 fw-normal">Heladera</h1>
         <br />
         {/* Aquí puedes agregar el contenido principal de tu aplicación */}

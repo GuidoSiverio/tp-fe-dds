@@ -3,41 +3,29 @@ import Sidebar from "./Sidebar";
 
 function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
-  const [humana, setHumano] = useState({
+  const [colaborador, setColaborador] = useState({
     direccion: "",
     medioDeContacto: "",
     nombre: "",
     apellido: "",
     fechaNacimiento: "",
-  });
-  const [juridica, setJuridica] = useState({
-    direccion: "",
-    medioDeContacto: "",
     razonSocial: "",
     tipo: "",
     rubro: "",
   });
+
   const localhost = "http://localhost:8080";
 
   async function addColaborador() {
     //e.preventDefault();
-    console.log(humana);
-    console.log(juridica);
-    const persona =
-      tipoColaborador === "humana" ? "/persona-humana" : "/persona-juridica";
-
-    const json = tipoColaborador === "humana" ? humana : juridica;
     try {
       const response = await fetch(localhost + "/colaboradores" + persona, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(json),
+        body: JSON.stringify(colaborador),
       });
-
-      console.log(humana);
-      console.log(juridica);
 
       console.log("Register response:", response);
     } catch (error) {
@@ -48,20 +36,28 @@ function Colaboador() {
 
   const handleChangeColaboradorType = (tipo) => {
     setTipoColaborador(tipo);
+    if (tipo === "humana") {
+      setColaborador({
+        ...colaborador,
+        razonSocial: null,
+        tipo: null,
+        rubro: null,
+      });
+    } else if (tipo === "juridica") {
+      setColaborador({
+        ...colaborador,
+        nombre: null,
+        apellido: null,
+        fechaNacimiento: null,
+      });
+    }
   };
 
   const handleChange = (field, value) => {
-    if (tipoColaborador === "humana") {
-      setHumano({
-        ...humana,
-        [field]: value,
-      });
-    } else if (tipoColaborador === "juridica") {
-      setJuridica({
-        ...juridica,
-        [field]: value,
-      });
-    }
+    setColaborador({
+      ...colaborador,
+      [field]: value,
+    });
   };
 
   const handleDateChange = (field, value) => {
