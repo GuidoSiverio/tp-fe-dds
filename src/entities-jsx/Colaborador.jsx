@@ -8,7 +8,7 @@ function Colaboador() {
     medioDeContacto: "",
     nombre: "",
     apellido: "",
-    fechaNacimiento: "",
+    fechaDeNacimiento: "",
     razonSocial: "",
     tipo: "",
     rubro: "",
@@ -19,7 +19,7 @@ function Colaboador() {
   async function addColaborador() {
     //e.preventDefault();
     try {
-      const response = await fetch(localhost + "/colaboradores" + persona, {
+      const response = await fetch(localhost + "/colaboradores", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +30,7 @@ function Colaboador() {
       console.log("Register response:", response);
     } catch (error) {
       console.error("Error during register:", error);
-      setError(error);
+      //setError(error);
     }
   }
 
@@ -48,7 +48,7 @@ function Colaboador() {
         ...colaborador,
         nombre: null,
         apellido: null,
-        fechaNacimiento: null,
+        fechaDeNacimiento: null,
       });
     }
   };
@@ -61,7 +61,7 @@ function Colaboador() {
   };
 
   const handleDateChange = (field, value) => {
-    const formattedDate = new Date(value).toISOString().slice(0, -1);
+    const formattedDate = new Date(value).toISOString().split(".")[0];
     handleChange(field, formattedDate);
   };
 
@@ -164,16 +164,16 @@ function Colaboador() {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="fechaNacimiento" className="form-label">
+                  <label htmlFor="fechaDeNacimiento" className="form-label">
                     Fecha de nacimiento
                   </label>
                   <input
                     type="date"
                     className="form-control"
-                    id="fechaNacimiento"
+                    id="fechaDeNacimiento"
                     required
                     onChange={(e) =>
-                      handleDateChange("fechaNacimiento", e.target.value)
+                      handleDateChange("fechaDeNacimiento", e.target.value)
                     }
                   />
                   <div className="invalid-feedback">

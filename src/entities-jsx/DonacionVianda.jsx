@@ -51,7 +51,6 @@ function Vianda() {
       console.log("Register response:", response);
     } catch (error) {
       console.error("Error during register:", error);
-      setError(error);
     }
   }
 
