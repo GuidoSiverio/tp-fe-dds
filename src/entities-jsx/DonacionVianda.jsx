@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 
-function Vianda() {
+function DonacionVianda() {
   const [vianda, setVianda] = useState({
     comida: "",
     fechaCaducidad: "",
@@ -228,4 +228,4 @@ function Vianda() {
   );
 }
 
-export default Vianda;
+export default DonacionVianda;
