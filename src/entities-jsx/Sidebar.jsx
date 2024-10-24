@@ -15,12 +15,12 @@ function Sidebar() {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 bg-light sidebar"
-      style={{ width: "4.5rem" }}
+      className="d-flex flex-column flex-shrink-0 bg-dark sidebar"
+      style={{ width: "4.5rem" , overflowX: 'visible'}}
     >
       <Link
         to="/"
-        className="d-block p-3 link-dark text-decoration-none"
+        className="d-block p-3 link-light text-decoration-none "
         title=""
       >
         <i
@@ -29,13 +29,13 @@ function Sidebar() {
         ></i>
       </Link>
       <ul
-        className="nav nav-pills nav-flush flex-column mb-auto text-center"
+        className="nav nav-pills link-light nav-flush flex-column mb-auto text-center"
         style={{ zIndex: 1001 }}
       >
         <li className="nav-item">
           <Link
             to="/home"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 ${
               activeLink === "/home" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/home")}
@@ -47,7 +47,7 @@ function Sidebar() {
         <li>
           <Link
             to="/colaboradores"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 link-light ${
               activeLink === "/colaboradores" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/colaboradores")}
@@ -59,7 +59,7 @@ function Sidebar() {
         <li>
           <Link
             to="/heladeras"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 link-light  ${
               activeLink === "/heladeras" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/heladeras")}
@@ -71,7 +71,7 @@ function Sidebar() {
         <li>
           <Link
             to="/contribuciones"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 ${
               activeLink === "/contribuciones" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/contribuciones")}
@@ -83,7 +83,7 @@ function Sidebar() {
         <li>
           <Link
             to="#"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 ${
               activeLink === "#" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("#")}
@@ -96,7 +96,7 @@ function Sidebar() {
       <div className="dropdown border-top">
         <a
           href="#"
-          className="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
+          className="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none dropdown-toggle"
           id="dropdownUser3"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -112,6 +112,7 @@ function Sidebar() {
         <ul
           className="dropdown-menu text-small shadow"
           aria-labelledby="dropdownUser3"
+          style={{ maxWidth: 'auto', marginLeft: '15px'}}
         >
           <li>
             <a className="dropdown-item" href="#">

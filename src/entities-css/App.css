@@ -3,6 +3,16 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background: white;
+  
+}
+
+.bodyMain{
+  background-color: white;
+}
+
+:root{
+  background: white;
 }
 
 .logo {
