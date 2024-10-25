@@ -122,10 +122,15 @@ function Login() {
         style={{
           backgroundColor: 'white',
           marginBottom: '5px',
+          border:'none',
           borderBottom: '1px solid darkslategray',
+          
           width: '100%',
-          borderRadius:'0px'
+          borderRadius:'0px',
+          outline: 'none',
+          boxShadow: 'none',
         }}
+        
         onChange={(e) => handleChange('username', e.target.value)}
       />
       <label htmlFor="floatingUsername" style={{ color: 'grey' }}>
@@ -142,6 +147,8 @@ function Login() {
         placeholder="Password"
         style={{ backgroundColor: 'white',
           marginBottom: '5px',
+          border:'none',
+          boxShadow:'none',
           borderBottom: '1px solid darkslategray',
           width: '100%',
           borderRadius:'0px' }}
@@ -174,7 +181,7 @@ function Login() {
         transition: 'backgroundColor 0.3s ease',
       }}
       onMouseOver={(e) => (e.target.style.backgroundColor = '#264141')}
-      onMouseOut={(e) => (e.target.style.backgroundColor = 'darkslategrey')}
+      onMouseOut={(e) => (e.target.style.backgroundColor = '#2f4f4f')}
     >
       Log In
     </button>

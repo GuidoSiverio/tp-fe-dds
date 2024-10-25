@@ -10,9 +10,24 @@
 }
 
 /* Ajusta el contenido principal */
-.content {
-  margin-left: 4.5rem; /* Ajusta este valor según el ancho del sidebar */
-  padding: 20px;
 
+
+
+.dropdown-item:hover {
+  background-color: rgb(38, 43, 48); /* Color de fondo al pasar el mouse */
+  color: white; /* Cambia el color del texto si es necesario */
 }
 
+.nav-link:hover{
+  background-color: rgb(38, 43, 48);
+}
+
+.nav-link.active {
+  color: darkslategrey; /* Color cuando está activa */
+  background-color: rgb(38, 43, 48); /* Fondo opcional para la pestaña activa */
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: var(--bs-nav-pills-link-active-color);
+  background-color: rgb(20, 23, 26);
+}

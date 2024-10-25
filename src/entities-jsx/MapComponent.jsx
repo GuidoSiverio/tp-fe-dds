@@ -10,7 +10,7 @@ function MapComponent({ markers }) {
     <MapContainer
       center={buenosAiresCoordinates}
       zoom={defaultZoom}
-      style={{ height: "500px", width: "500px" }}
+      style={{ height: "500px", maxWidth: "600px" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

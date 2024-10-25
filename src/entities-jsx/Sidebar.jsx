@@ -35,7 +35,7 @@ function Sidebar() {
         <li className="nav-item">
           <Link
             to="/home"
-            className={`nav-link py-3 ${
+            className={`nav-link py-3 link-light ${
               activeLink === "/home" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/home")}
@@ -71,7 +71,7 @@ function Sidebar() {
         <li>
           <Link
             to="/contribuciones"
-            className={`nav-link py-3 ${
+            className={`nav-link py-3 link-light ${
               activeLink === "/contribuciones" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/contribuciones")}
@@ -80,20 +80,9 @@ function Sidebar() {
             <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
-        <li>
-          <Link
-            to="#"
-            className={`nav-link py-3 ${
-              activeLink === "#" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("#")}
-            title="Personas"
-          >
-            <i className="bi bi-people-circle"></i>
-          </Link>
-        </li>
+        
       </ul>
-      <div className="dropdown border-top">
+      <div className="dropdown " style={{ borderTop:'2px solid white'}}>
         <a
           href="#"
           className="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none dropdown-toggle"
@@ -110,9 +99,9 @@ function Sidebar() {
           />
         </a>
         <ul
-          className="dropdown-menu text-small shadow"
+          className="dropdown-menu dropdown-menu-end text-small shadow"
           aria-labelledby="dropdownUser3"
-          style={{ maxWidth: 'auto', marginLeft: '15px'}}
+          style={{ maxWidth: 'auto', marginLeft:' 15px '}}
         >
           <li>
             <a className="dropdown-item" href="#">
