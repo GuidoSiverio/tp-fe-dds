@@ -71,8 +71,8 @@ function Heladera() {
   return (
 <div className="Heladera d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
   <Sidebar />
-  <div className="content text-center" style={{ width: '100%', maxWidth: '600px', padding: '20px' }}>
-    <div id="map" style={{width:'800px',  marginBottom: '30px', borderRadius: '10px', overflow: 'hidden', boxShadow: '0px 4px 10px rgba(0,0,0,0.1)' }}>
+  <div className="content text-center" style={{ width: '100%', padding: '20px' }}>
+    <div id="map" style={{width:'100%',  marginBottom: '30px', borderRadius: '10px', overflow: 'hidden', boxShadow: '0px 4px 10px rgba(0,0,0,0.1)' }}>
       <MapComponent markers={markers} />
     </div>
     <h1 className="display-4 fw-normal mb-4 w-100">Heladera</h1>
