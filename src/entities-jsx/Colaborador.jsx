@@ -3,69 +3,65 @@ import Sidebar from "./Sidebar";
 
 function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
-  const [humana, setHumano] = useState({
+  const [colaborador, setColaborador] = useState({
     direccion: "",
     medioDeContacto: "",
     nombre: "",
     apellido: "",
-    fechaNacimiento: "",
-  });
-  const [juridica, setJuridica] = useState({
-    direccion: "",
-    medioDeContacto: "",
+    fechaDeNacimiento: "",
     razonSocial: "",
     tipo: "",
     rubro: "",
   });
+
   const localhost = "http://localhost:8080";
 
   async function addColaborador() {
     //e.preventDefault();
-    console.log(humana);
-    console.log(juridica);
-    const persona =
-      tipoColaborador === "humana" ? "/persona-humana" : "/persona-juridica";
-
-    const json = tipoColaborador === "humana" ? humana : juridica;
     try {
-      const response = await fetch(localhost + "/colaboradores" + persona, {
+      const response = await fetch(localhost + "/colaboradores", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(json),
+        body: JSON.stringify(colaborador),
       });
-
-      console.log(humana);
-      console.log(juridica);
 
       console.log("Register response:", response);
     } catch (error) {
       console.error("Error during register:", error);
-      setError(error);
+      //setError(error);
     }
   }
 
   const handleChangeColaboradorType = (tipo) => {
     setTipoColaborador(tipo);
-  };
-
-  const handleChange = (field, value) => {
-    if (tipoColaborador === "humana") {
-      setHumano({
-        ...humana,
-        [field]: value,
+    if (tipo === "humana") {
+      setColaborador({
+        ...colaborador,
+        razonSocial: null,
+        tipo: null,
+        rubro: null,
       });
-    } else if (tipoColaborador === "juridica") {
-      setJuridica({
-        ...juridica,
-        [field]: value,
+    } else if (tipo === "juridica") {
+      setColaborador({
+        ...colaborador,
+        nombre: null,
+        apellido: null,
+        fechaDeNacimiento: null,
       });
     }
   };
 
+  const handleChange = (field, value) => {
+    setColaborador({
+      ...colaborador,
+      [field]: value,
+    });
+  };
+
   const handleDateChange = (field, value) => {
-    const formattedDate = new Date(value).toISOString().slice(0, -1);
+    const formattedDate = new Date(value).toISOString().split(".")[0];
     handleChange(field, formattedDate);
   };
 
@@ -168,16 +164,16 @@ function Colaboador() {
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="fechaNacimiento" className="form-label">
+                  <label htmlFor="fechaDeNacimiento" className="form-label">
                     Fecha de nacimiento
                   </label>
                   <input
                     type="date"
                     className="form-control"
-                    id="fechaNacimiento"
+                    id="fechaDeNacimiento"
                     required
                     onChange={(e) =>
-                      handleDateChange("fechaNacimiento", e.target.value)
+                      handleDateChange("fechaDeNacimiento", e.target.value)
                     }
                   />
                   <div className="invalid-feedback">
