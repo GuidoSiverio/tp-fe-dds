@@ -5,7 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Contribuciones() {
   return (
-    <div className="Contribuciones">
+    <div className="Contribuciones" style={{ }}>
       <Sidebar />
 
       <h2 class="pb-2 border-bottom">Contribuciones</h2>
