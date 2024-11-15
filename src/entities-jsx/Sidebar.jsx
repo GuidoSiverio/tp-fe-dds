@@ -16,7 +16,7 @@ function Sidebar() {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 bg-dark sidebar"
-      style={{ width: "4.5rem" , overflowX: 'visible'}}
+      style={{ width: "4.5rem", overflowX: "visible" }}
     >
       <Link
         to="/"
@@ -80,9 +80,20 @@ function Sidebar() {
             <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
-        
+        <li>
+          <Link
+            to="/tecnicos"
+            className={`nav-link py-3 link-light  ${
+              activeLink === "/tecnicos" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/tecnicos")}
+            title="Tecnicos"
+          >
+            <i className="bi bi-h-square-fill"></i>
+          </Link>
+        </li>
       </ul>
-      <div className="dropdown " style={{ borderTop:'2px solid white'}}>
+      <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a
           href="#"
           className="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none dropdown-toggle"
@@ -101,7 +112,7 @@ function Sidebar() {
         <ul
           className="dropdown-menu dropdown-menu-end text-small shadow"
           aria-labelledby="dropdownUser3"
-          style={{ maxWidth: 'auto', marginLeft:' 15px '}}
+          style={{ maxWidth: "auto", marginLeft: " 15px " }}
         >
           <li>
             <a className="dropdown-item" href="#">

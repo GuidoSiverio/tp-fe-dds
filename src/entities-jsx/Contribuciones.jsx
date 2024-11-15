@@ -1,73 +1,102 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./Sidebar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Contribuciones() {
   return (
-    <div className="Contribuciones" style={{ }}>
+    <div className="Contribuciones">
       <Sidebar />
 
-      <h2 class="pb-2 border-bottom">Contribuciones</h2>
-      <div class="row g-4 py-5 row-cols-1 row-cols-lg-4">
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+      <h2 className="pb-2 border-bottom">Contribuciones</h2>
+      <div className="row g-4 py-5 row-cols-1 row-cols-lg-4">
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
           <div>
-            <h3 class="fs-2 text-body-emphasis">Donacion de Dinero</h3>
+            <h3 className="fs-2 text-body-emphasis">Donación de Dinero</h3>
             <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
-            </p>
-            <a href="/contribuciones/donacion-dinero" class="btn btn-primary">
-              Realizar contribucion
-            </a>
-          </div>
-        </div>
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
-          <div>
-            <h3 class="fs-2 text-body-emphasis">Donacion de Vianda</h3>
-            <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
-            </p>
-            <a href="/contribuciones/donacion-vianda" class="btn btn-primary">
-              Realizar contribucion
-            </a>
-          </div>
-        </div>
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
-          <div>
-            <h3 class="fs-2 text-body-emphasis">Distribucion de viandas</h3>
-            <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
-            </p>
-            <a href="/contribuciones/distribucion" class="btn btn-primary">
-              Realizar contribucion
-            </a>
-          </div>
-        </div>
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
-          <div>
-            <h3 class="fs-2 text-body-emphasis">
-              Hacerse cargo de una heladera
-            </h3>
-            <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We'll add onto it with another sentence and probably just keep
-              going until we run out of words.
+              Contribuye con tu donación económica para ayudar a quienes más lo
+              necesitan.
             </p>
             <a
-              href="/contribuciones/responsable-heladera"
-              class="btn btn-primary"
+              href="/contribuciones/donacion-dinero"
+              className="btn btn-primary"
             >
-              Realizar contribucion
+              Realizar contribución
+            </a>
+          </div>
+        </div>
+
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">Donación de Vianda</h3>
+            <p>Ofrece viandas para aquellos que lo necesiten.</p>
+            <a
+              href="/contribuciones/donacion-vianda"
+              className="btn btn-primary"
+            >
+              Realizar contribución
+            </a>
+          </div>
+        </div>
+
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">Distribución de Viandas</h3>
+            <p>Ayuda en la distribución de viandas a personas vulnerables.</p>
+            <a href="/contribuciones/distribucion" className="btn btn-primary">
+              Realizar contribución
+            </a>
+          </div>
+        </div>
+
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">
+              Hacerse Cargo de una Heladera
+            </h3>
+            <p>Conviértete en responsable de una heladera comunitaria.</p>
+            <a
+              href="/contribuciones/responsable-heladera"
+              className="btn btn-primary"
+            >
+              Realizar contribución
+            </a>
+          </div>
+        </div>
+
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">Donación de Productos</h3>
+            <p>
+              Dona nuevos productos para que sean una recompensa para nuestros
+              colaboradores.
+            </p>
+            <a
+              href="/contribuciones/donacion-producto"
+              className="btn btn-primary"
+            >
+              Realizar contribución
+            </a>
+          </div>
+        </div>
+
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">
+              Registrar Nueva Personas Vulnerables
+            </h3>
+            <p>Ingresar una nueva persona vulnerable al sistema</p>
+            <a
+              href="/contribuciones/incorporacion-persona"
+              className="btn btn-primary"
+            >
+              Realizar contribución
             </a>
           </div>
         </div>
