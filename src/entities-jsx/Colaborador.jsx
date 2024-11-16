@@ -1,7 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
+<<<<<<< Updated upstream
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+=======
+import Papa from "papaparse";
+>>>>>>> Stashed changes
 
 function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
@@ -24,6 +28,27 @@ function Colaboador() {
   if (!user) {
     return <p>Por favor, inicia sesión.</p>;
   }
+
+  const inputRef = React.useRef(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "text/csv") {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log("Contenido del CSV:", e.target.result);
+      };
+      reader.readAsText(file);
+    } else {
+      alert("Por favor, selecciona un archivo .csv válido");
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click(); 
+    }
+  };
 
   const localhost = "http://localhost:8080";
 
@@ -275,6 +300,7 @@ function Colaboador() {
               )}
             </div>
 
+<<<<<<< Updated upstream
             <hr className="my-4" />
 
             <button
@@ -286,6 +312,151 @@ function Colaboador() {
             </button>
           </form>
         )}
+=======
+            <div>
+              <button
+                className="w-25 btn btn-primary"
+                style={{
+                  backgroundColor: "#2f4f4f",
+                  transition: "backgroundColor 0.3s ease",
+                  border: "none",
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}
+                onMouseOut={(e) => (e.target.style.backgroundColor = "#2f4f4f")}
+                onClick={handleButtonClick} // Asigna el clic al input
+              >
+                Importar CSV
+                <input
+                  ref={inputRef} // Conecta el input al botón mediante la referencia
+                  id="csvFile"
+                  type="file"
+                  accept=".csv"
+                  style={{ display: "none" }} // Oculta el input
+                  onChange={handleFileUpload}
+                />
+              </button>
+              
+            </div>
+
+            {tipoColaborador === "humana" && (
+              <>
+                <div className="col-12">
+                  <label htmlFor="nombre" className="form-label">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="nombre"
+                    placeholder="Nombre"
+                    required
+                    onChange={(e) => handleChange("nombre", e.target.value)}
+                  />
+                  <div className="invalid-feedback">Nombre requerido.</div>
+                </div>
+
+                <div className="col-12">
+                  <label htmlFor="apellido" className="form-label">
+                    Apellido
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="apellido"
+                    placeholder="Apellido"
+                    required
+                    onChange={(e) => handleChange("apellido", e.target.value)}
+                  />
+                  <div className="invalid-feedback">Apellido requerido.</div>
+                </div>
+
+                <div className="col-12">
+                  <label htmlFor="fechaDeNacimiento" className="form-label">
+                    Fecha de nacimiento
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="fechaDeNacimiento"
+                    required
+                    onChange={(e) =>
+                      handleDateChange("fechaDeNacimiento", e.target.value)
+                    }
+                  />
+                  <div className="invalid-feedback">
+                    Fecha de nacimiento requerida.
+                  </div>
+                </div>
+              </>
+            )}
+            {tipoColaborador === "juridica" && (
+              <>
+                <div className="col-12">
+                  <label htmlFor="razonSocial" className="form-label">
+                    Razón Social
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="razonSocial"
+                    placeholder="Razón Social"
+                    required
+                    onChange={(e) =>
+                      handleChange("razonSocial", e.target.value)
+                    }
+                  />
+                  <div className="invalid-feedback">
+                    Razón Social requerida.
+                  </div>
+                </div>
+
+                <div className="col-12">
+                  <label htmlFor="tipo" className="form-label">
+                    Tipo
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="tipo"
+                    placeholder="Tipo"
+                    required
+                    onChange={(e) => handleChange("tipo", e.target.value)}
+                  />
+                  <div className="invalid-feedback">Tipo requerido.</div>
+                </div>
+
+                <div className="col-12">
+                  <label htmlFor="rubro" className="form-label">
+                    Rubro
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="rubro"
+                    placeholder="Rubro"
+                    required
+                    onChange={(e) => handleChange("rubro", e.target.value)}
+                  />
+                  <div className="invalid-feedback">Rubro requerido.</div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <hr className="my-4" />
+
+
+          <button className="w-50 btn btn-primary btn-lg"  type="submit" onClick={addColaborador}
+              style={{backgroundColor:'#2f4f4f',
+                      transition: 'backgroundColor 0.3s ease',
+                      border:'none'}}
+              onMouseOver={(e) => (e.target.style.backgroundColor = '#264141')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#2f4f4f')}
+              >
+            Save
+          </button>
+        </form>
+>>>>>>> Stashed changes
       </div>
     </div>
   );
