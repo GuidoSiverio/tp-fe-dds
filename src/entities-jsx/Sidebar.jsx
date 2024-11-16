@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../entities-css/Sidebar.css";
+import { UserContext } from "./UserContext";
 
 function Sidebar() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
+  const { logoutUser } = useContext(UserContext);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -16,12 +18,13 @@ function Sidebar() {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 bg-dark sidebar"
-      style={{ width: "4.5rem" , overflowX: 'visible'}}
+      style={{ width: "4.5rem", overflowX: "visible" }}
     >
       <Link
         to="/"
         className="d-block p-3 link-light text-decoration-none "
         title=""
+        onClick={logoutUser}
       >
         <i
           className="bi bi-person-raised-hand"
@@ -80,9 +83,8 @@ function Sidebar() {
             <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
-        
       </ul>
-      <div className="dropdown " style={{ borderTop:'2px solid white'}}>
+      <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a
           href="#"
           className="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none dropdown-toggle"
@@ -101,7 +103,7 @@ function Sidebar() {
         <ul
           className="dropdown-menu dropdown-menu-end text-small shadow"
           aria-labelledby="dropdownUser3"
-          style={{ maxWidth: 'auto', marginLeft:' 15px '}}
+          style={{ maxWidth: "auto", marginLeft: " 15px " }}
         >
           <li>
             <a className="dropdown-item" href="#">

@@ -7,17 +7,20 @@ import Vianda from "./DonacionVianda";
 import Colaborador from "./Colaborador";
 import Heladera from "./Heladera";
 import Contribuciones from "./Contribuciones";
+import { UserProvider } from "./UserContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/colaboradores" element={<Colaborador />} />
-      <Route path="/heladeras" element={<Heladera />} />
-      <Route path="/contribuciones" element={<Contribuciones />} />
-      <Route path="/contribuciones/donacion-vianda" element={<Vianda />} />
-    </Routes>
+    <UserProvider>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/colaboradores" element={<Colaborador />} />
+        <Route path="/heladeras" element={<Heladera />} />
+        <Route path="/contribuciones" element={<Contribuciones />} />
+        <Route path="/contribuciones/donacion-vianda" element={<Vianda />} />
+      </Routes>
+    </UserProvider>
   );
 }
 
