@@ -1,23 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 
-function Vianda() {
+function DonacionVianda() {
   const [vianda, setVianda] = useState({
     comida: "",
     fechaCaducidad: "",
-    fechaDonacion: "",
     calorias: "",
     peso: "",
-    fechaEntrega: "",
-    fueEntregada: "",
-    colaborador: "",
+    colaboradorId: "",
+    heladeraId: "",
   });
   const localhost = "http://localhost:8080";
+
+  const [heladeras, setHeladeras] = useState([]);
+  const [colaboradores, setColaboradores] = useState([]);
+
+  function getHeladeras() {
+    return fetch(localhost + "/heladeras", {
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => response.json());
+  }
+
+  function getColaboradores() {
+    return fetch(localhost + "/colaboradores", {
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => response.json());
+  }
+
+  useEffect(() => {
+    getHeladeras().then((data) => {
+      setHeladeras(data);
+    });
+
+    getColaboradores().then((data) => {
+      setColaboradores(data);
+    });
+  }, []);
 
   async function addVianda() {
     //e.preventDefault();
     try {
-      const response = fetch(localhost + "/vianda", {
+      const response = fetch(localhost + "/contribuciones/donacion-vianda", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +51,6 @@ function Vianda() {
       console.log("Register response:", response);
     } catch (error) {
       console.error("Error during register:", error);
-      setError(error);
     }
   }
 
@@ -39,11 +61,16 @@ function Vianda() {
     });
   };
 
+  const handleDateChange = (field, value) => {
+    const formattedDate = new Date(value).toISOString().slice(0, -1);
+    handleChange(field, formattedDate);
+  };
+
   return (
     <div className="Vianda">
       <Sidebar />
       <div className="content">
-        <h1 class="display-4 fw-normal">Vianda</h1>
+        <h1 class="display-4 fw-normal">Donacion de Vianda</h1>
         <br />
         {/* Aquí puedes agregar el contenido principal de tu aplicación */}
         <form className="needs-validation" noValidate>
@@ -74,7 +101,9 @@ function Vianda() {
                 className="form-control"
                 id="date"
                 required
-                onChange={(e) => handleChange("fechaCaducidad", e.target.value)}
+                onChange={(e) =>
+                  handleDateChange("fechaCaducidad", e.target.value)
+                }
               />
               <div className="invalid-feedback">
                 Fecha de caducidad requerida.
@@ -121,10 +150,32 @@ function Vianda() {
                 className="form-select"
                 id="country"
                 required
-                onChange={(e) => handleChange("colaborador", e.target.value)}
+                onChange={(e) => {
+                  const selectedId =
+                    e.target.selectedOptions[0].getAttribute("data-id");
+                  handleChange("colaboradorId", selectedId);
+                }}
               >
                 <option value="">Choose...</option>
-                <option>Guido</option>
+                {colaboradores.length > 0 ? (
+                  colaboradores.map((colaborador, index) => (
+                    <option
+                      key={index}
+                      value={
+                        colaborador.nombre && colaborador.razonSocial
+                          ? `${colaborador.nombre} - ${colaborador.razonSocial}`
+                          : colaborador.nombre || colaborador.razonSocial
+                      }
+                      data-id={colaborador.id}
+                    >
+                      {colaborador.nombre && colaborador.razonSocial
+                        ? `${colaborador.nombre} - ${colaborador.razonSocial}`
+                        : colaborador.nombre || colaborador.razonSocial}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>Cargando heladeras...</option>
+                )}
               </select>
               <div className="invalid-feedback">Colaborador requerido.</div>
             </div>
@@ -137,10 +188,26 @@ function Vianda() {
                 className="form-select"
                 id="country"
                 required
-                onChange={(e) => handleChange("heladera", e.target.value)}
+                onChange={(e) => {
+                  const selectedId =
+                    e.target.selectedOptions[0].getAttribute("data-id");
+                  handleChange("heladeraId", selectedId);
+                }}
               >
                 <option value="">Choose...</option>
-                <option>Heladera1</option>
+                {heladeras.length > 0 ? (
+                  heladeras.map((heladera, index) => (
+                    <option
+                      key={index}
+                      value={heladera.nombre}
+                      data-id={heladera.id}
+                    >
+                      {heladera.nombre}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>Cargando heladeras...</option>
+                )}
               </select>
               <div className="invalid-feedback">Heladera requerido.</div>
             </div>
@@ -161,4 +228,4 @@ function Vianda() {
   );
 }
 
-export default Vianda;
+export default DonacionVianda;

@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../entities-css/Sidebar.css";
+import { UserContext } from "./UserContext";
 
 function Sidebar() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
+  const { logoutUser } = useContext(UserContext);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -15,13 +17,14 @@ function Sidebar() {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 bg-light sidebar"
-      style={{ width: "4.5rem" }}
+      className="d-flex flex-column flex-shrink-0 bg-dark sidebar"
+      style={{ width: "4.5rem", overflowX: "visible" }}
     >
       <Link
         to="/"
-        className="d-block p-3 link-dark text-decoration-none"
+        className="d-block p-3 link-light text-decoration-none "
         title=""
+        onClick={logoutUser}
       >
         <i
           className="bi bi-person-raised-hand"
@@ -29,13 +32,13 @@ function Sidebar() {
         ></i>
       </Link>
       <ul
-        className="nav nav-pills nav-flush flex-column mb-auto text-center"
+        className="nav nav-pills link-light nav-flush flex-column mb-auto text-center"
         style={{ zIndex: 1001 }}
       >
         <li className="nav-item">
           <Link
             to="/home"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 link-light ${
               activeLink === "/home" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/home")}
@@ -47,7 +50,7 @@ function Sidebar() {
         <li>
           <Link
             to="/colaboradores"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 link-light ${
               activeLink === "/colaboradores" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/colaboradores")}
@@ -58,20 +61,8 @@ function Sidebar() {
         </li>
         <li>
           <Link
-            to="/viandas"
-            className={`nav-link py-3 border-bottom ${
-              activeLink === "/viandas" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/viandas")}
-            title="Viandas"
-          >
-            <i className="bi bi-bag-check-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/heladeras"
-            className={`nav-link py-3 border-bottom ${
+            className={`nav-link py-3 link-light  ${
               activeLink === "/heladeras" ? "active" : ""
             }`}
             onClick={() => handleLinkClick("/heladeras")}
@@ -82,21 +73,21 @@ function Sidebar() {
         </li>
         <li>
           <Link
-            to="#"
-            className={`nav-link py-3 border-bottom ${
-              activeLink === "#" ? "active" : ""
+            to="/contribuciones"
+            className={`nav-link py-3 link-light ${
+              activeLink === "/contribuciones" ? "active" : ""
             }`}
-            onClick={() => handleLinkClick("#")}
-            title="Personas"
+            onClick={() => handleLinkClick("/contribuciones")}
+            title="Contribuciones"
           >
-            <i className="bi bi-people-circle"></i>
+            <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
       </ul>
-      <div className="dropdown border-top">
+      <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a
           href="#"
-          className="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
+          className="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none dropdown-toggle"
           id="dropdownUser3"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -110,8 +101,9 @@ function Sidebar() {
           />
         </a>
         <ul
-          className="dropdown-menu text-small shadow"
+          className="dropdown-menu dropdown-menu-end text-small shadow"
           aria-labelledby="dropdownUser3"
+          style={{ maxWidth: "auto", marginLeft: " 15px " }}
         >
           <li>
             <a className="dropdown-item" href="#">
