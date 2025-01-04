@@ -1,8 +1,30 @@
-# React + Vite
+# Proyecto de Diseño de Sistemas - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositorio contiene el frontend del proyecto desarrollado para la materia **Diseño de Sistemas**.
 
-Currently, two official plugins are available:
+## 📦 Tecnologías utilizadas
+- **Librería**: React
+- **Lenguajes**: JavaScript, HTML, CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ⚙️ Requisitos
+- **Node.js** (incluye npm)
+
+## ⚙️ Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/GuidoSiverio/tp-fe-dds.git
+
+2. Navega al directorio del proyecto:
+   ```bash
+   cd <NOMBRE_DEL_DIRECTORIO>
+
+
+3. Instala las dependencias:
+   ```bash
+   npm install
+
+
+4. Inicia la aplicación:
+   ```bash
+   npm run dev
