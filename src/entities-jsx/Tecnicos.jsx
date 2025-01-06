@@ -22,7 +22,7 @@ function Tecnico() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(colaborador),
+        body: JSON.stringify(tecnico),
       });
 
       console.log("Register response:", response);
@@ -89,14 +89,19 @@ function Tecnico() {
               <label htmlFor="tipoDocumento" className="form-label">
                 Tipo de Documento
               </label>
-              <input
+              <select
                 type="text"
                 className="form-control"
                 id="tipoDocumento"
                 placeholder="TipoDocumento"
                 required
                 onChange={(e) => handleChange("tipoDocumento", e.target.value)}
-              />
+              >
+                <option value="">Choose...</option>
+                <option value="DNI">DNI</option>
+                <option value="Pasaporte">Pasaporte</option>
+                <option value="CI">CI</option>
+              </select>
               <div className="invalid-feedback">
                 Tipo de Documento requerido.
               </div>
@@ -136,14 +141,18 @@ function Tecnico() {
               <label htmlFor="medioContacto" className="form-label">
                 Medio de Contacto
               </label>
-              <input
+              <select
                 type="text"
                 className="form-control"
                 id="medioContacto"
                 placeholder="MedioContacto"
                 required
                 onChange={(e) => handleChange("medioContacto", e.target.value)}
-              />
+              >
+                <option value="">Choose...</option>
+                <option>Whatsapp</option>
+                <option>Email</option>
+              </select>
               <div className="invalid-feedback">
                 Medio de Contacto requerido.
               </div>

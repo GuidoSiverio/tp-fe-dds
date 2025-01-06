@@ -4,13 +4,15 @@ import Sidebar from "./Sidebar";
 function PersonaVulnerable() {
   const [personaVulnerable, setPersonaVulnerable] = useState({
     nombre: "",
-    apellido: "",
     fechaNacimiento: "",
     situacionDeCalle: false,
     domicilio: "",
+    poseeDni: false,
+    tipoDni: "",
+    numeroDni: "",
     tieneMenoresACargo: false,
     cantidadMenoresACargo: 0,
-    tarjeta: "", // Campo de tarjeta
+    tarjeta: "",
   });
 
   const localhost = "http://localhost:8080";
@@ -46,6 +48,11 @@ function PersonaVulnerable() {
     });
   };
 
+  const handleDateChange = (field, value) => {
+    const formattedDate = new Date(value).toISOString().split(".")[0];
+    handleChange(field, formattedDate);
+  };
+
   return (
     <div className="PersonaVulnerable">
       <Sidebar />
@@ -74,21 +81,6 @@ function PersonaVulnerable() {
             </div>
 
             <div className="col-12">
-              <label htmlFor="apellido" className="form-label">
-                Apellido
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="apellido"
-                placeholder="Apellido"
-                required
-                onChange={(e) => handleChange("apellido", e.target.value)}
-              />
-              <div className="invalid-feedback">Apellido requerido.</div>
-            </div>
-
-            <div className="col-12">
               <label htmlFor="fechaNacimiento" className="form-label">
                 Fecha de Nacimiento
               </label>
@@ -98,7 +90,7 @@ function PersonaVulnerable() {
                 id="fechaNacimiento"
                 required
                 onChange={(e) =>
-                  handleChange("fechaNacimiento", e.target.value)
+                  handleDateChange("fechaNacimiento", e.target.value)
                 }
               />
               <div className="invalid-feedback">
@@ -138,6 +130,58 @@ function PersonaVulnerable() {
                   id="domicilio"
                   placeholder="Domicilio"
                   onChange={(e) => handleChange("domicilio", e.target.value)}
+                />
+              </div>
+            )}
+
+            <div className="col-12">
+              <label htmlFor="poseeDni" className="form-label">
+                ¿Posee documento?
+              </label>
+              <select
+                className="form-select"
+                id="poseeDni"
+                required
+                onChange={(e) =>
+                  handleChange("poseeDni", e.target.value === "true")
+                }
+              >
+                <option value="">Seleccione...</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+              </select>
+              <div className="invalid-feedback">Datos de DNI requeridos.</div>
+            </div>
+
+            {personaVulnerable.poseeDni && (
+              <div className="col-12">
+                <label htmlFor="tipoDni" className="form-label">
+                  Tipo de documento
+                </label>
+                <select
+                  className="form-control"
+                  id="tipoDni"
+                  required
+                  onChange={(e) => handleChange("tipoDni", e.target.value)}
+                >
+                  <option value="">Choose...</option>
+                  <option value="DNI">DNI</option>
+                  <option value="Pasaporte">Pasaporte</option>
+                  <option value="CI">CI</option>
+                </select>
+              </div>
+            )}
+            {personaVulnerable.poseeDni && (
+              <div className="col-12">
+                <label htmlFor="numeroDni" className="form-label">
+                  Numero de documento
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="numeroDni"
+                  placeholder="Numero de documento"
+                  onChange={(e) => handleChange("numeroDni", e.target.value)}
                 />
               </div>
             )}
