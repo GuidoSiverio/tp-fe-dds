@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 
 function RegistroEmpresa() {
-  const [empresa, setEmpresa] = useState({
+  const [producto, setProducto] = useState({
     nombre: "",
     rubro: "",
     puntosNecesarios: 0,
@@ -13,22 +13,22 @@ function RegistroEmpresa() {
 
   // Función para manejar los cambios en los campos del formulario
   const handleChange = (field, value) => {
-    setEmpresa({
-      ...empresa,
+    setProducto({
+      ...producto,
       [field]: value,
     });
   };
 
   // Función para manejar el envío del formulario
-  async function addEmpresa(e) {
+  async function addProducto(e) {
     e.preventDefault(); // Prevenir comportamiento por defecto del formulario
     try {
-      const response = await fetch(localhost + "/empresas", {
+      const response = await fetch(localhost + "/contribuciones/ofertas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(empresa),
+        body: JSON.stringify(producto),
       });
 
       if (response.ok) {
@@ -50,7 +50,7 @@ function RegistroEmpresa() {
           Registrar Empresa para Ofrecer Beneficios
         </h1>
         <br />
-        <form className="needs-validation" noValidate onSubmit={addEmpresa}>
+        <form className="needs-validation" noValidate onSubmit={addProducto}>
           <div className="row g-3">
             <div className="col-12">
               <label htmlFor="nombre" className="form-label">

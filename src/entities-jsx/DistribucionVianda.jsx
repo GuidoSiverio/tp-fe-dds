@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
+import { UserContext } from "./UserContext";
 
 function DistribucionVianda() {
+  const {
+    collaborator: colaborador,
+    isCollaboratorLinked: isColaboradorLinked,
+  } = useContext(UserContext);
   const [distribucion, setDistribucion] = useState({
     heladeraOrigen: "",
     heladeraDestino: "",
     cantidadViandas: "",
     motivoDistribucion: "",
     fechaDistribucion: "",
+    colaboradorId: "",
   });
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   const [heladeras, setHeladeras] = useState([]); // Para almacenar las heladeras disponibles
   const localhost = "http://localhost:8080";
@@ -30,7 +38,7 @@ function DistribucionVianda() {
   async function addDistribucion(e) {
     e.preventDefault(); // Previene el comportamiento por defecto del formulario
     try {
-      const response = await fetch(localhost + "/distribuciones", {
+      const response = await fetch(localhost + "/contribuciones/distribucion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,13 +47,15 @@ function DistribucionVianda() {
       });
 
       if (response.ok) {
-        console.log("Distribución registrada exitosamente.");
-        // Aquí podrías agregar algún mensaje de éxito o redirigir a otra página.
+        setMessage("Distrubución registrada exitósamente.");
+        setMessageType("success");
       } else {
-        console.error("Error al registrar la distribución");
+        setMessage("Error al registrar la distrubución.");
+        setMessageType("error");
       }
     } catch (error) {
-      console.error("Error durante la solicitud:", error);
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
     }
   }
 
@@ -57,10 +67,21 @@ function DistribucionVianda() {
     });
   };
 
+  const handleDateChange = (field, value) => {
+    const formattedDate = new Date(value).toISOString().slice(0, -1);
+    handleChange(field, formattedDate);
+  };
+
   // Obtener las heladeras disponibles cuando el componente se monta
   useEffect(() => {
     getHeladeras();
   }, []);
+
+  useEffect(() => {
+    if (isColaboradorLinked && colaborador?.id) {
+      setDistribucion((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    }
+  }, [isColaboradorLinked, colaborador]);
 
   return (
     <div className="DistribucionVianda">
@@ -70,120 +91,137 @@ function DistribucionVianda() {
           Registrar Distribución de Vianda
         </h1>
         <br />
-        <form
-          className="needs-validation"
-          noValidate
-          onSubmit={addDistribucion}
-        >
-          <div className="row g-3">
-            <div className="col-12">
-              <label htmlFor="heladeraOrigen" className="form-label">
-                Heladera de Origen
-              </label>
-              <select
-                className="form-select"
-                id="heladeraOrigen"
-                required
-                onChange={(e) => handleChange("heladeraOrigen", e.target.value)}
-              >
-                <option value="">Seleccionar...</option>
-                {heladeras.map((heladera) => (
-                  <option key={heladera.id} value={heladera.id}>
-                    {heladera.nombre} - {heladera.ubicacion}
-                  </option>
-                ))}
-              </select>
-              <div className="invalid-feedback">
-                Heladera de origen requerida.
+        {!isColaboradorLinked ? (
+          <h1>
+            Debes ser colaborador para realizar una distribucion de viandas.
+          </h1>
+        ) : (
+          <form
+            className="needs-validation"
+            noValidate
+            onSubmit={addDistribucion}
+          >
+            <div className="row g-3">
+              <div className="col-12">
+                <label htmlFor="heladeraOrigen" className="form-label">
+                  Heladera de Origen
+                </label>
+                <select
+                  className="form-select"
+                  id="heladeraOrigen"
+                  required
+                  onChange={(e) =>
+                    handleChange("heladeraOrigen", e.target.value)
+                  }
+                >
+                  <option value="">Seleccionar...</option>
+                  {heladeras.map((heladera) => (
+                    <option key={heladera.id} value={heladera.id}>
+                      {heladera.nombre} - {heladera.ubicacion}
+                    </option>
+                  ))}
+                </select>
+                <div className="invalid-feedback">
+                  Heladera de origen requerida.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="heladeraDestino" className="form-label">
+                  Heladera de Destino
+                </label>
+                <select
+                  className="form-select"
+                  id="heladeraDestino"
+                  required
+                  onChange={(e) =>
+                    handleChange("heladeraDestino", e.target.value)
+                  }
+                >
+                  <option value="">Seleccionar...</option>
+                  {heladeras.map((heladera) => (
+                    <option key={heladera.id} value={heladera.id}>
+                      {heladera.nombre} - {heladera.ubicacion}
+                    </option>
+                  ))}
+                </select>
+                <div className="invalid-feedback">
+                  Heladera de destino requerida.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="cantidadViandas" className="form-label">
+                  Cantidad de Viandas
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="cantidadViandas"
+                  placeholder="Cantidad"
+                  required
+                  onChange={(e) =>
+                    handleChange("cantidadViandas", e.target.value)
+                  }
+                />
+                <div className="invalid-feedback">
+                  Cantidad de viandas requerida.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="motivoDistribucion" className="form-label">
+                  Motivo de la Distribución
+                </label>
+                <textarea
+                  className="form-control"
+                  id="motivoDistribucion"
+                  placeholder="Motivo de la distribución"
+                  required
+                  onChange={(e) =>
+                    handleChange("motivoDistribucion", e.target.value)
+                  }
+                ></textarea>
+                <div className="invalid-feedback">
+                  Motivo de la distribución requerido.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="fechaDistribucion" className="form-label">
+                  Fecha de la Distribución
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="fechaDistribucion"
+                  required
+                  onChange={(e) =>
+                    handleDateChange("fechaDistribucion", e.target.value)
+                  }
+                />
+                <div className="invalid-feedback">
+                  Fecha de distribución requerida.
+                </div>
               </div>
             </div>
 
-            <div className="col-12">
-              <label htmlFor="heladeraDestino" className="form-label">
-                Heladera de Destino
-              </label>
-              <select
-                className="form-select"
-                id="heladeraDestino"
-                required
-                onChange={(e) =>
-                  handleChange("heladeraDestino", e.target.value)
-                }
-              >
-                <option value="">Seleccionar...</option>
-                {heladeras.map((heladera) => (
-                  <option key={heladera.id} value={heladera.id}>
-                    {heladera.nombre} - {heladera.ubicacion}
-                  </option>
-                ))}
-              </select>
-              <div className="invalid-feedback">
-                Heladera de destino requerida.
-              </div>
-            </div>
+            <hr className="my-4" />
 
-            <div className="col-12">
-              <label htmlFor="cantidadViandas" className="form-label">
-                Cantidad de Viandas
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="cantidadViandas"
-                placeholder="Cantidad"
-                required
-                onChange={(e) =>
-                  handleChange("cantidadViandas", e.target.value)
-                }
-              />
-              <div className="invalid-feedback">
-                Cantidad de viandas requerida.
-              </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="motivoDistribucion" className="form-label">
-                Motivo de la Distribución
-              </label>
-              <textarea
-                className="form-control"
-                id="motivoDistribucion"
-                placeholder="Motivo de la distribución"
-                required
-                onChange={(e) =>
-                  handleChange("motivoDistribucion", e.target.value)
-                }
-              ></textarea>
-              <div className="invalid-feedback">
-                Motivo de la distribución requerido.
-              </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="fechaDistribucion" className="form-label">
-                Fecha de la Distribución
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="fechaDistribucion"
-                required
-                onChange={(e) =>
-                  handleChange("fechaDistribucion", e.target.value)
-                }
-              />
-              <div className="invalid-feedback">
-                Fecha de distribución requerida.
-              </div>
-            </div>
+            <button className="w-100 btn btn-primary btn-lg" type="submit">
+              Registrar Distribución
+            </button>
+          </form>
+        )}
+        {message && (
+          <div
+            className={`alert ${
+              messageType === "success" ? "alert-success" : "alert-danger"
+            } mt-4`}
+          >
+            {message}
           </div>
-
-          <hr className="my-4" />
-
-          <button className="w-100 btn btn-primary btn-lg" type="submit">
-            Registrar Distribución
-          </button>
-        </form>
+        )}
       </div>
     </div>
   );

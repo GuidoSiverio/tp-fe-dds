@@ -136,7 +136,7 @@ function Sidebar() {
             <hr className="dropdown-divider"></hr>
           </li>
           <li>
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="/" onClick={logoutUser}>
               Sign out
             </a>
           </li>
