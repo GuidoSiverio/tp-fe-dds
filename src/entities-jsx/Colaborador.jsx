@@ -7,7 +7,7 @@ function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
   const {
     user,
-    collaborator,
+    collaborator: colab,
     isCollaboratorLinked: isColaboradorLinked,
   } = useContext(UserContext);
   const [colaborador, setColaborador] = useState({
@@ -37,7 +37,7 @@ function Colaboador() {
     } else {
       console.log("No hay colaborador vinculado.");
     }
-  }, [isColaboradorLinked, collaborator]);
+  }, [isColaboradorLinked, colab]);
 
   const localhost = "http://localhost:8080";
 

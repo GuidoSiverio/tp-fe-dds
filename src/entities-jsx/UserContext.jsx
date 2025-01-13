@@ -17,7 +17,12 @@ export const UserProvider = ({ children }) => {
       if (storedColaborador) {
         setColaborador(storedColaborador);
         setIsColaboradorLinked(true);
+        console.log("Colaborador cargado desde localStorage.");
+      } else {
+        console.log("No se encontró colaborador en localStorage.");
       }
+    } else {
+      console.log("No se encontró usuario en localStorage.");
     }
   }, []);
 
@@ -37,9 +42,14 @@ export const UserProvider = ({ children }) => {
         setColaborador(data);
         setIsColaboradorLinked(true);
         localStorage.setItem("colaborador", JSON.stringify(data));
+        console.log("Colaborador cargado y vinculado:", data);
+      } else {
+        setColaborador(null);
+        setIsColaboradorLinked(false);
+        console.log("No se encontró colaborador en el servidor.");
       }
     } catch (error) {
-      console.error("Error fetching colaborador:", error);
+      console.error("Error al verificar colaborador:", error);
       setColaborador(null);
       setIsColaboradorLinked(false);
     }
@@ -51,6 +61,10 @@ export const UserProvider = ({ children }) => {
     setColaborador(null);
     setIsColaboradorLinked(false);
     localStorage.removeItem("user");
+    if (localStorage.getItem("colaborador")) {
+      localStorage.removeItem("colaborador");
+      localStorage.removeItem("isColaboradorLinked");
+    }
   };
 
   return (
