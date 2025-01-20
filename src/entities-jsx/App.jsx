@@ -12,6 +12,7 @@ import Contribuciones from "./Contribuciones";
 import Tecnicos from "./Tecnicos";
 import PersonaVulnerable from "./PersonaVulnerable";
 import Producto from "./DonacionProducto";
+import Ofertas from "./Ofertas";
 import { UserProvider } from "./UserContext";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           path="/contribuciones/donacion-producto"
           element={<Producto />}
         />
+        <Route path="/ofertas" element={<Ofertas />} />
       </Routes>
     </UserProvider>
   );

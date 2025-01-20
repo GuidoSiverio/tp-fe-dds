@@ -92,7 +92,19 @@ function Sidebar() {
             onClick={() => handleLinkClick("/tecnicos")}
             title="Tecnicos"
           >
-            <i className="bi bi-h-square-fill"></i>
+            <i className="bi bi-hammer"></i>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/ofertas"
+            className={`nav-link py-3 link-light  ${
+              activeLink === "/ofertas" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/ofertas")}
+            title="Ofertas"
+          >
+            <i className="bi bi-bag-fill"></i>
           </Link>
         </li>
       </ul>

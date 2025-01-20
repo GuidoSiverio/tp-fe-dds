@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import Sidebar from "./Sidebar";
-import "../entities-css/Home.css";
 import { UserContext } from "./UserContext";
-
 function Home() {
   const { user } = useContext(UserContext);
   if (!user) {
