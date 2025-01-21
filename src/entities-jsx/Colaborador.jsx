@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
-  const { user, isCollaboratorLinked } = useContext(UserContext);
+  const {
+    user,
+    collaborator: colab,
+    isCollaboratorLinked: isColaboradorLinked,
+  } = useContext(UserContext);
   const [colaborador, setColaborador] = useState({
     direccion: "",
     medioDeContacto: "",
@@ -21,14 +25,24 @@ function Colaboador() {
   //const [colaboradorVinculado, setColaboradorVinculado] = useState(false);
   const navigate = useNavigate();
 
-  if (!user) {
-    return <p>Por favor, inicia sesión.</p>;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/"); // Redirige si no hay un usuario logueado
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    if (isColaboradorLinked) {
+      console.log("El colaborador está vinculado.");
+    } else {
+      console.log("No hay colaborador vinculado.");
+    }
+  }, [isColaboradorLinked, colab]);
 
   const localhost = "http://localhost:8080";
 
-  async function addColaborador() {
-    //e.preventDefault();
+  async function addColaborador(e) {
+    e.preventDefault();
     try {
       const response = await fetch(localhost + "/colaboradores", {
         method: "POST",
@@ -79,37 +93,15 @@ function Colaboador() {
     const formattedDate = new Date(value).toISOString().split(".")[0];
     handleChange(field, formattedDate);
   };
-  /*
-  useEffect(() => {
-    async function checkCollaboratorStatus() {
-      try {
-        const response = await fetch(localhost + "/check-collaborator", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(user),
-        });
-        if (response.ok) {
-          setColaboradorVinculado(true);
-        } else {
-          setColaboradorVinculado(false);
-        }
-      } catch (error) {
-        console.error("Error fetching colaborador vinculado:", error);
-        setColaboradorVinculado(false);
-      }
-    }
 
-    checkCollaboratorStatus();
-  }, [user]);
-*/
   return (
     <div className="Colaborador">
       <Sidebar />
       <div className="content">
         <h1 class="display-4 fw-normal">Alta Colaborador</h1>
         <br />
-        {isCollaboratorLinked ? (
-          <p>Ya eres colaborador.</p>
+        {isColaboradorLinked ? (
+          <h1>Ya eres colaborador.</h1>
         ) : (
           <form className="needs-validation" noValidate>
             <div className="row g-3">

@@ -83,6 +83,30 @@ function Sidebar() {
             <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
+        <li>
+          <Link
+            to="/tecnicos"
+            className={`nav-link py-3 link-light  ${
+              activeLink === "/tecnicos" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/tecnicos")}
+            title="Tecnicos"
+          >
+            <i className="bi bi-hammer"></i>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/ofertas"
+            className={`nav-link py-3 link-light  ${
+              activeLink === "/ofertas" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/ofertas")}
+            title="Ofertas"
+          >
+            <i className="bi bi-bag-fill"></i>
+          </Link>
+        </li>
       </ul>
       <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a
@@ -124,7 +148,7 @@ function Sidebar() {
             <hr className="dropdown-divider"></hr>
           </li>
           <li>
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="/" onClick={logoutUser}>
               Sign out
             </a>
           </li>
