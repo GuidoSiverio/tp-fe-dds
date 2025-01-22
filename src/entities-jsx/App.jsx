@@ -14,6 +14,7 @@ import PersonaVulnerable from "./PersonaVulnerable";
 import Producto from "./DonacionProducto";
 import TecnicosAlta from "./TecnicosAlta";
 import ModificarTecnico from "./ModificarTecnico";
+import BajaTecnico from "./TecnicosBaja";
 
 function App() {
   const tecnicoId = 1;
@@ -39,9 +40,10 @@ function App() {
       <Route path="/contribuciones/donacion-producto" element={<Producto />} />
       <Route path="/tecnicos/tecnicos-alta" element={<TecnicosAlta />} />
       <Route
-        path="/tecnicos/tecnicos-modificar"
+        path="/tecnicos/tecnicos-modificacion"
         element={<ModificarTecnico />}
       />
+      <Route path="/tecnicos/tecnicos-baja" element={<BajaTecnico />} />
     </Routes>
   );
 }

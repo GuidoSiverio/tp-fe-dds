@@ -25,12 +25,22 @@ function Tecnicos() {
           <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
           <div>
             <h3 className="fs-2 text-body-emphasis">Modificar Tecnico</h3>
-            <p>OModicar a un tecnico ya existente en el sistema</p>
+            <p>Modicar a un tecnico ya existente en el sistema</p>
             <a
               href="/tecnicos/tecnicos-modificacion"
               className="btn btn-primary"
             >
               Modificar
+            </a>
+          </div>
+        </div>
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">Dar de Baja un Tecnico</h3>
+            <p>Eliminar un tecnico en el sistema</p>
+            <a href="/tecnicos/tecnicos-baja" className="btn btn-primary">
+              Dar de Baja
             </a>
           </div>
         </div>
