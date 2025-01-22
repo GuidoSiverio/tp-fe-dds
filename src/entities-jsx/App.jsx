@@ -15,6 +15,8 @@ import Producto from "./DonacionProducto";
 import TecnicosAlta from "./TecnicosAlta";
 import ModificarTecnico from "./ModificarTecnico";
 import BajaTecnico from "./TecnicosBaja";
+import Ofertas from "./Ofertas";
+import { UserProvider } from "./UserContext";
 
 function App() {
   const tecnicoId = 1;
@@ -45,6 +47,9 @@ function App() {
       />
       <Route path="/tecnicos/tecnicos-baja" element={<BajaTecnico />} />
     </Routes>
+        <Route path="/ofertas" element={<Ofertas />} />
+      </Routes>
+    </UserProvider>
   );
 }
 

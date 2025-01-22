@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import Sidebar from "./Sidebar";
-import "../entities-css/Home.css";
-
+import { UserContext } from "./UserContext";
 function Home() {
+  const { user } = useContext(UserContext);
+  if (!user) {
+    return <p>Por favor, inicia sesión.</p>;
+  }
+
   return (
     <div className="Home">
       <Sidebar />
@@ -13,7 +17,8 @@ function Home() {
           <div class="col-md-5 p-lg-5 mx-auto my-5">
             <h1 class="display-4 fw-normal">AlimentAR</h1>
             <p class="lead fw-normal">
-              Sistema para la Mejora del Acceso Alimentario en Contextos de Vulnerabilidad Socioeconómica
+              Sistema para la Mejora del Acceso Alimentario en Contextos de
+              Vulnerabilidad Socioeconómica
             </p>
             <a class="btn btn-outline-secondary" href="#">
               Coming soon

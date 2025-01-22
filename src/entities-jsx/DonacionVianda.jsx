@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Sidebar from "./Sidebar";
+import { UserContext } from "./UserContext";
 
 function DonacionVianda() {
+  const {
+    collaborator: colaborador,
+    isCollaboratorLinked: isColaboradorLinked,
+  } = useContext(UserContext);
   const [vianda, setVianda] = useState({
     comida: "",
     fechaCaducidad: "",
@@ -10,19 +15,14 @@ function DonacionVianda() {
     colaboradorId: "",
     heladeraId: "",
   });
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
   const localhost = "http://localhost:8080";
 
   const [heladeras, setHeladeras] = useState([]);
-  const [colaboradores, setColaboradores] = useState([]);
 
   function getHeladeras() {
     return fetch(localhost + "/heladeras", {
-      headers: { "Content-Type": "application/json" },
-    }).then((response) => response.json());
-  }
-
-  function getColaboradores() {
-    return fetch(localhost + "/colaboradores", {
       headers: { "Content-Type": "application/json" },
     }).then((response) => response.json());
   }
@@ -31,26 +31,38 @@ function DonacionVianda() {
     getHeladeras().then((data) => {
       setHeladeras(data);
     });
-
-    getColaboradores().then((data) => {
-      setColaboradores(data);
-    });
   }, []);
 
-  async function addVianda() {
-    //e.preventDefault();
-    try {
-      const response = fetch(localhost + "/contribuciones/donacion-vianda", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(vianda),
-      });
+  useEffect(() => {
+    if (isColaboradorLinked && colaborador?.id) {
+      setVianda((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    }
+  }, [isColaboradorLinked, colaborador]);
 
-      console.log("Register response:", response);
+  async function addVianda(e) {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        localhost + "/contribuciones/donacion-vianda",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(vianda),
+        }
+      );
+
+      if (response.ok) {
+        setMessage("Donación registrada exitósamente.");
+        setMessageType("success");
+      } else {
+        setMessage("Error al registrar la donación.");
+        setMessageType("error");
+      }
     } catch (error) {
-      console.error("Error during register:", error);
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
     }
   }
 
@@ -73,156 +85,125 @@ function DonacionVianda() {
         <h1 class="display-4 fw-normal">Donacion de Vianda</h1>
         <br />
         {/* Aquí puedes agregar el contenido principal de tu aplicación */}
-        <form className="needs-validation" noValidate>
-          <div className="row g-3">
-            <div className="col-12">
-              <label htmlFor="comida" className="form-label">
-                Comida
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="comida"
-                placeholder="Comida"
-                required
-                onChange={(e) => handleChange("comida", e.target.value)}
-              />
-              <div className="invalid-feedback">
-                Nombre de la comida requerida.
-              </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="date" className="form-label">
-                Fecha de caducidad
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="date"
-                required
-                onChange={(e) =>
-                  handleDateChange("fechaCaducidad", e.target.value)
-                }
-              />
-              <div className="invalid-feedback">
-                Fecha de caducidad requerida.
-              </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="calorias" className="form-label">
-                Calorias
-              </label>
-              <div className="input-group has-validation">
+        {!isColaboradorLinked ? (
+          <h1>Debes ser colaborador para realizar una donacion de vianda.</h1>
+        ) : (
+          <form className="needs-validation" noValidate onSubmit={addVianda}>
+            <div className="row g-3">
+              <div className="col-12">
+                <label htmlFor="comida" className="form-label">
+                  Comida
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="calorias"
-                  placeholder="Calorias"
+                  id="comida"
+                  placeholder="Comida"
                   required
-                  onChange={(e) => handleChange("calorias", e.target.value)}
+                  onChange={(e) => handleChange("comida", e.target.value)}
                 />
-                <div className="invalid-feedback">Calorias requeridas.</div>
+                <div className="invalid-feedback">
+                  Nombre de la comida requerida.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="date" className="form-label">
+                  Fecha de caducidad
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="date"
+                  required
+                  onChange={(e) =>
+                    handleDateChange("fechaCaducidad", e.target.value)
+                  }
+                />
+                <div className="invalid-feedback">
+                  Fecha de caducidad requerida.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="calorias" className="form-label">
+                  Calorias
+                </label>
+                <div className="input-group has-validation">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="calorias"
+                    placeholder="Calorias"
+                    required
+                    onChange={(e) => handleChange("calorias", e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="peso" className="form-label">
+                  Peso
+                </label>
+                <input
+                  type="peso"
+                  className="form-control"
+                  id="peso"
+                  placeholder="Peso"
+                  required
+                  onChange={(e) => handleChange("peso", e.target.value)}
+                />
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="heladera" className="form-label">
+                  Heladera
+                </label>
+                <select
+                  className="form-select"
+                  id="country"
+                  required
+                  onChange={(e) => {
+                    const selectedId =
+                      e.target.selectedOptions[0].getAttribute("data-id");
+                    handleChange("heladeraId", selectedId);
+                  }}
+                >
+                  <option value="">Choose...</option>
+                  {heladeras.length > 0 ? (
+                    heladeras.map((heladera, index) => (
+                      <option
+                        key={index}
+                        value={heladera.nombre}
+                        data-id={heladera.id}
+                      >
+                        {heladera.nombre}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>Cargando heladeras...</option>
+                  )}
+                </select>
+                <div className="invalid-feedback">Heladera requerido.</div>
               </div>
             </div>
 
-            <div className="col-12">
-              <label htmlFor="peso" className="form-label">
-                Peso
-              </label>
-              <input
-                type="peso"
-                className="form-control"
-                id="peso"
-                placeholder="Peso"
-                required
-                onChange={(e) => handleChange("peso", e.target.value)}
-              />
-              <div className="invalid-feedback">Peso requerido</div>
-            </div>
+            <hr className="my-4" />
 
-            <div className="col-12">
-              <label htmlFor="colaborador" className="form-label">
-                Colaboador
-              </label>
-              <select
-                className="form-select"
-                id="country"
-                required
-                onChange={(e) => {
-                  const selectedId =
-                    e.target.selectedOptions[0].getAttribute("data-id");
-                  handleChange("colaboradorId", selectedId);
-                }}
-              >
-                <option value="">Choose...</option>
-                {colaboradores.length > 0 ? (
-                  colaboradores.map((colaborador, index) => (
-                    <option
-                      key={index}
-                      value={
-                        colaborador.nombre && colaborador.razonSocial
-                          ? `${colaborador.nombre} - ${colaborador.razonSocial}`
-                          : colaborador.nombre || colaborador.razonSocial
-                      }
-                      data-id={colaborador.id}
-                    >
-                      {colaborador.nombre && colaborador.razonSocial
-                        ? `${colaborador.nombre} - ${colaborador.razonSocial}`
-                        : colaborador.nombre || colaborador.razonSocial}
-                    </option>
-                  ))
-                ) : (
-                  <option disabled>Cargando heladeras...</option>
-                )}
-              </select>
-              <div className="invalid-feedback">Colaborador requerido.</div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="heladera" className="form-label">
-                Heladera
-              </label>
-              <select
-                className="form-select"
-                id="country"
-                required
-                onChange={(e) => {
-                  const selectedId =
-                    e.target.selectedOptions[0].getAttribute("data-id");
-                  handleChange("heladeraId", selectedId);
-                }}
-              >
-                <option value="">Choose...</option>
-                {heladeras.length > 0 ? (
-                  heladeras.map((heladera, index) => (
-                    <option
-                      key={index}
-                      value={heladera.nombre}
-                      data-id={heladera.id}
-                    >
-                      {heladera.nombre}
-                    </option>
-                  ))
-                ) : (
-                  <option disabled>Cargando heladeras...</option>
-                )}
-              </select>
-              <div className="invalid-feedback">Heladera requerido.</div>
-            </div>
-          </div>
-
-          <hr className="my-4" />
-
-          <button
-            className="w-100 btn btn-primary btn-lg"
-            type="submit"
-            onClick={addVianda}
+            <button className="w-100 btn btn-primary btn-lg" type="submit">
+              Save
+            </button>
+          </form>
+        )}
+        {message && (
+          <div
+            className={`alert ${
+              messageType === "success" ? "alert-success" : "alert-danger"
+            } mt-4`}
           >
-            Save
-          </button>
-        </form>
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );

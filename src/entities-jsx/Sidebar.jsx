@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../entities-css/Sidebar.css";
+import { UserContext } from "./UserContext";
 
 function Sidebar() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
+  const { logoutUser } = useContext(UserContext);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -22,6 +24,7 @@ function Sidebar() {
         to="/"
         className="d-block p-3 link-light text-decoration-none "
         title=""
+        onClick={logoutUser}
       >
         <i
           className="bi bi-person-raised-hand"
@@ -89,7 +92,19 @@ function Sidebar() {
             onClick={() => handleLinkClick("/tecnicos")}
             title="Tecnicos"
           >
-            <i className="bi bi-h-square-fill"></i>
+            <i className="bi bi-hammer"></i>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/ofertas"
+            className={`nav-link py-3 link-light  ${
+              activeLink === "/ofertas" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/ofertas")}
+            title="Ofertas"
+          >
+            <i className="bi bi-bag-fill"></i>
           </Link>
         </li>
       </ul>
@@ -133,7 +148,7 @@ function Sidebar() {
             <hr className="dropdown-divider"></hr>
           </li>
           <li>
-            <a className="dropdown-item" href="#">
+            <a className="dropdown-item" href="/" onClick={logoutUser}>
               Sign out
             </a>
           </li>

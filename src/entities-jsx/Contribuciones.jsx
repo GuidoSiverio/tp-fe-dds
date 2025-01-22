@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import Sidebar from "./Sidebar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { UserContext } from "./UserContext";
 
 function Contribuciones() {
+  const { user } = useContext(UserContext);
+  if (!user) {
+    return <p>Por favor, inicia sesión.</p>;
+  }
   return (
-    <div className="Contribuciones">
+    <div className="Contribuciones" style={{}}>
       <Sidebar />
 
       <h2 className="pb-2 border-bottom">Contribuciones</h2>
