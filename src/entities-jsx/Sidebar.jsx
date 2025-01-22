@@ -73,6 +73,18 @@ function Sidebar() {
         </li>
         <li>
           <Link
+            to="/infoHeladera"
+            className={`nav-link py-3 link-light  ${
+              activeLink === "/infoHeladera" ? "active" : ""
+            }`}
+            onClick={() => handleLinkClick("/infoHeladera")}
+            title="Informacion Heladeras"
+          >
+            <i className="bi bi-info-square-fill"></i>
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/contribuciones"
             className={`nav-link py-3 link-light ${
               activeLink === "/contribuciones" ? "active" : ""
@@ -95,6 +107,7 @@ function Sidebar() {
             <i className="bi bi-h-square-fill"></i>
           </Link>
         </li>
+        
       </ul>
       <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a
