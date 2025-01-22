@@ -5,19 +5,51 @@ import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
 function Heladera() {
-  const { user, collaborator, isCollaboratorLinked } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [heladera, setHeladera] = useState({
+    nombre: "",
     longitud: "",
     latitud: "",
     direccion: "",
-    nombre: "",
     capacidad: "",
     fechaFuncionamiento: "",
+    radio: "",
+    lugarRecomendado: "",
   });
+  const [showRecommendations, setShowRecommendations] = useState(false); // Estado para manejar las recomendaciones
   const [heladeras, setHeladeras] = useState([]);
   const [markers, setMarkers] = useState([]);
   const localhost = "http://localhost:8080";
   const navigate = useNavigate();
+  const [recommendations, setRecommendations] = useState([]);
+
+  const fetchRecommendations = async () => {
+    if (!heladera.latitud || !heladera.longitud || !heladera.radio) {
+      alert("Por favor completa latitud, longitud y radio.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:8080/heladeras/recomendaciones", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          latitud: parseFloat(heladera.latitud),
+          longitud: parseFloat(heladera.longitud),
+          radio: parseFloat(heladera.radio),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Datos recibidos del backend:", data); // Verifica los datos aquí
+          setRecommendations(data);
+        })
+        .catch((error) => console.error("Error al obtener recomendaciones:", error)); // Actualiza el estado con las recomendaciones obtenidas
+          } catch (error) {
+            console.error("Error al obtener recomendaciones:", error);
+            alert("Ocurrió un error al intentar obtener las recomendaciones.");
+          }
+        };
 
   if (!user) {
     return <p>Por favor, inicia sesión.</p>;
@@ -29,10 +61,27 @@ function Heladera() {
     }).then((response) => response.json());
   }
 
-  async function addHeladera() {
-    //e.preventDefault();
+  const getSubstringBeforeFifthComma = (str) => {
+    const commas = [];
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === ",") {
+        commas.push(i);
+        if (commas.length === 5) {
+          break;
+        }
+      }
+    }
+    if (commas.length >= 5) {
+      return str.substring(0, commas[4]); // Corta el nombre hasta la quinta coma
+    } else {
+      return str; // Si hay menos de 5 comas, retorna el nombre completo
+    }
+  };
+
+  async function addHeladera(event) {
+    event.preventDefault();
     try {
-      const response = fetch(localhost + "/heladeras", {
+      const response = await fetch(localhost + "/heladeras", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +96,6 @@ function Heladera() {
       }
     } catch (error) {
       console.error("Error during register:", error);
-      setError(error);
     }
   }
 
@@ -70,13 +118,12 @@ function Heladera() {
   }, []);
 
   useEffect(() => {
-    // Solo se ejecuta cuando heladeras cambia y recalcula markers
     if (heladeras.length > 0) {
       const newMarkers = heladeras.map((heladera) => ({
         position: [parseFloat(heladera.latitud), parseFloat(heladera.longitud)],
         popupText: heladera.nombre,
       }));
-      setMarkers(newMarkers); // Actualizamos el estado de markers
+      setMarkers(newMarkers);
     }
   }, [heladeras]);
 
@@ -117,18 +164,16 @@ function Heladera() {
                 type="text"
                 className="form-control"
                 id="nombre"
-                style={{ border: "1px solid black", boxShadow: "none" }}
+                value={heladera.nombre} 
                 required
                 onChange={(e) => handleChange("nombre", e.target.value)}
               />
-              <div className="invalid-feedback">Nombre requerido</div>
             </div>
 
             <div className="col-12">
               <label
                 htmlFor="longitud"
                 className="form-label d-flex justify-content-start"
-                style={{ textAlign: "left" }}
               >
                 Longitud
               </label>
@@ -136,11 +181,10 @@ function Heladera() {
                 type="text"
                 className="form-control"
                 id="longitud"
-                style={{ border: "1px solid black", boxShadow: "none" }}
+                value={heladera.longitud} 
                 required
                 onChange={(e) => handleChange("longitud", e.target.value)}
               />
-              <div className="invalid-feedback">Longitud requerida.</div>
             </div>
 
             <div className="col-12">
@@ -154,12 +198,74 @@ function Heladera() {
                 type="text"
                 className="form-control"
                 id="latitud"
-                style={{ border: "1px solid black", boxShadow: "none" }}
+                value={heladera.latitud} 
                 required
                 onChange={(e) => handleChange("latitud", e.target.value)}
               />
-              <div className="invalid-feedback">Latitud requerida.</div>
             </div>
+
+            {showRecommendations && (
+                  <>
+                    <div className="col-12">
+                      <label
+                        htmlFor="radio"
+                        className="form-label d-flex justify-content-start"
+                      >
+                        Radio
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="radio"
+                        style={{ boxShadow: "none" }}
+                        required
+                        onChange={(e) => handleChange("radio", e.target.value)}
+                        onBlur={fetchRecommendations} // Llama al backend al salir del campo
+                      />
+                      <div className="invalid-feedback">Radio requerido.</div>
+                    </div>
+
+                    <div className="col-12">
+                      <label
+                        htmlFor="lugarRecomendado"
+                        className="form-label d-flex justify-content-start"
+                      >
+                        Lugar Recomendado
+                      </label>
+                      <select
+                        className="form-control"
+                        onChange={(e) => {
+                          const selectedNombre = e.target.value;
+                          const selectedRecomendacion = recommendations.find(
+                            (recomendacion) => recomendacion.nombre === selectedNombre
+                          );
+
+                          if (selectedRecomendacion) {
+                            setHeladera((prevHeladera) => ({
+                              ...prevHeladera,
+                              lugarRecomendado: selectedRecomendacion.nombre,
+                              nombre: getSubstringBeforeFifthComma(selectedRecomendacion.nombre),
+                              latitud: selectedRecomendacion.latitud,
+                              longitud: selectedRecomendacion.longitud,
+                              direccion: selectedRecomendacion.nombre,
+                            }));
+                          }
+                        }}
+                      >
+                        <option value="">Selecciona un lugar</option>
+                        {recommendations.map((recomendacion) => (
+                          <option key={recomendacion.id} value={recomendacion.nombre}>
+                            {recomendacion.nombre}
+                          </option>
+                        ))}
+                      </select>
+
+                      <div className="invalid-feedback">
+                        Por favor selecciona un lugar recomendado.
+                      </div>
+                    </div>
+                  </>
+                )}
 
             <div className="col-12">
               <label
@@ -172,11 +278,10 @@ function Heladera() {
                 type="text"
                 className="form-control"
                 id="direccion"
-                style={{ border: "1px solid black", boxShadow: "none" }}
+                value={heladera.direccion} 
                 required
                 onChange={(e) => handleChange("direccion", e.target.value)}
               />
-              <div className="invalid-feedback">Dirección requerida</div>
             </div>
 
             <div className="col-12">
@@ -190,11 +295,9 @@ function Heladera() {
                 type="text"
                 className="form-control"
                 id="capacidad"
-                style={{ border: "1px solid black", boxShadow: "none" }}
                 required
                 onChange={(e) => handleChange("capacidad", e.target.value)}
               />
-              <div className="invalid-feedback">Capacidad requerida</div>
             </div>
 
             <div className="col-12">
@@ -208,34 +311,40 @@ function Heladera() {
                 type="date"
                 className="form-control"
                 id="date"
-                style={{ border: "1px solid black", boxShadow: "none" }}
                 required
                 onChange={(e) =>
                   handleDateChange("fechaFuncionamiento", e.target.value)
                 }
               />
-              <div className="invalid-feedback">
-                Fecha de funcionamiento requerida.
-              </div>
             </div>
           </div>
 
           <hr className="my-4" />
 
+          <div className="d-flex justify-content-between">
           <button
-            className="w-50 btn btn-primary btn-lg"
+            className="btn btn-secondary btn-lg"
+            type="button"
+            onClick={() => setShowRecommendations(!showRecommendations)}
+            style={{
+              backgroundColor: "#6c757d",
+              border: "none",
+            }}
+          >
+            Ver Recomendaciones
+          </button>
+          <button
+            className="btn btn-primary btn-lg"
             type="submit"
             onClick={addHeladera}
             style={{
               backgroundColor: "#2f4f4f",
-              transition: "backgroundColor 0.3s ease",
               border: "none",
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#2f4f4f")}
           >
             Save
           </button>
+          </div>
         </form>
       </div>
     </div>

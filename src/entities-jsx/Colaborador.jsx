@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
+
 function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
   const {
@@ -27,6 +28,7 @@ function Colaboador() {
 
   useEffect(() => {
     if (!user) {
+      
       navigate("/"); // Redirige si no hay un usuario logueado
     }
   }, [user, navigate]);
@@ -82,6 +84,27 @@ function Colaboador() {
     }
   };
 
+  const inputRef = React.useRef(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "text/csv") {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log("Contenido del CSV:", e.target.result);
+      };
+      reader.readAsText(file);
+    } else {
+      alert("Por favor, selecciona un archivo .csv válido");
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click(); 
+    }
+  };
+
   const handleChange = (field, value) => {
     setColaborador({
       ...colaborador,
@@ -98,7 +121,7 @@ function Colaboador() {
     <div className="Colaborador">
       <Sidebar />
       <div className="content">
-        <h1 class="display-4 fw-normal">Alta Colaborador</h1>
+        <h1 className="display-4 fw-normal">Alta Colaborador</h1>
         <br />
         {isColaboradorLinked ? (
           <h1>Ya eres colaborador.</h1>
@@ -123,7 +146,7 @@ function Colaboador() {
                   Tipo de colaborador requerido.
                 </div>
               </div>
-
+  
               <div className="col-12">
                 <label htmlFor="direccion" className="form-label">
                   Direccion
@@ -138,7 +161,7 @@ function Colaboador() {
                 />
                 <div className="invalid-feedback">Direccion requerida.</div>
               </div>
-
+  
               <div className="col-12">
                 <label htmlFor="medioDeContacto" className="form-label">
                   Medio de contacto
@@ -161,7 +184,7 @@ function Colaboador() {
                   Medio de contacto requerido.
                 </div>
               </div>
-
+  
               {tipoColaborador === "humana" && (
                 <>
                   <div className="col-12">
@@ -178,7 +201,7 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Nombre requerido.</div>
                   </div>
-
+  
                   <div className="col-12">
                     <label htmlFor="apellido" className="form-label">
                       Apellido
@@ -193,7 +216,7 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Apellido requerido.</div>
                   </div>
-
+  
                   <div className="col-12">
                     <label htmlFor="fechaDeNacimiento" className="form-label">
                       Fecha de nacimiento
@@ -233,7 +256,7 @@ function Colaboador() {
                       Razón Social requerida.
                     </div>
                   </div>
-
+  
                   <div className="col-12">
                     <label htmlFor="tipo" className="form-label">
                       Tipo
@@ -248,7 +271,7 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Tipo requerido.</div>
                   </div>
-
+  
                   <div className="col-12">
                     <label htmlFor="rubro" className="form-label">
                       Rubro
@@ -266,21 +289,54 @@ function Colaboador() {
                 </>
               )}
             </div>
-
+  
             <hr className="my-4" />
-
+  
             <button
-              className="w-100 btn btn-primary btn-lg"
-              type="button"
+              className="w-50 btn btn-primary btn-lg"
+              type="submit"
               onClick={addColaborador}
+              style={{
+                backgroundColor: "#2f4f4f",
+                transition: "backgroundColor 0.3s ease",
+                border: "none",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#2f4f4f")}
             >
               Save
             </button>
           </form>
         )}
+  
+        <hr className="my-4" />
+  
+        <div>
+          <button
+            className="w-25 btn btn-primary mt-3"
+            style={{
+              backgroundColor: "#2f4f4f",
+              transition: "backgroundColor 0.3s ease",
+              border: "none",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#2f4f4f")}
+            onClick={handleButtonClick}
+          >
+            Importar carga masiva de colaboradores
+            <input
+              ref={inputRef}
+              id="csvFile"
+              type="file"
+              accept=".csv"
+              style={{ display: "none" }}
+              onChange={handleFileUpload}
+            />
+          </button>
+        </div>
       </div>
     </div>
-  );
+  );  
 }
 
 export default Colaboador;

@@ -14,6 +14,7 @@ import PersonaVulnerable from "./PersonaVulnerable";
 import Producto from "./DonacionProducto";
 import Ofertas from "./Ofertas";
 import { UserProvider } from "./UserContext";
+import InfoHeladera from "./InfoHeladera";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/colaboradores" element={<Colaborador />} />
         <Route path="/heladeras" element={<Heladera />} />
         <Route path="/tecnicos" element={<Tecnicos />} />
+        <Route path="/infoHeladera" element={<InfoHeladera />} />
         <Route path="/contribuciones" element={<Contribuciones />} />
         <Route path="/contribuciones/donacion-vianda" element={<Vianda />} />
         <Route path="/contribuciones/donacion-dinero" element={<Dinero />} />
