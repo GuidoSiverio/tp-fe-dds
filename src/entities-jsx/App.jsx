@@ -12,8 +12,11 @@ import Contribuciones from "./Contribuciones";
 import Tecnicos from "./Tecnicos";
 import PersonaVulnerable from "./PersonaVulnerable";
 import Producto from "./DonacionProducto";
+import TecnicosAlta from "./TecnicosAlta";
+import ModificarTecnico from "./ModificarTecnico";
 
 function App() {
+  const tecnicoId = 1;
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -34,6 +37,11 @@ function App() {
         element={<Heladera />}
       />
       <Route path="/contribuciones/donacion-producto" element={<Producto />} />
+      <Route path="/tecnicos/tecnicos-alta" element={<TecnicosAlta />} />
+      <Route
+        path="/tecnicos/tecnicos-modificar"
+        element={<ModificarTecnico />}
+      />
     </Routes>
   );
 }

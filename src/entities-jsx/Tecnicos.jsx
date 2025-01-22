@@ -1,185 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./Sidebar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-function Tecnico() {
-  const [tecnico, setTecnico] = useState({
-    nombre: "",
-    apellido: "",
-    tipoDocumento: "",
-    documento: "",
-    cuit: "",
-    medioContacto: "",
-    areaCobertura: "",
-  });
-
-  const localhost = "http://localhost:8080";
-
-  async function addTecnico() {
-    //e.preventDefault();
-    try {
-      const response = await fetch(localhost + "/tecnicos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(colaborador),
-      });
-
-      console.log("Register response:", response);
-    } catch (error) {
-      console.error("Error during register:", error);
-      //setError(error);
-    }
-  }
-
-  const handleChange = (field, value) => {
-    setTecnico({
-      ...tecnico,
-      [field]: value,
-    });
-  };
-
-  const handleDateChange = (field, value) => {
-    const formattedDate = new Date(value).toISOString().split(".")[0];
-    handleChange(field, formattedDate);
-  };
-
+function Tecnicos() {
   return (
-    <div className="Tecnico">
+    <div className="Tecnicos">
       <Sidebar />
-      <div className="content">
-        <h1 class="display-4 fw-normal">Alta Tecnico</h1>
-        <br />
-        {/* Aquí puedes agregar el contenido principal de tu aplicación */}
-        <form className="needs-validation" noValidate>
-          <div className="row g-3">
-            <div className="col-12"></div>
 
-            <div className="col-12">
-              <label htmlFor="nombre" className="form-label">
-                Nombre
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="nombre"
-                placeholder="Nombre"
-                required
-                onChange={(e) => handleChange("nombre", e.target.value)}
-              />
-              <div className="invalid-feedback">Nombre requerido.</div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="apellido" className="form-label">
-                Apellido
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="apellido"
-                placeholder="Apellido"
-                required
-                onChange={(e) => handleChange("apellido", e.target.value)}
-              />
-              <div className="invalid-feedback">Apellido requerido.</div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="tipoDocumento" className="form-label">
-                Tipo de Documento
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="tipoDocumento"
-                placeholder="TipoDocumento"
-                required
-                onChange={(e) => handleChange("tipoDocumento", e.target.value)}
-              />
-              <div className="invalid-feedback">
-                Tipo de Documento requerido.
-              </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="documento" className="form-label">
-                Documento
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="documento"
-                placeholder="Documento"
-                required
-                onChange={(e) => handleChange("documento", e.target.value)}
-              />
-              <div className="invalid-feedback">Documento requerido.</div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="cuil" className="form-label">
-                CUIL
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="cuil"
-                placeholder="Cuil"
-                required
-                onChange={(e) => handleChange("cuil", e.target.value)}
-              />
-              <div className="invalid-feedback">CUIL requerido.</div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="medioContacto" className="form-label">
-                Medio de Contacto
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="medioContacto"
-                placeholder="MedioContacto"
-                required
-                onChange={(e) => handleChange("medioContacto", e.target.value)}
-              />
-              <div className="invalid-feedback">
-                Medio de Contacto requerido.
-              </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="areaCobertura" className="form-label">
-                Area de Cobertura
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="areaCobertura"
-                placeholder="AreaCobertura"
-                required
-                onChange={(e) => handleChange("areaCobertura", e.target.value)}
-              />
-              <div className="invalid-feedback">
-                Area de Cobertura requerido.
-              </div>
-            </div>
+      <h2 className="pb-2 border-bottom">Tecnicos de Heladeras</h2>
+      <div className="row g-4 py-5 row-cols-1 row-cols-lg-4">
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">Nuevo Tecnico</h3>
+            <p>Dar de alta a un nuevo tecnico en el sistema</p>
+            <a href="/tecnicos/tecnicos-alta" className="btn btn-primary">
+              Alta
+            </a>
           </div>
+        </div>
 
-          <hr className="my-4" />
-
-          <button
-            className="w-100 btn btn-primary btn-lg"
-            type="button"
-            onClick={addTecnico}
-          >
-            Save
-          </button>
-        </form>
+        <div className="col d-flex align-items-start">
+          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
+          <div>
+            <h3 className="fs-2 text-body-emphasis">Modificar Tecnico</h3>
+            <p>OModicar a un tecnico ya existente en el sistema</p>
+            <a
+              href="/tecnicos/tecnicos-modificacion"
+              className="btn btn-primary"
+            >
+              Modificar
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Tecnico;
+export default Tecnicos;
