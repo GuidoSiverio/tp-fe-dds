@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
-
+import Papa from "papaparse";
 
 function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
@@ -28,7 +28,6 @@ function Colaboador() {
 
   useEffect(() => {
     if (!user) {
-      
       navigate("/"); // Redirige si no hay un usuario logueado
     }
   }, [user, navigate]);
@@ -89,11 +88,29 @@ function Colaboador() {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type === "text/csv") {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        console.log("Contenido del CSV:", e.target.result);
-      };
-      reader.readAsText(file);
+      Papa.parse(file, {
+        header: true,
+        complete: async (results) => {
+          console.log("Parsed CSV data:", results.data);
+          try {
+            const response = await fetch(localhost + "/colaboradores/masive", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(results.data),
+            });
+
+            if (response.ok) {
+              alert("Carga masiva exitosa");
+            } else {
+              console.error("Error during bulk upload:", response);
+            }
+          } catch (error) {
+            console.error("Error during bulk upload:", error);
+          }
+        },
+      });
     } else {
       alert("Por favor, selecciona un archivo .csv válido");
     }
@@ -101,7 +118,7 @@ function Colaboador() {
 
   const handleButtonClick = () => {
     if (inputRef.current) {
-      inputRef.current.click(); 
+      inputRef.current.click();
     }
   };
 
@@ -146,7 +163,7 @@ function Colaboador() {
                   Tipo de colaborador requerido.
                 </div>
               </div>
-  
+
               <div className="col-12">
                 <label htmlFor="direccion" className="form-label">
                   Direccion
@@ -161,7 +178,7 @@ function Colaboador() {
                 />
                 <div className="invalid-feedback">Direccion requerida.</div>
               </div>
-  
+
               <div className="col-12">
                 <label htmlFor="medioDeContacto" className="form-label">
                   Medio de contacto
@@ -184,7 +201,7 @@ function Colaboador() {
                   Medio de contacto requerido.
                 </div>
               </div>
-  
+
               {tipoColaborador === "humana" && (
                 <>
                   <div className="col-12">
@@ -201,7 +218,7 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Nombre requerido.</div>
                   </div>
-  
+
                   <div className="col-12">
                     <label htmlFor="apellido" className="form-label">
                       Apellido
@@ -216,7 +233,7 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Apellido requerido.</div>
                   </div>
-  
+
                   <div className="col-12">
                     <label htmlFor="fechaDeNacimiento" className="form-label">
                       Fecha de nacimiento
@@ -256,7 +273,7 @@ function Colaboador() {
                       Razón Social requerida.
                     </div>
                   </div>
-  
+
                   <div className="col-12">
                     <label htmlFor="tipo" className="form-label">
                       Tipo
@@ -271,7 +288,7 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Tipo requerido.</div>
                   </div>
-  
+
                   <div className="col-12">
                     <label htmlFor="rubro" className="form-label">
                       Rubro
@@ -289,9 +306,9 @@ function Colaboador() {
                 </>
               )}
             </div>
-  
+
             <hr className="my-4" />
-  
+
             <button
               className="w-50 btn btn-primary btn-lg"
               type="submit"
@@ -308,9 +325,9 @@ function Colaboador() {
             </button>
           </form>
         )}
-  
+
         <hr className="my-4" />
-  
+
         <div>
           <button
             className="w-25 btn btn-primary mt-3"
@@ -336,7 +353,7 @@ function Colaboador() {
         </div>
       </div>
     </div>
-  );  
+  );
 }
 
 export default Colaboador;
