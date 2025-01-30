@@ -28,10 +28,23 @@ export const UserProvider = ({ children }) => {
 
   // Función para actualizar el estado del usuario y guardarlo en localStorage
   const loginUser = async (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
-
     try {
+      const userResponse = await fetch(
+        localhost + `/users?username=${userData.username}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!userResponse.ok) {
+        throw new Error("Error en la autenticación");
+      }
+
+      const userWithRole = await userResponse.json();
+      setUser(userWithRole);
+      localStorage.setItem("user", JSON.stringify(userWithRole));
+
       const response = await fetch(localhost + "/check-colaborador", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

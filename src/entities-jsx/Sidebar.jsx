@@ -9,7 +9,7 @@ import { UserContext } from "./UserContext";
 function Sidebar() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
-  const { logoutUser } = useContext(UserContext);
+  const { logoutUser, user } = useContext(UserContext);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -95,18 +95,20 @@ function Sidebar() {
             <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
-        <li>
-          <Link
-            to="/tecnicos"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/tecnicos" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/tecnicos")}
-            title="Tecnicos"
-          >
-            <i className="bi bi-hammer"></i>
-          </Link>
-        </li>
+        {user.rol === "ADMIN" && (
+          <li>
+            <Link
+              to="/tecnicos"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/tecnicos" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/tecnicos")}
+              title="Tecnicos"
+            >
+              <i className="bi bi-hammer"></i>
+            </Link>
+          </li>
+        )}
         <li>
           <Link
             to="/ofertas"
@@ -119,7 +121,6 @@ function Sidebar() {
             <i className="bi bi-bag-fill"></i>
           </Link>
         </li>
-        
       </ul>
       <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a

@@ -11,8 +11,17 @@ function Tecnico() {
     medioContacto: "",
     areaCobertura: "",
   });
+  const { user } = useContext(UserContext);
 
   const localhost = "http://localhost:8080";
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.rol !== "ADMIN") {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   async function addTecnico() {
     //e.preventDefault();

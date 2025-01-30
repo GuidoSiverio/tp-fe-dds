@@ -327,30 +327,31 @@ function Colaboador() {
         )}
 
         <hr className="my-4" />
-
-        <div>
-          <button
-            className="w-25 btn btn-primary mt-3"
-            style={{
-              backgroundColor: "#2f4f4f",
-              transition: "backgroundColor 0.3s ease",
-              border: "none",
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#2f4f4f")}
-            onClick={handleButtonClick}
-          >
-            Importar carga masiva de colaboradores
-            <input
-              ref={inputRef}
-              id="csvFile"
-              type="file"
-              accept=".csv"
-              style={{ display: "none" }}
-              onChange={handleFileUpload}
-            />
-          </button>
-        </div>
+        {user.rol === "ADMIN" && (
+          <div>
+            <button
+              className="w-25 btn btn-primary mt-3"
+              style={{
+                backgroundColor: "#2f4f4f",
+                transition: "backgroundColor 0.3s ease",
+                border: "none",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#2f4f4f")}
+              onClick={handleButtonClick}
+            >
+              Importar carga masiva de colaboradores
+              <input
+                ref={inputRef}
+                id="csvFile"
+                type="file"
+                accept=".csv"
+                style={{ display: "none" }}
+                onChange={handleFileUpload}
+              />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
