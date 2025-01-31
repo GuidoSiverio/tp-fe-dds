@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
+import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function Tecnico() {
   const [tecnico, setTecnico] = useState({
