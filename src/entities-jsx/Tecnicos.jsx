@@ -16,7 +16,9 @@ function Tecnicos() {
           <div className="col">
             <div className="card shadow-sm p-3 text-center">
               <h3 className="fs-4">Registrar Incidente</h3>
-              <p>Registra los incidentes en los cuales trabajaste</p>
+              <p>
+                Registra las visitas de los incidentes en los que trabajaste
+              </p>
               <a
                 href="/tecnicos/registrar-incidente"
                 className="btn btn-primary"
