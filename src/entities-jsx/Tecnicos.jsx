@@ -5,43 +5,61 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Tecnicos() {
   return (
-    <div className="Tecnicos">
+    <div className="Tecnicos d-flex">
       <Sidebar />
 
-      <h2 className="pb-2 border-bottom">Tecnicos de Heladeras</h2>
-      <div className="row g-4 py-5 row-cols-1 row-cols-lg-4">
-        <div className="col d-flex align-items-start">
-          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
-          <div>
-            <h3 className="fs-2 text-body-emphasis">Nuevo Tecnico</h3>
-            <p>Dar de alta a un nuevo tecnico en el sistema</p>
-            <a href="/tecnicos/tecnicos-alta" className="btn btn-primary">
-              Alta
-            </a>
-          </div>
-        </div>
+      <div className="container mt-4">
+        <h2 className="pb-2 border-bottom">Técnicos de Heladeras</h2>
 
-        <div className="col d-flex align-items-start">
-          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
-          <div>
-            <h3 className="fs-2 text-body-emphasis">Modificar Tecnico</h3>
-            <p>Modicar a un tecnico ya existente en el sistema</p>
-            <a
-              href="/tecnicos/tecnicos-modificacion"
-              className="btn btn-primary"
-            >
-              Modificar
-            </a>
+        <div className="row g-4 py-5 row-cols-1 row-cols-md-2 row-cols-lg-4">
+          {/* Registrar Incidente */}
+          <div className="col">
+            <div className="card shadow-sm p-3 text-center">
+              <h3 className="fs-4">Registrar Incidente</h3>
+              <p>Registra los incidentes en los cuales trabajaste</p>
+              <a
+                href="/tecnicos/registrar-incidente"
+                className="btn btn-primary"
+              >
+                Registrar
+              </a>
+            </div>
           </div>
-        </div>
-        <div className="col d-flex align-items-start">
-          <div className="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"></div>
-          <div>
-            <h3 className="fs-2 text-body-emphasis">Dar de Baja un Tecnico</h3>
-            <p>Eliminar un tecnico en el sistema</p>
-            <a href="/tecnicos/tecnicos-baja" className="btn btn-primary">
-              Dar de Baja
-            </a>
+
+          {/* Nuevo Técnico */}
+          <div className="col">
+            <div className="card shadow-sm p-3 text-center">
+              <h3 className="fs-4">Nuevo Técnico</h3>
+              <p>Dar de alta a un nuevo técnico en el sistema</p>
+              <a href="/tecnicos/tecnicos-alta" className="btn btn-primary">
+                Alta
+              </a>
+            </div>
+          </div>
+
+          {/* Modificar Técnico */}
+          <div className="col">
+            <div className="card shadow-sm p-3 text-center">
+              <h3 className="fs-4">Modificar Técnico</h3>
+              <p>Modificar a un técnico ya existente en el sistema</p>
+              <a
+                href="/tecnicos/tecnicos-modificacion"
+                className="btn btn-primary"
+              >
+                Modificar
+              </a>
+            </div>
+          </div>
+
+          {/* Dar de Baja Técnico */}
+          <div className="col">
+            <div className="card shadow-sm p-3 text-center">
+              <h3 className="fs-4">Dar de Baja un Técnico</h3>
+              <p>Eliminar un técnico en el sistema</p>
+              <a href="/tecnicos/tecnicos-baja" className="btn btn-primary">
+                Dar de Baja
+              </a>
+            </div>
           </div>
         </div>
       </div>

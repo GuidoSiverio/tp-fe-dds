@@ -15,6 +15,7 @@ import Producto from "./DonacionProducto";
 import TecnicosAlta from "./TecnicosAlta";
 import ModificarTecnico from "./ModificarTecnico";
 import BajaTecnico from "./TecnicosBaja";
+import RegistrarIncidente from "./RegistrarIncidente";
 import Ofertas from "./Ofertas";
 import { UserProvider } from "./UserContext";
 
@@ -49,6 +50,10 @@ function App() {
           element={<ModificarTecnico />}
         />
         <Route path="/tecnicos/tecnicos-baja" element={<BajaTecnico />} />
+        <Route
+          path="/tecnicos/registrar-incidente"
+          element={<RegistrarIncidente />}
+        />
         <Route path="/ofertas" element={<Ofertas />} />
       </Routes>
     </UserProvider>
