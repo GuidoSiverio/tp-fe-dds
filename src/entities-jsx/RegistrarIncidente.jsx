@@ -11,7 +11,7 @@ function RegistrarIncidente() {
     solucionado: false,
   });
 
-  const [heladeras, setHeladeras] = useState([]); // Estado para almacenar heladeras desde el backend
+  const [heladeras, setHeladeras] = useState([]);
 
   const navigate = useNavigate();
   const localhost = "http://localhost:8080";
@@ -25,7 +25,7 @@ function RegistrarIncidente() {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
         const data = await response.json();
-        setHeladeras(data); // Guardamos las heladeras en el estado
+        setHeladeras(data);
       } catch (error) {
         console.error("Error al obtener heladeras:", error);
         alert("Error al cargar las heladeras.");
@@ -81,7 +81,7 @@ function RegistrarIncidente() {
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
-    const imageUrls = files.map((file) => URL.createObjectURL(file)); // Simulación de carga de imágenes
+    const imageUrls = files.map((file) => URL.createObjectURL(file));
     setIncidente({
       ...incidente,
       imagenes: [...incidente.imagenes, ...imageUrls],
@@ -171,17 +171,19 @@ function RegistrarIncidente() {
             </div>
 
             {/* Checkbox de solucionado */}
-            <div className="col-12 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="solucionado"
-                checked={incidente.solucionado}
-                onChange={handleCheckboxChange}
-              />
-              <label className="form-check-label" htmlFor="solucionado">
-                ¿Solucionado?
-              </label>
+            <div className="col-12 d-flex justify-content-center">
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input custom-checkbox"
+                  id="solucionado"
+                  checked={incidente.solucionado}
+                  onChange={handleCheckboxChange}
+                />
+                <label className="form-check-label ms-2" htmlFor="solucionado">
+                  ¿Solucionado?
+                </label>
+              </div>
             </div>
           </div>
           <hr className="my-4" />
@@ -194,6 +196,15 @@ function RegistrarIncidente() {
           </button>
         </form>
       </div>
+
+      <style>
+        {`
+          .custom-checkbox {
+            transform: scale(1.5); 
+            margin-right: 10px; 
+          }
+        `}
+      </style>
     </div>
   );
 }
