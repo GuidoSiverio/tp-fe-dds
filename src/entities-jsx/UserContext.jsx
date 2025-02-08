@@ -4,18 +4,20 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [colaborador, setColaborador] = useState(null);
+  const [colaboradorContext, setColaboradorContext] = useState(null);
   const [isColaboradorLinked, setIsColaboradorLinked] = useState(false);
   const localhost = "http://localhost:8080";
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    const storedColaborador = JSON.parse(localStorage.getItem("colaborador"));
+    const storedColaborador = JSON.parse(
+      localStorage.getItem("colaboradorContext")
+    );
 
     if (storedUser) {
       setUser(storedUser);
       if (storedColaborador) {
-        setColaborador(storedColaborador);
+        setColaboradorContext(storedColaborador);
         setIsColaboradorLinked(true);
         console.log("Colaborador cargado desde localStorage.");
       } else {
@@ -52,18 +54,18 @@ export const UserProvider = ({ children }) => {
       });
       const data = await response.json();
       if (response.ok && data) {
-        setColaborador(data);
+        setColaboradorContext(data);
         setIsColaboradorLinked(true);
-        localStorage.setItem("colaborador", JSON.stringify(data));
+        localStorage.setItem("colaboradorContext", JSON.stringify(data));
         console.log("Colaborador cargado y vinculado:", data);
       } else {
-        setColaborador(null);
+        setColaboradorContext(null);
         setIsColaboradorLinked(false);
         console.log("No se encontró colaborador en el servidor.");
       }
     } catch (error) {
       console.error("Error al verificar colaborador:", error);
-      setColaborador(null);
+      setColaboradorContext(null);
       setIsColaboradorLinked(false);
     }
   };
@@ -71,11 +73,11 @@ export const UserProvider = ({ children }) => {
   // Función para cerrar sesión y eliminar los datos de localStorage
   const logoutUser = () => {
     setUser(null);
-    setColaborador(null);
+    setColaboradorContext(null);
     setIsColaboradorLinked(false);
     localStorage.removeItem("user");
-    if (localStorage.getItem("colaborador")) {
-      localStorage.removeItem("colaborador");
+    if (localStorage.getItem("colaboradorContext")) {
+      localStorage.removeItem("colaboradorContext");
       localStorage.removeItem("isColaboradorLinked");
     }
   };
@@ -84,8 +86,10 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
-        collaborator: colaborador,
-        isCollaboratorLinked: isColaboradorLinked,
+        colaboradorContext,
+        isColaboradorLinked,
+        setColaboradorContext,
+        setIsColaboradorLinked,
         loginUser,
         logoutUser,
       }}

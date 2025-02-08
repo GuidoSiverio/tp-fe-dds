@@ -3,10 +3,7 @@ import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 
 function RegistroEmpresa() {
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
   const [producto, setProducto] = useState({
     nombre: "",
     rubro: "",
@@ -20,10 +17,13 @@ function RegistroEmpresa() {
   const localhost = "http://localhost:8080";
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
-      setProducto((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    if (isColaboradorLinked && colaboradorContext?.id) {
+      setProducto((prev) => ({
+        ...prev,
+        colaboradorId: colaboradorContext.id,
+      }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
 
   // Función para manejar los cambios en los campos del formulario
   const handleChange = (field, value) => {

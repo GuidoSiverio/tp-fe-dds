@@ -8,12 +8,16 @@ function Colaboador() {
   const [tipoColaborador, setTipoColaborador] = useState("");
   const {
     user,
-    collaborator: colab,
-    isCollaboratorLinked: isColaboradorLinked,
+    colaboradorContext,
+    isColaboradorLinked,
+    setColaboradorContext,
+    setIsColaboradorLinked,
   } = useContext(UserContext);
   const [colaborador, setColaborador] = useState({
     direccion: "",
     medioDeContacto: "",
+    numero: "",
+    email: "",
     nombre: "",
     apellido: "",
     fechaDeNacimiento: "",
@@ -23,7 +27,6 @@ function Colaboador() {
     username: user != null ? user.username : "",
     password: user != null ? user.password : "",
   });
-  //const [colaboradorVinculado, setColaboradorVinculado] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +41,7 @@ function Colaboador() {
     } else {
       console.log("No hay colaborador vinculado.");
     }
-  }, [isColaboradorLinked, colab]);
+  }, [isColaboradorLinked, colaboradorContext]);
 
   const localhost = "http://localhost:8080";
 
@@ -54,6 +57,13 @@ function Colaboador() {
       });
 
       if (response.ok) {
+        const newColaborador = await response.json();
+        setColaboradorContext(newColaborador);
+        setIsColaboradorLinked(true);
+        localStorage.setItem(
+          "colaboradorContext",
+          JSON.stringify(newColaborador)
+        );
         navigate("/home");
       } else {
         console.error("Error during register:", response);
@@ -194,13 +204,51 @@ function Colaboador() {
                   }
                 >
                   <option value="">Choose...</option>
-                  <option>Whatsapp</option>
+                  <option>WhatsApp</option>
                   <option>Email</option>
                 </select>
                 <div className="invalid-feedback">
                   Medio de contacto requerido.
                 </div>
               </div>
+
+              {colaborador.medioDeContacto === "WhatsApp" && (
+                <>
+                  <div className="col-12">
+                    <label htmlFor="numero" className="form-label">
+                      Numero
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="numero"
+                      placeholder="Numero"
+                      required
+                      onChange={(e) => handleChange("numero", e.target.value)}
+                    />
+                    <div className="invalid-feedback">Numero requerido.</div>
+                  </div>
+                </>
+              )}
+
+              {colaborador.medioDeContacto === "Email" && (
+                <>
+                  <div className="col-12">
+                    <label htmlFor="email" className="form-label">
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="email"
+                      placeholder="Email"
+                      required
+                      onChange={(e) => handleChange("email", e.target.value)}
+                    />
+                    <div className="invalid-feedback">Email requerido.</div>
+                  </div>
+                </>
+              )}
 
               {tipoColaborador === "humana" && (
                 <>
@@ -218,7 +266,6 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Nombre requerido.</div>
                   </div>
-
                   <div className="col-12">
                     <label htmlFor="apellido" className="form-label">
                       Apellido
@@ -233,7 +280,6 @@ function Colaboador() {
                     />
                     <div className="invalid-feedback">Apellido requerido.</div>
                   </div>
-
                   <div className="col-12">
                     <label htmlFor="fechaDeNacimiento" className="form-label">
                       Fecha de nacimiento
@@ -241,7 +287,7 @@ function Colaboador() {
                     <input
                       type="date"
                       className="form-control"
-                      id="fechaDeNacimiento"
+                      id="date"
                       required
                       onChange={(e) =>
                         handleDateChange("fechaDeNacimiento", e.target.value)

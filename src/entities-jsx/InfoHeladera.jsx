@@ -9,11 +9,31 @@ function InfoHeladera() {
   const [activeRow, setActiveRow] = useState(null); // Estado para fila activa
   const [descripcion, setDescripcion] = useState(""); // Estado para descripción
   const [foto, setFoto] = useState(""); // Estado para foto
+  const [suscripciones, setSuscripciones] = useState([]); // Estado para suscripciones
   const localhost = "http://localhost:8080";
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+
+  async function getSuscripciones() {
+    try {
+      const response = await fetch(
+        `${localhost}/suscripciones/${colaboradorContext.id}`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Error en la petición");
+      }
+      const data = await response.json();
+      setSuscripciones(data);
+    } catch (error) {
+      console.error("Error al obtener las suscripciones:", error);
+    }
+  }
+
+  useEffect(() => {
+    getSuscripciones();
+  }, []);
 
   // Función para obtener las heladeras
   const fetchHeladeras = () => {
@@ -27,8 +47,13 @@ function InfoHeladera() {
 
   // Función para suscribirse
   const handleSuscribirse = (heladeraId) => {
+    if (suscripciones.includes(heladeraId)) {
+      alert("Ya estás suscrito a esta heladera.");
+      return;
+    }
+
     fetch(
-      `${localhost}/heladeras/${heladeraId}/suscribirse/${colaborador.id}`,
+      `${localhost}/heladeras/${heladeraId}/suscribirse/${colaboradorContext.id}`,
       {
         method: "POST",
         headers: {
@@ -39,12 +64,36 @@ function InfoHeladera() {
       .then((response) => {
         if (response.ok) {
           alert("Te has suscrito correctamente a la heladera.");
+          setSuscripciones([...suscripciones, heladeraId]);
           setRefreshFlag(!refreshFlag);
         } else {
           alert("Error al suscribirse. Por favor, intenta nuevamente.");
         }
       })
       .catch((error) => console.error("Error al suscribirse:", error));
+  };
+
+  // Función para desuscribirse
+  const handleDesuscribirse = (heladeraId) => {
+    fetch(
+      `${localhost}/heladeras/${heladeraId}/desuscribirse/${colaboradorContext.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          alert("Te has desuscrito correctamente de la heladera.");
+          setSuscripciones(suscripciones.filter((id) => id !== heladeraId));
+          setRefreshFlag(!refreshFlag);
+        } else {
+          alert("Error al desuscribirse. Por favor, intenta nuevamente.");
+        }
+      })
+      .catch((error) => console.error("Error al desuscribirse:", error));
   };
 
   // Función para reportar alerta
@@ -62,7 +111,7 @@ function InfoHeladera() {
         descripcion,
         foto: foto || "",
         heladeraId,
-        colaboradorId: colaborador.id,
+        colaboradorId: colaboradorContext.id,
       }),
     })
       .then((response) => {
@@ -119,13 +168,21 @@ function InfoHeladera() {
                       <td>{heladera.capacidad}</td>
                       <td>{heladera.activa ? "Activa" : "Inactiva"}</td>
                       <td>
-                        <button
-                          className="btn btn-success"
-                          onClick={() => handleSuscribirse(heladera.id)}
-                          disabled={!heladera.activa}
-                        >
-                          Suscribirse
-                        </button>
+                        {suscripciones.includes(heladera.id) ? (
+                          <button
+                            className="btn btn-warning"
+                            onClick={() => handleDesuscribirse(heladera.id)}
+                          >
+                            Desuscribirse
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-success"
+                            onClick={() => handleSuscribirse(heladera.id)}
+                          >
+                            Suscribirse
+                          </button>
+                        )}
                       </td>
                       <td>
                         <button

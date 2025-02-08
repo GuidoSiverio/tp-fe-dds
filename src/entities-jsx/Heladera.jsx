@@ -15,6 +15,8 @@ function Heladera() {
     fechaFuncionamiento: "",
     radio: "",
     lugarRecomendado: "",
+    tempMinAceptable: "",
+    tempMaxAceptable: "",
     colaboradorId: "",
   });
   const [showRecommendations, setShowRecommendations] = useState(false); // Estado para manejar las recomendaciones
@@ -23,19 +25,16 @@ function Heladera() {
   const localhost = "http://localhost:8080";
   const navigate = useNavigate();
   const [recommendations, setRecommendations] = useState([]);
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
+    if (isColaboradorLinked && colaboradorContext?.id) {
       setHeladera((prev) => ({
         ...prev,
-        colaboradorId: colaborador.id,
+        colaboradorId: colaboradorContext.id,
       }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
 
   useEffect(() => {
     getHeladeras().then((data) => {
@@ -322,6 +321,42 @@ function Heladera() {
                 id="capacidad"
                 required
                 onChange={(e) => handleChange("capacidad", e.target.value)}
+              />
+            </div>
+
+            <div className="col-12">
+              <label
+                htmlFor="tempMinAceptable"
+                className="form-label d-flex justify-content-start"
+              >
+                Temperatura Mínima Aceptable
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="tempMinAceptable"
+                required
+                onChange={(e) =>
+                  handleChange("tempMinAceptable", e.target.value)
+                }
+              />
+            </div>
+
+            <div className="col-12">
+              <label
+                htmlFor="tempMaxAceptable"
+                className="form-label d-flex justify-content-start"
+              >
+                Temperatura Máxima Aceptable
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="tempMaxAceptable"
+                required
+                onChange={(e) =>
+                  handleChange("tempMaxAceptable", e.target.value)
+                }
               />
             </div>
 

@@ -3,10 +3,7 @@ import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 
 function DonacionVianda() {
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
   const [vianda, setVianda] = useState({
     comida: "",
     fechaCaducidad: "",
@@ -34,10 +31,10 @@ function DonacionVianda() {
   }, []);
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
-      setVianda((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    if (isColaboradorLinked && colaboradorContext?.id) {
+      setVianda((prev) => ({ ...prev, colaboradorId: colaboradorContext.id }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
 
   async function addVianda(e) {
     e.preventDefault();

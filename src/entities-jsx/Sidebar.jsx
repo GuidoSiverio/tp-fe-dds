@@ -95,7 +95,7 @@ function Sidebar() {
             <i className="bi bi-bag-check-fill"></i>
           </Link>
         </li>
-        {user.rol === "ADMIN" && (
+        {user && user.rol === "ADMIN" && (
           <li>
             <Link
               to="/tecnicos"

@@ -3,10 +3,7 @@ import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 
 function PersonaVulnerable() {
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
   const [personaVulnerable, setPersonaVulnerable] = useState({
     nombre: "",
     fechaNacimiento: "",
@@ -64,13 +61,13 @@ function PersonaVulnerable() {
   };
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
+    if (isColaboradorLinked && colaboradorContext?.id) {
       setPersonaVulnerable((prev) => ({
         ...prev,
-        colaboradorId: colaborador.id,
+        colaboradorId: colaboradorContext.id,
       }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
 
   return (
     <div className="PersonaVulnerable">

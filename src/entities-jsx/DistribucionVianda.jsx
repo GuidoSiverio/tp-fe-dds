@@ -3,10 +3,7 @@ import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 
 function DistribucionVianda() {
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
   const [distribucion, setDistribucion] = useState({
     heladeraOrigen: "",
     heladeraDestino: "",
@@ -78,10 +75,21 @@ function DistribucionVianda() {
   }, []);
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
-      setDistribucion((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    if (isColaboradorLinked && colaboradorContext?.id) {
+      setDistribucion((prev) => ({
+        ...prev,
+        colaboradorId: colaboradorContext.id,
+      }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
+
+  const filteredHeladerasOrigen = heladeras.filter(
+    (heladera) => heladera.id !== Number(distribucion.heladeraDestino)
+  );
+
+  const filteredHeladerasDestino = heladeras.filter(
+    (heladera) => heladera.id !== Number(distribucion.heladeraOrigen)
+  );
 
   return (
     <div className="DistribucionVianda">
@@ -115,9 +123,9 @@ function DistribucionVianda() {
                   }
                 >
                   <option value="">Seleccionar...</option>
-                  {heladeras.map((heladera) => (
+                  {filteredHeladerasOrigen.map((heladera) => (
                     <option key={heladera.id} value={heladera.id}>
-                      {heladera.nombre} - {heladera.ubicacion}
+                      {heladera.nombre}
                     </option>
                   ))}
                 </select>
@@ -139,9 +147,9 @@ function DistribucionVianda() {
                   }
                 >
                   <option value="">Seleccionar...</option>
-                  {heladeras.map((heladera) => (
+                  {filteredHeladerasDestino.map((heladera) => (
                     <option key={heladera.id} value={heladera.id}>
-                      {heladera.nombre} - {heladera.ubicacion}
+                      {heladera.nombre}
                     </option>
                   ))}
                 </select>

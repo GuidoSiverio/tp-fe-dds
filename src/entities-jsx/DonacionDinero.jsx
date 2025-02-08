@@ -3,10 +3,7 @@ import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 
 function DonacionDinero() {
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
   const [donacion, setDonacion] = useState({
     fechaDonacion: "",
     monto: "",
@@ -62,10 +59,13 @@ function DonacionDinero() {
   };
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
-      setDonacion((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    if (isColaboradorLinked && colaboradorContext?.id) {
+      setDonacion((prev) => ({
+        ...prev,
+        colaboradorId: colaboradorContext.id,
+      }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
 
   return (
     <div className="DonacionDinero">
