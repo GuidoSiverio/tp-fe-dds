@@ -27,6 +27,9 @@ function Heladera() {
   const [recommendations, setRecommendations] = useState([]);
   const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
 
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
+
   useEffect(() => {
     if (isColaboradorLinked && colaboradorContext?.id) {
       setHeladera((prev) => ({
@@ -134,12 +137,15 @@ function Heladera() {
       });
 
       if (response.ok) {
-        navigate("/home");
+        setMessage("Heladera registrada exitósamente.");
+        setMessageType("success");
       } else {
-        console.error("Error during register:", response);
+        setMessage("Error al registrar la heladera.");
+        setMessageType("error");
       }
     } catch (error) {
-      console.error("Error during register:", error);
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
     }
   }
 
@@ -406,6 +412,15 @@ function Heladera() {
             </button>
           </div>
         </form>
+        {message && (
+          <div
+            className={`alert ${
+              messageType === "success" ? "alert-success" : "alert-danger"
+            } mt-4`}
+          >
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );

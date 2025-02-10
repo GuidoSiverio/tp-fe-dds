@@ -5,7 +5,9 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [colaboradorContext, setColaboradorContext] = useState(null);
+  const [tecnicoContext, setTecnicoContext] = useState(null);
   const [isColaboradorLinked, setIsColaboradorLinked] = useState(false);
+  const [isTecnicoLinked, setIsTecnicoLinked] = useState(false);
   const localhost = "http://localhost:8080";
 
   useEffect(() => {
@@ -13,6 +15,7 @@ export const UserProvider = ({ children }) => {
     const storedColaborador = JSON.parse(
       localStorage.getItem("colaboradorContext")
     );
+    const storedTecnico = JSON.parse(localStorage.getItem("tecnicoContext"));
 
     if (storedUser) {
       setUser(storedUser);
@@ -20,8 +23,12 @@ export const UserProvider = ({ children }) => {
         setColaboradorContext(storedColaborador);
         setIsColaboradorLinked(true);
         console.log("Colaborador cargado desde localStorage.");
+      } else if (storedTecnico) {
+        setTecnicoContext(storedTecnico);
+        setIsTecnicoLinked(true);
+        console.log("Tecnico cargado desde localStorage.");
       } else {
-        console.log("No se encontró colaborador en localStorage.");
+        console.log("No se encontró colaborador o técnico en localStorage.");
       }
     } else {
       console.log("No se encontró usuario en localStorage.");
@@ -47,26 +54,55 @@ export const UserProvider = ({ children }) => {
       setUser(userWithRole);
       localStorage.setItem("user", JSON.stringify(userWithRole));
 
-      const response = await fetch(localhost + "/check-colaborador", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
-      const data = await response.json();
-      if (response.ok && data) {
-        setColaboradorContext(data);
-        setIsColaboradorLinked(true);
-        localStorage.setItem("colaboradorContext", JSON.stringify(data));
-        console.log("Colaborador cargado y vinculado:", data);
+      if (userWithRole.rol === "COLABORADOR" || userWithRole.rol === "ADMIN") {
+        checkColaborador(userData);
       } else {
-        setColaboradorContext(null);
-        setIsColaboradorLinked(false);
-        console.log("No se encontró colaborador en el servidor.");
+        checkTecnico(userData);
       }
     } catch (error) {
-      console.error("Error al verificar colaborador:", error);
+      console.error("Error al verificar:", error);
       setColaboradorContext(null);
       setIsColaboradorLinked(false);
+      setTecnicoContext(null);
+      setIsTecnicoLinked(false);
+    }
+  };
+
+  const checkColaborador = async (userData) => {
+    const response = await fetch(localhost + "/check-colaborador", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (response.ok && data) {
+      setColaboradorContext(data);
+      setIsColaboradorLinked(true);
+      localStorage.setItem("colaboradorContext", JSON.stringify(data));
+      console.log("Colaborador cargado y vinculado:", data);
+    } else {
+      setColaboradorContext(null);
+      setIsColaboradorLinked(false);
+      console.log("No se encontró colaborador en el servidor.");
+    }
+  };
+
+  const checkTecnico = async (userData) => {
+    const response = await fetch(localhost + "/check-tecnico", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (response.ok && data) {
+      setTecnicoContext(data);
+      setIsTecnicoLinked(true);
+      localStorage.setItem("tecnicoContext", JSON.stringify(data));
+      console.log("Tecnico cargado y vinculado:", data);
+    } else {
+      setTecnicoContext(null);
+      setIsTecnicoLinked(false);
+      console.log("No se encontró tecnico en el servidor.");
     }
   };
 
@@ -75,10 +111,15 @@ export const UserProvider = ({ children }) => {
     setUser(null);
     setColaboradorContext(null);
     setIsColaboradorLinked(false);
+    setTecnicoContext(null);
+    setIsTecnicoLinked(false);
     localStorage.removeItem("user");
     if (localStorage.getItem("colaboradorContext")) {
       localStorage.removeItem("colaboradorContext");
       localStorage.removeItem("isColaboradorLinked");
+    } else if (localStorage.getItem("tecnicoContext")) {
+      localStorage.removeItem("tecnicoContext");
+      localStorage.removeItem("isTecnicoLinked");
     }
   };
 
@@ -88,6 +129,8 @@ export const UserProvider = ({ children }) => {
         user,
         colaboradorContext,
         isColaboradorLinked,
+        tecnicoContext,
+        isTecnicoLinked,
         setColaboradorContext,
         setIsColaboradorLinked,
         loginUser,
