@@ -27,3 +27,4 @@ function MapComponent({ markers }) {
 }
 
 export default MapComponent;
+

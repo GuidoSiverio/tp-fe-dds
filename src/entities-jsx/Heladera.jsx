@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import MapComponent from "./MapComponent";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import "../entities-css/Heladera.css";
 
 function Heladera() {
   const { user } = useContext(UserContext);
@@ -144,112 +145,66 @@ function Heladera() {
   }
 
   return (
-    <div
-      className="Heladera d-flex flex-column align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
+    <div className="Heladera-alta">
       <Sidebar />
-      <div
-        className="content text-center"
-        style={{ width: "80%", padding: "20px" }}
-      >
-        <div
-          id="map"
-          style={{
-            width: "100%",
-            marginBottom: "30px",
-            borderRadius: "10px",
-            overflow: "hidden",
-            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <MapComponent markers={markers} />
-        </div>
-        <h1 className="display-4 fw-normal mb-4 w-100">Heladera</h1>
+      
+      <h2 className="pb-2 animated-slideIn">Alta heladeras</h2>
+
+      <div className="content-heladera">
+      
 
         <form className="needs-validation" noValidate>
           <div className="row g-3">
-            <div className="col-12">
-              <label
-                htmlFor="nombre"
-                className="form-label d-flex justify-content-start"
-              >
-                Nombre
-              </label>
+            <div className="col-md-6">
+              <label htmlFor="nombre">Nombre</label>
               <input
                 type="text"
-                className="form-control"
                 id="nombre"
                 value={heladera.nombre}
-                required
                 onChange={(e) => handleChange("nombre", e.target.value)}
+                required
               />
             </div>
 
-            <div className="col-12">
-              <label
-                htmlFor="longitud"
-                className="form-label d-flex justify-content-start"
-              >
-                Longitud
-              </label>
+            <div className="col-md-6">
+              <label htmlFor="longitud">Longitud</label>
               <input
                 type="text"
-                className="form-control"
                 id="longitud"
                 value={heladera.longitud}
-                required
                 onChange={(e) => handleChange("longitud", e.target.value)}
+                required
               />
             </div>
 
-            <div className="col-12">
-              <label
-                htmlFor="latitud"
-                className="form-label d-flex justify-content-start"
-              >
-                Latitud
-              </label>
+            <div className="col-md-6">
+              <label htmlFor="latitud">Latitud</label>
               <input
                 type="text"
-                className="form-control"
                 id="latitud"
                 value={heladera.latitud}
-                required
                 onChange={(e) => handleChange("latitud", e.target.value)}
+                required
               />
             </div>
 
             {showRecommendations && (
               <>
-                <div className="col-12">
-                  <label
-                    htmlFor="radio"
-                    className="form-label d-flex justify-content-start"
-                  >
-                    Radio
-                  </label>
+                <div className="col-md-6">
+                  <label htmlFor="radio">Radio</label>
                   <input
                     type="number"
-                    className="form-control"
                     id="radio"
-                    style={{ boxShadow: "none" }}
-                    required
+                    value={heladera.radio}
                     onChange={(e) => handleChange("radio", e.target.value)}
-                    onBlur={fetchRecommendations} // Llama al backend al salir del campo
+                    required
+                    onBlur={fetchRecommendations}
                   />
-                  <div className="invalid-feedback">Radio requerido.</div>
                 </div>
 
-                <div className="col-12">
-                  <label
-                    htmlFor="lugarRecomendado"
-                    className="form-label d-flex justify-content-start"
-                  >
-                    Lugar Recomendado
-                  </label>
-                  <select
-                    className="form-control"
+                <div className="col-md-6">
+                  <label htmlFor="lugarRecomendado">Lugar Recomendado</label>
+                  <select className="select-formulario"
                     onChange={(e) => {
                       const selectedNombre = e.target.value;
                       const selectedRecomendacion = recommendations.find(
@@ -275,137 +230,72 @@ function Heladera() {
                   >
                     <option value="">Selecciona un lugar</option>
                     {recommendations.map((recomendacion) => (
-                      <option
-                        key={recomendacion.id}
-                        value={recomendacion.nombre}
-                      >
+                      <option key={recomendacion.id} value={recomendacion.nombre}>
                         {recomendacion.nombre}
                       </option>
                     ))}
                   </select>
-
-                  <div className="invalid-feedback">
-                    Por favor selecciona un lugar recomendado.
-                  </div>
                 </div>
               </>
             )}
 
-            <div className="col-12">
-              <label
-                htmlFor="direccion"
-                className="form-label d-flex justify-content-start"
-              >
-                Dirección
-              </label>
+            <div className="col-md-6">
+              <label htmlFor="direccion">Dirección</label>
               <input
                 type="text"
-                className="form-control"
                 id="direccion"
                 value={heladera.direccion}
-                required
                 onChange={(e) => handleChange("direccion", e.target.value)}
+                required
               />
             </div>
 
-            <div className="col-12">
-              <label
-                htmlFor="capacidad"
-                className="form-label d-flex justify-content-start"
-              >
-                Capacidad
-              </label>
+            <div className="col-md-6">
+              <label htmlFor="capacidad">Capacidad</label>
               <input
-                type="text"
-                className="form-control"
+                type="number"
                 id="capacidad"
-                required
+                value={heladera.capacidad}
                 onChange={(e) => handleChange("capacidad", e.target.value)}
-              />
-            </div>
-
-            <div className="col-12">
-              <label
-                htmlFor="tempMinAceptable"
-                className="form-label d-flex justify-content-start"
-              >
-                Temperatura Mínima Aceptable
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="tempMinAceptable"
                 required
-                onChange={(e) =>
-                  handleChange("tempMinAceptable", e.target.value)
-                }
               />
             </div>
 
-            <div className="col-12">
-              <label
-                htmlFor="tempMaxAceptable"
-                className="form-label d-flex justify-content-start"
-              >
-                Temperatura Máxima Aceptable
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="tempMaxAceptable"
-                required
-                onChange={(e) =>
-                  handleChange("tempMaxAceptable", e.target.value)
-                }
-              />
-            </div>
-
-            <div className="col-12">
-              <label
-                htmlFor="date"
-                className="form-label d-flex justify-content-start"
-              >
-                Fecha de funcionamiento
-              </label>
+            <div className="col-md-6">
+              <label htmlFor="fechaFuncionamiento">Fecha de Funcionamiento</label>
               <input
                 type="date"
-                className="form-control"
-                id="date"
-                required
+                id="fechaFuncionamiento"
+                value={heladera.fechaFuncionamiento.slice(0, 10)}
                 onChange={(e) =>
                   handleDateChange("fechaFuncionamiento", e.target.value)
                 }
+                required
               />
             </div>
-          </div>
-
-          <hr className="my-4" />
-
-          <div className="d-flex justify-content-between">
-            <button
-              className="btn btn-secondary btn-lg"
+            
+            <div className="col-6">
+              <button
+              className="button-recomendaciones col-md-12"
               type="button"
               onClick={() => setShowRecommendations(!showRecommendations)}
-              style={{
-                backgroundColor: "#6c757d",
-                border: "none",
-              }}
-            >
+              >
               Ver Recomendaciones
-            </button>
-            <button
-              className="btn btn-primary btn-lg"
-              type="submit"
-              onClick={addHeladera}
-              style={{
-                backgroundColor: "#2f4f4f",
-                border: "none",
-              }}
-            >
-              Save
-            </button>
+              </button>
+            </div>
+              <div className="col-6">
+              <button
+                type="button"
+                className="button-save col-md-12"
+                onClick={addHeladera}
+                disabled={!heladera.nombre || !heladera.latitud || !heladera.longitud}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </form>
+        <MapComponent markers={markers} />
       </div>
     </div>
   );
