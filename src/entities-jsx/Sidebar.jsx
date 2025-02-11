@@ -47,55 +47,64 @@ function Sidebar() {
             <i className="bi bi-house-fill"></i>
           </Link>
         </li>
-        <li>
-          <Link
-            to="/colaboradores"
-            className={`nav-link py-3 link-light ${
-              activeLink === "/colaboradores" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/colaboradores")}
-            title="Colaboradores"
-          >
-            <i className="bi bi-people-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/heladeras"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/heladeras" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/heladeras")}
-            title="Heladeras"
-          >
-            <i className="bi bi-h-square-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/infoHeladera"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/infoHeladera" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/infoHeladera")}
-            title="Informacion Heladeras"
-          >
-            <i className="bi bi-info-square-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/contribuciones"
-            className={`nav-link py-3 link-light ${
-              activeLink === "/contribuciones" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/contribuciones")}
-            title="Contribuciones"
-          >
-            <i className="bi bi-bag-check-fill"></i>
-          </Link>
-        </li>
-        {user && user.rol === "ADMIN" && (
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/colaboradores"
+              className={`nav-link py-3 link-light ${
+                activeLink === "/colaboradores" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/colaboradores")}
+              title="Colaboradores"
+            >
+              <i className="bi bi-people-fill"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/heladeras"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/heladeras" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/heladeras")}
+              title="Heladeras"
+            >
+              <i className="bi bi-h-square-fill"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/infoHeladera"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/infoHeladera" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/infoHeladera")}
+              title="Informacion Heladeras"
+            >
+              <i className="bi bi-info-square-fill"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/contribuciones"
+              className={`nav-link py-3 link-light ${
+                activeLink === "/contribuciones" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/contribuciones")}
+              title="Contribuciones"
+            >
+              <i className="bi bi-bag-check-fill"></i>
+            </Link>
+          </li>
+        )}
+        {((user && user.rol === "ADMIN") ||
+          (user && user.rol === "TECNICO")) && (
           <li>
             <Link
               to="/tecnicos"
@@ -109,18 +118,20 @@ function Sidebar() {
             </Link>
           </li>
         )}
-        <li>
-          <Link
-            to="/ofertas"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/ofertas" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/ofertas")}
-            title="Ofertas"
-          >
-            <i className="bi bi-bag-fill"></i>
-          </Link>
-        </li>
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/ofertas"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/ofertas" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/ofertas")}
+              title="Ofertas"
+            >
+              <i className="bi bi-bag-fill"></i>
+            </Link>
+          </li>
+        )}
       </ul>
       <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a

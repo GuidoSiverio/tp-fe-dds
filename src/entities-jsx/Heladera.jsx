@@ -28,6 +28,9 @@ function Heladera() {
   const [recommendations, setRecommendations] = useState([]);
   const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
 
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
+
   useEffect(() => {
     if (isColaboradorLinked && colaboradorContext?.id) {
       setHeladera((prev) => ({
@@ -135,12 +138,15 @@ function Heladera() {
       });
 
       if (response.ok) {
-        navigate("/home");
+        setMessage("Heladera registrada exitósamente.");
+        setMessageType("success");
       } else {
-        console.error("Error during register:", response);
+        setMessage("Error al registrar la heladera.");
+        setMessageType("error");
       }
     } catch (error) {
-      console.error("Error during register:", error);
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
     }
   }
 
@@ -150,7 +156,7 @@ function Heladera() {
       
       <h2 className="pb-2 animated-slideIn">Alta heladeras</h2>
 
-      <div className="content-heladera">
+      <div className="content-heladera ">
       
 
         <form className="needs-validation" noValidate>
@@ -262,6 +268,42 @@ function Heladera() {
             </div>
 
             <div className="col-md-6">
+              <label
+                htmlFor="tempMinAceptable"
+                className="form-label d-flex justify-content-start"
+              >
+                Temperatura Mínima Aceptable
+              </label>
+              <input
+                type="text"
+                
+                id="tempMinAceptable"
+                required
+                onChange={(e) =>
+                  handleChange("tempMinAceptable", e.target.value)
+                }
+              />
+            </div>
+
+            <div className="col-md-6">
+              <label
+                htmlFor="tempMaxAceptable"
+                className="form-label d-flex justify-content-start"
+              >
+                Temperatura Máxima Aceptable
+              </label>
+              <input
+                type="text"
+               
+                id="tempMaxAceptable"
+                required
+                onChange={(e) =>
+                  handleChange("tempMaxAceptable", e.target.value)
+                }
+              />
+            </div>
+
+            <div className="col-md-6">
               <label htmlFor="fechaFuncionamiento">Fecha de Funcionamiento</label>
               <input
                 type="date"
@@ -287,7 +329,7 @@ function Heladera() {
               <button
                 type="button"
                 className="button-save col-md-12"
-                onClick={addHeladera}
+                onClick={addHeladera} 
                 disabled={!heladera.nombre || !heladera.latitud || !heladera.longitud}
               >
                 Save
@@ -296,6 +338,15 @@ function Heladera() {
           </div>
         </form>
         <MapComponent markers={markers} />
+        {message && (
+          <div
+            className={`alert ${
+              messageType === "success" ? "alert-success" : "alert-danger"
+            } mt-4`}
+          >
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );

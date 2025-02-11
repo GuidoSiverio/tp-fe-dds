@@ -24,9 +24,10 @@
   border: 1px solid #1e3535; /* Verde oscuro */
   transform: translateY(30px);
   opacity: 0;
-  animation: slideInUp 0.3s forwards; /* Animación de deslizamiento hacia arriba */
+  animation: slideIn 0.5s forwards; /* Animación de deslizamiento hacia arriba */
   margin-bottom: 50px;
 }
+
 
 /* Títulos y subtítulos */
 .display-4 {
@@ -52,16 +53,16 @@ button, input, textarea {
 
 /* Estilo de inputs con borde y enfoque */
 input {
-  border: 2px solid #2f4f4f;
+  border: 2px solid #faffff;
 }
 
 input:focus {
-  border: 2px solid #1e3535; /* Verde oscuro al enfocarse */
+  border: 2px solid #f7fafa; /* Verde oscuro al enfocarse */
   outline: none;
 }
 
 select:focus {
-  border: 2px solid #1e3535; /* Verde oscuro al enfocarse */
+  border: 2px solid #f7fafa; /* Verde oscuro al enfocarse */
   outline: none;
 }
 

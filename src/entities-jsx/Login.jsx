@@ -181,7 +181,6 @@ function Login() {
             borderRadius: "5px",
             cursor: "pointer",
             fontWeight: "bold",
-            backgroundColor: "#2f4f4f",
             transition: "backgroundColor 0.3s ease",
           }}
           onMouseOver={(e) => (e.target.style.backgroundColor = "#264141")}

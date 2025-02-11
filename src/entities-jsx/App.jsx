@@ -12,6 +12,10 @@ import Contribuciones from "./Contribuciones";
 import Tecnicos from "./Tecnicos";
 import PersonaVulnerable from "./PersonaVulnerable";
 import Producto from "./DonacionProducto";
+import TecnicosAlta from "./TecnicosAlta";
+import TecnicosUpdate from "./TecnicosUpdate";
+import TecnicosBaja from "./TecnicosBaja";
+import Visita from "./Visita";
 import Ofertas from "./Ofertas";
 import { UserProvider } from "./UserContext";
 import InfoHeladera from "./InfoHeladera";
@@ -30,6 +34,10 @@ function App() {
         <Route path="/contribuciones/donacion-vianda" element={<Vianda />} />
         <Route path="/contribuciones/donacion-dinero" element={<Dinero />} />
         <Route path="/contribuciones/distribucion" element={<Distribucion />} />
+        <Route path="/tecnicos/alta" element={<TecnicosAlta />} />
+        <Route path="/tecnicos/modificacion" element={<TecnicosUpdate />} />
+        <Route path="/tecnicos/baja" element={<TecnicosBaja />} />
+        <Route path="/tecnicos/visitas" element={<Visita />} />
         <Route
           path="/contribuciones/incorporacion-persona"
           element={<PersonaVulnerable />}

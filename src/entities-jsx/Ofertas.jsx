@@ -8,6 +8,8 @@ function Ofertas() {
   const [puntosDisponibles, setPuntosDisponibles] = useState(0);
   const [ofertas, setOfertas] = useState([]);
   const localhost = "http://localhost:8080";
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   const fetchOfertasYPuntos = () => {
     if (!user || !isColaboradorLinked) {
@@ -44,25 +46,33 @@ function Ofertas() {
     fetchOfertasYPuntos();
   }, [user, isColaboradorLinked]);
 
-  const handleObtenerOferta = (ofertaId) => {
+  async function handleObtenerOferta(ofertaId) {
     // Lógica para obtener una oferta
-    fetch(localhost + `/contribuciones/ofertas/${ofertaId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(colaboradorContext.id),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Oferta obtenida con éxito.");
-          fetchOfertasYPuntos();
-        } else {
-          throw new Error("No se pudo obtener la oferta.");
+    try {
+      const response = await fetch(
+        localhost + `/contribuciones/ofertas/${ofertaId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(colaboradorContext.id),
         }
-      })
-      .catch((error) => alert(error.message));
-  };
+      );
+
+      if (response.ok) {
+        setMessage("Oferta obtenida exitósamente.");
+        setMessageType("success");
+        fetchOfertasYPuntos();
+      } else {
+        setMessage("Error al obtener la oferta.");
+        setMessageType("error");
+      }
+    } catch (error) {
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
+    }
+  }
 
   if (!user) {
     return <p>Por favor, inicia sesión.</p>;
@@ -108,6 +118,15 @@ function Ofertas() {
               ))}
             </div>
           </div>
+        </div>
+      )}
+      {message && (
+        <div
+          className={`alert ${
+            messageType === "success" ? "alert-success" : "alert-danger"
+          } mt-4`}
+        >
+          {message}
         </div>
       )}
     </div>

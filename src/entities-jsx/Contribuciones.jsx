@@ -14,8 +14,8 @@ function Contribuciones() {
     <div className="Contribuciones" style={{}}>
       <Sidebar />
 
-      <h2 className="pb-2">Contribuciones</h2>
-      <div className="row-contribuciones g-4 py-5 row-cols-1 row-cols-lg-4">
+      <h2 className="pb-2 animated-slideIn">Contribuciones</h2>
+      <div className="row-contribuciones animated-slideIn g-4 py-5 row-cols-1 row-cols-lg-4">
         <div className="col-contribuciones d-flex align-items-start">
           
           <div>
