@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function InfoHeladera() {
-  const { user } = useContext(UserContext);
   const [heladeras, setHeladeras] = useState([]);
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [activeRow, setActiveRow] = useState(null); // Estado para fila activa
@@ -11,7 +11,18 @@ function InfoHeladera() {
   const [foto, setFoto] = useState(""); // Estado para foto
   const [suscripciones, setSuscripciones] = useState([]); // Estado para suscripciones
   const localhost = "http://localhost:8080";
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   async function getSuscripciones() {
     try {
@@ -102,17 +113,15 @@ function InfoHeladera() {
       alert("Por favor, completa la descripción.");
       return;
     }
+
+    const formData = new FormData();
+    formData.append("descripcion", descripcion);
+    formData.append("colaboradorId", colaboradorContext.id);
+    formData.append("imagen", foto);
+
     fetch(`${localhost}/heladeras/${heladeraId}/incidentes`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        descripcion,
-        foto: foto || "",
-        heladeraId,
-        colaboradorId: colaboradorContext.id,
-      }),
+      body: formData,
     })
       .then((response) => {
         if (response.ok) {
@@ -133,10 +142,10 @@ function InfoHeladera() {
     fetchHeladeras();
   }, [refreshFlag]);
 
-  // Control para redirigir si el usuario no ha iniciado sesión
-  if (!user) {
-    return <p>Por favor, inicia sesión.</p>;
-  }
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setFoto(file);
+  };
 
   return (
     <div className="infoHeladera">
@@ -210,12 +219,13 @@ function InfoHeladera() {
                               onChange={(e) => setDescripcion(e.target.value)}
                             />
                             <input
-                              type="text"
-                              className="form-control my-2"
-                              placeholder="URL de la foto (opcional)"
-                              value={foto}
-                              onChange={(e) => setFoto(e.target.value)}
+                              type="file"
+                              className="form-control"
+                              id="imagen"
+                              accept="image/*"
+                              onChange={handleImageUpload}
                             />
+
                             <button
                               className="btn btn-primary"
                               onClick={() => handleReportarAlerta(heladera.id)}

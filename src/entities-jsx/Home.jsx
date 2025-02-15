@@ -1,11 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
+
 function Home() {
-  const { user } = useContext(UserContext);
-  if (!user) {
-    return <p>Por favor, inicia sesión.</p>;
-  }
+  const { user, loading } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   return (
     <div className="Home">

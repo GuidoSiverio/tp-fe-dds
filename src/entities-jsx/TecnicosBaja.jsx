@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 function BajaTecnico() {
   const [tecnicos, setTecnicos] = useState([]); // Lista de técnicos
   const [tecnicoId, setTecnicoId] = useState(""); // Técnico seleccionado
-  const [loading, setLoading] = useState(false); // Para manejar el estado de carga
   const localhost = "http://localhost:8080";
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
+  const { user, loading } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   // Cargar lista de técnicos al montar el componente
   useEffect(() => {
@@ -39,7 +50,6 @@ function BajaTecnico() {
       return;
     }
 
-    setLoading(true);
     try {
       const response = await fetch(`${localhost}/tecnicos/${tecnicoId}`, {
         method: "DELETE",
@@ -60,8 +70,6 @@ function BajaTecnico() {
     } catch (error) {
       setMessage("Error durante la solicitud: " + error.message);
       setMessageType("error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -72,37 +80,30 @@ function BajaTecnico() {
         <h1 className="display-4 fw-normal">Dar de Baja Técnico</h1>
         <br />
 
-        {loading ? (
-          <div>Cargando...</div>
-        ) : (
-          <div>
-            <div className="mb-3">
-              <label htmlFor="tecnicoSelect" className="form-label">
-                Seleccione un Técnico
-              </label>
-              <select
-                id="tecnicoSelect"
-                className="form-select"
-                value={tecnicoId}
-                onChange={(e) => setTecnicoId(e.target.value)}
-              >
-                <option value="">Seleccione...</option>
-                {tecnicos.map((tec) => (
-                  <option key={tec.id} value={tec.id}>
-                    {tec.nombre} {tec.apellido}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <button
-              className="btn btn-danger w-100"
-              onClick={handleBajaTecnico}
+        <div>
+          <div className="mb-3">
+            <label htmlFor="tecnicoSelect" className="form-label">
+              Seleccione un Técnico
+            </label>
+            <select
+              id="tecnicoSelect"
+              className="form-select"
+              value={tecnicoId}
+              onChange={(e) => setTecnicoId(e.target.value)}
             >
-              Dar de Baja
-            </button>
+              <option value="">Seleccione...</option>
+              {tecnicos.map((tec) => (
+                <option key={tec.id} value={tec.id}>
+                  {tec.nombre} {tec.apellido}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
+
+          <button className="btn btn-danger w-100" onClick={handleBajaTecnico}>
+            Dar de Baja
+          </button>
+        </div>
 
         {message && (
           <div

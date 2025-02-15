@@ -6,14 +6,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Tecnicos() {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   const localhost = "http://localhost:8080";
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.rol !== "ADMIN" && user.rol !== "TECNICO") {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    } else if (user.rol !== "ADMIN" && user.rol !== "TECNICO") {
       navigate("/home");
     }
   }, [user, navigate]);

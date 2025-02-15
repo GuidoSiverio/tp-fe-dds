@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 function ModificarTecnico() {
   const [tecnicos, setTecnicos] = useState([]); // Lista de técnicos
@@ -15,10 +17,18 @@ function ModificarTecnico() {
   });
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
-
-  const [loading, setLoading] = useState(false); // Para manejar el estado de carga
-  const [error, setError] = useState(null); // Para manejar errores
+  const { user, loading } = useContext(UserContext);
   const localhost = "http://localhost:8080";
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   // Cargar lista de técnicos al montar el componente
   useEffect(() => {
@@ -120,121 +130,110 @@ function ModificarTecnico() {
           </select>
         </div>
 
-        {loading ? (
-          <div>Cargando datos del técnico...</div>
-        ) : error ? (
-          <div>Error: {error}</div>
-        ) : (
-          <form className="needs-validation" noValidate>
-            <div className="row g-3">
-              <div className="col-12">
-                <label htmlFor="nombre" className="form-label">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="nombre"
-                  value={tecnico.nombre}
-                  onChange={(e) => handleChange("nombre", e.target.value)}
-                />
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="apellido" className="form-label">
-                  Apellido
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="apellido"
-                  value={tecnico.apellido}
-                  onChange={(e) => handleChange("apellido", e.target.value)}
-                />
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="tipoDocumento" className="form-label">
-                  Tipo de Documento
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="tipoDocumento"
-                  value={tecnico.tipoDocumento}
-                  onChange={(e) =>
-                    handleChange("tipoDocumento", e.target.value)
-                  }
-                />
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="documento" className="form-label">
-                  Documento
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="documento"
-                  value={tecnico.documento}
-                  onChange={(e) => handleChange("documento", e.target.value)}
-                />
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="cuil" className="form-label">
-                  CUIL
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="cuil"
-                  value={tecnico.cuil}
-                  onChange={(e) => handleChange("cuit", e.target.value)}
-                />
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="medioContacto" className="form-label">
-                  Medio de Contacto
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="medioContacto"
-                  value={tecnico.medioContacto}
-                  onChange={(e) =>
-                    handleChange("medioContacto", e.target.value)
-                  }
-                />
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="areaCobertura" className="form-label">
-                  Área de Cobertura
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="areaCobertura"
-                  value={tecnico.areaCobertura}
-                  onChange={(e) =>
-                    handleChange("areaCobertura", e.target.value)
-                  }
-                />
-              </div>
+        <form className="needs-validation" noValidate>
+          <div className="row g-3">
+            <div className="col-12">
+              <label htmlFor="nombre" className="form-label">
+                Nombre
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="nombre"
+                value={tecnico.nombre}
+                onChange={(e) => handleChange("nombre", e.target.value)}
+              />
             </div>
 
-            <hr className="my-4" />
-            <button
-              className="w-100 btn btn-primary btn-lg"
-              type="button"
-              onClick={updateTecnico}
-            >
-              Guardar Cambios
-            </button>
-          </form>
-        )}
+            <div className="col-12">
+              <label htmlFor="apellido" className="form-label">
+                Apellido
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="apellido"
+                value={tecnico.apellido}
+                onChange={(e) => handleChange("apellido", e.target.value)}
+              />
+            </div>
+
+            <div className="col-12">
+              <label htmlFor="tipoDocumento" className="form-label">
+                Tipo de Documento
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="tipoDocumento"
+                value={tecnico.tipoDocumento}
+                onChange={(e) => handleChange("tipoDocumento", e.target.value)}
+              />
+            </div>
+
+            <div className="col-12">
+              <label htmlFor="documento" className="form-label">
+                Documento
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="documento"
+                value={tecnico.documento}
+                onChange={(e) => handleChange("documento", e.target.value)}
+              />
+            </div>
+
+            <div className="col-12">
+              <label htmlFor="cuil" className="form-label">
+                CUIL
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="cuil"
+                value={tecnico.cuil}
+                onChange={(e) => handleChange("cuit", e.target.value)}
+              />
+            </div>
+
+            <div className="col-12">
+              <label htmlFor="medioContacto" className="form-label">
+                Medio de Contacto
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="medioContacto"
+                value={tecnico.medioContacto}
+                onChange={(e) => handleChange("medioContacto", e.target.value)}
+              />
+            </div>
+
+            <div className="col-12">
+              <label htmlFor="areaCobertura" className="form-label">
+                Área de Cobertura
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="areaCobertura"
+                value={tecnico.areaCobertura}
+                onChange={(e) => handleChange("areaCobertura", e.target.value)}
+              />
+            </div>
+          </div>
+
+          <hr className="my-4" />
+          <button
+            className="w-100 btn btn-primary btn-lg"
+            type="button"
+            onClick={updateTecnico}
+          >
+            Guardar Cambios
+          </button>
+        </form>
+
         {message && (
           <div
             className={`alert ${

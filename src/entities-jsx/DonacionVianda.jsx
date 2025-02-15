@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function DonacionVianda() {
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
   const [vianda, setVianda] = useState({
     comida: "",
     fechaCaducidad: "",
@@ -22,6 +24,16 @@ function DonacionVianda() {
     latitud: "",
   });
   const [recommendedHeladeras, setRecommendedHeladeras] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   function getHeladeras() {
     return fetch(localhost + "/heladeras", {
@@ -100,7 +112,7 @@ function DonacionVianda() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${localhost}/heladeras/recomendadas?longitud=${recommendationsData.longitud}&latitud=${recommendationsData.latitud}`,
+        `${localhost}/contribuciones/donacion-vianda/recomendaciones?longitud=${recommendationsData.longitud}&latitud=${recommendationsData.latitud}`,
         {
           method: "GET",
           headers: {
@@ -219,12 +231,18 @@ function DonacionVianda() {
                         handleChange("heladeraId", e.target.value)
                       }
                     >
-                      <option value="">Seleccione una heladera</option>
-                      {heladeras.map((heladera) => (
-                        <option key={heladera.id} value={heladera.id}>
-                          {heladera.nombre}
-                        </option>
-                      ))}
+                      <option value="">
+                        {heladeras.filter((h) => h.activa).length === 0
+                          ? "No hay heladeras disponibles"
+                          : "Seleccione una heladera"}
+                      </option>
+                      {heladeras
+                        .filter((h) => h.activa)
+                        .map((heladera) => (
+                          <option key={heladera.id} value={heladera.id}>
+                            {heladera.nombre}
+                          </option>
+                        ))}
                     </select>
                     <div className="invalid-feedback">Heladera requerida.</div>
                   </div>

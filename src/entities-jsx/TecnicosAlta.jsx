@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 function TecnicosAlta() {
   const [tecnico, setTecnico] = useState({
@@ -16,9 +18,20 @@ function TecnicosAlta() {
     password: "",
   });
 
+  const { user, loading } = useContext(UserContext);
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
   const localhost = "http://localhost:8080";
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   async function addTecnico() {
     if (!validateForm()) return;
@@ -102,16 +115,19 @@ function TecnicosAlta() {
 
             <div className="col-12">
               <label htmlFor="tipoDocumento" className="form-label">
-                Tipo de Documento
+                Tipo de documento
               </label>
-              <input
-                type="text"
+              <select
                 className="form-control"
                 id="tipoDocumento"
-                placeholder="TipoDocumento"
                 required
                 onChange={(e) => handleChange("tipoDocumento", e.target.value)}
-              />
+              >
+                <option value="">Choose...</option>
+                <option value="DNI">DNI</option>
+                <option value="Pasaporte">Pasaporte</option>
+                <option value="CI">CI</option>
+              </select>
               <div className="invalid-feedback">
                 Tipo de Documento requerido.
               </div>
@@ -119,7 +135,7 @@ function TecnicosAlta() {
 
             <div className="col-12">
               <label htmlFor="documento" className="form-label">
-                Documento
+                Numero de Documento
               </label>
               <input
                 type="text"
@@ -129,7 +145,9 @@ function TecnicosAlta() {
                 required
                 onChange={(e) => handleChange("documento", e.target.value)}
               />
-              <div className="invalid-feedback">Documento requerido.</div>
+              <div className="invalid-feedback">
+                Numero de documento requerido.
+              </div>
             </div>
 
             <div className="col-12">

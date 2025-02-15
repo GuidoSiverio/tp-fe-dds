@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function DistribucionVianda() {
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
   const [distribucion, setDistribucion] = useState({
     heladeraOrigen: "",
     heladeraDestino: "",
@@ -18,6 +20,15 @@ function DistribucionVianda() {
   const [heladeras, setHeladeras] = useState([]); // Para almacenar las heladeras disponibles
   const localhost = "http://localhost:8080";
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
   // Obtener las heladeras disponibles desde el backend
   async function getHeladeras() {
     try {

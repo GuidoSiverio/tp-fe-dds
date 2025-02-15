@@ -373,7 +373,7 @@ function Colaboador() {
         )}
 
         <hr className="my-4" />
-        {user.rol === "ADMIN" && (
+        {user && user.rol === "ADMIN" && (
           <div>
             <button
               className="w-25 btn btn-primary mt-3"

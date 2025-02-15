@@ -1,18 +1,32 @@
 import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function Ofertas() {
-  const { user, colaboradorContext, isColaboradorLinked } =
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
     useContext(UserContext);
   const [puntosDisponibles, setPuntosDisponibles] = useState(0);
   const [ofertas, setOfertas] = useState([]);
   const localhost = "http://localhost:8080";
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   const fetchOfertasYPuntos = () => {
-    if (!user || !isColaboradorLinked) {
+    if (loading) return;
+    if (!user) {
+      navigate("/");
+      return;
+    } else if (!isColaboradorLinked) {
       return;
     }
 
@@ -44,7 +58,7 @@ function Ofertas() {
 
   useEffect(() => {
     fetchOfertasYPuntos();
-  }, [user, isColaboradorLinked]);
+  }, [user, loading, isColaboradorLinked]);
 
   async function handleObtenerOferta(ofertaId) {
     // Lógica para obtener una oferta
@@ -97,9 +111,10 @@ function Ofertas() {
                     <div className="card-body">
                       <h5 className="card-title">{oferta.nombre}</h5>
                       <img
-                        src={oferta.imagen}
+                        src={`${localhost}/${oferta.imagen}`} // Carga la imagen desde el backend
                         className="card-img-top"
                         style={{ maxHeight: "200px", objectFit: "contain" }}
+                        alt="Imagen de la oferta"
                       />
                       <p className="card-text">{oferta.rubro}</p>
                       <p className="card-text">

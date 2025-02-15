@@ -5,14 +5,12 @@ import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
 function Heladera() {
-  const { user } = useContext(UserContext);
   const [heladera, setHeladera] = useState({
     nombre: "",
     longitud: "",
     latitud: "",
     direccion: "",
     capacidad: "",
-    fechaFuncionamiento: "",
     radio: "",
     lugarRecomendado: "",
     tempMinAceptable: "",
@@ -25,10 +23,19 @@ function Heladera() {
   const localhost = "http://localhost:8080";
   const navigate = useNavigate();
   const [recommendations, setRecommendations] = useState([]);
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
 
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     if (isColaboradorLinked && colaboradorContext?.id) {
@@ -60,11 +67,6 @@ function Heladera() {
       ...heladera,
       [key]: value,
     });
-  };
-
-  const handleDateChange = (field, value) => {
-    const formattedDate = new Date(value).toISOString().slice(0, -1);
-    handleChange(field, formattedDate);
   };
 
   const fetchRecommendations = async () => {
@@ -362,24 +364,6 @@ function Heladera() {
                 required
                 onChange={(e) =>
                   handleChange("tempMaxAceptable", e.target.value)
-                }
-              />
-            </div>
-
-            <div className="col-12">
-              <label
-                htmlFor="date"
-                className="form-label d-flex justify-content-start"
-              >
-                Fecha de funcionamiento
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="date"
-                required
-                onChange={(e) =>
-                  handleDateChange("fechaFuncionamiento", e.target.value)
                 }
               />
             </div>

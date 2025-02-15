@@ -8,10 +8,12 @@ export const UserProvider = ({ children }) => {
   const [tecnicoContext, setTecnicoContext] = useState(null);
   const [isColaboradorLinked, setIsColaboradorLinked] = useState(false);
   const [isTecnicoLinked, setIsTecnicoLinked] = useState(false);
+  const [loading, setLoading] = useState(true);
   const localhost = "http://localhost:8080";
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
+    console.log("Cargando usuario desde localStorage:", storedUser);
     const storedColaborador = JSON.parse(
       localStorage.getItem("colaboradorContext")
     );
@@ -33,6 +35,7 @@ export const UserProvider = ({ children }) => {
     } else {
       console.log("No se encontró usuario en localStorage.");
     }
+    setLoading(false);
   }, []);
 
   // Función para actualizar el estado del usuario y guardarlo en localStorage
@@ -127,6 +130,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        loading,
         colaboradorContext,
         isColaboradorLinked,
         tecnicoContext,

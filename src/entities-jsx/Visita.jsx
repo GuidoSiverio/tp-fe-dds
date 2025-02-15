@@ -9,9 +9,11 @@ function Visita() {
     tecnicoId: "",
     incidenteId: "",
     comentario: "",
+    imagen: "",
     solucionado: false,
   });
-  const { tecnicoContext, isTecnicoLinked } = useContext(UserContext);
+  const { user, tecnicoContext, isTecnicoLinked, loading } =
+    useContext(UserContext);
 
   const [heladeras, setHeladeras] = useState([]);
   const [incidentes, setIncidentes] = useState([]);
@@ -24,6 +26,11 @@ function Visita() {
 
   // Obtener heladeras desde el backend
   useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
     async function fetchHeladeras() {
       try {
         const response = await fetch(localhost + "/heladeras", {
@@ -44,7 +51,7 @@ function Visita() {
     }
 
     fetchHeladeras();
-  }, []);
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     if (visita.heladeraId) {
@@ -79,13 +86,18 @@ function Visita() {
   async function addVisita() {
     if (!validateForm()) return;
 
+    const formData = new FormData();
+    formData.append("heladeraId", visita.heladeraId);
+    formData.append("tecnicoId", tecnicoContext.id);
+    formData.append("incidenteId", visita.incidenteId);
+    formData.append("comentario", visita.comentario);
+    formData.append("solucionado", visita.solucionado);
+    formData.append("imagen", visita.imagen);
     try {
       const response = await fetch(localhost + "/tecnicos/visitas", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(visita),
+
+        body: formData,
       });
 
       if (response.ok) {
@@ -133,11 +145,10 @@ function Visita() {
   };
 
   const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    const imageUrls = files.map((file) => URL.createObjectURL(file));
+    const file = event.target.files[0];
     setVisita({
       ...visita,
-      imagenes: [...visita.imagenes, ...imageUrls],
+      imagen: file, // Guarda el archivo en lugar de un blob
     });
   };
 
@@ -206,31 +217,19 @@ function Visita() {
               />
             </div>
 
-            {/* Carga de imágenes
+            {/* Carga de imágenes*/}
             <div className="col-12">
-              <label htmlFor="imagenes" className="form-label">
-                Subir Imágenes
+              <label htmlFor="imagen" className="form-label">
+                Subir Imagen
               </label>
               <input
                 type="file"
                 className="form-control"
-                id="imagenes"
-                multiple
+                id="imagen"
                 accept="image/*"
                 onChange={handleImageUpload}
               />
-              <div className="mt-2">
-                {visita.imagenes.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt="Incidente"
-                    width="100"
-                    className="me-2"
-                  />
-                ))}
-              </div>
-            </div> */}
+            </div>
 
             {/* Checkbox de solucionado */}
             <div className="col-12 d-flex justify-content-center">

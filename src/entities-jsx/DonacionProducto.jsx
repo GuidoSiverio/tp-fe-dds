@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function RegistroEmpresa() {
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
   const [producto, setProducto] = useState({
     nombre: "",
     rubro: "",
@@ -13,8 +15,16 @@ function RegistroEmpresa() {
   });
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
-
+  const navigate = useNavigate();
   const localhost = "http://localhost:8080";
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     if (isColaboradorLinked && colaboradorContext?.id) {
@@ -36,13 +46,16 @@ function RegistroEmpresa() {
   // Función para manejar el envío del formulario
   async function addProducto(e) {
     e.preventDefault(); // Prevenir comportamiento por defecto del formulario
+    const formData = new FormData();
+    formData.append("nombre", producto.nombre);
+    formData.append("rubro", producto.rubro);
+    formData.append("puntosNecesarios", producto.puntosNecesarios);
+    formData.append("colaboradorId", producto.colaboradorId);
+    formData.append("imagen", producto.imagen);
     try {
       const response = await fetch(localhost + "/contribuciones/ofertas", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(producto),
+        body: formData,
       });
 
       if (response.ok) {
@@ -57,6 +70,14 @@ function RegistroEmpresa() {
       setMessageType("error");
     }
   }
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setProducto({
+      ...producto,
+      imagen: file, // Guardamos el archivo en lugar del URL blob
+    });
+  };
 
   return (
     <div className="RegistroEmpresa">
@@ -129,19 +150,27 @@ function RegistroEmpresa() {
                 </div>
               </div>
 
+              {/* Carga de imágenes*/}
               <div className="col-12">
                 <label htmlFor="imagen" className="form-label">
                   Imagen ilustrativa
                 </label>
                 <input
-                  type="url"
+                  type="file"
                   className="form-control"
                   id="imagen"
-                  placeholder="URL de la imagen"
-                  onChange={(e) => handleChange("imagen", e.target.value)}
+                  accept="image/*"
+                  onChange={handleImageUpload}
                 />
-                <div className="invalid-feedback">
-                  Debe ingresar una URL válida si desea agregar una imagen.
+                <div className="mt-2">
+                  {producto.imagen && (
+                    <img
+                      src={producto.imagen}
+                      alt="Incidente"
+                      width="100"
+                      className="me-2"
+                    />
+                  )}
                 </div>
               </div>
             </div>

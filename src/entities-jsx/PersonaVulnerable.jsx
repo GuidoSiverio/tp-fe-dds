@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function PersonaVulnerable() {
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
   const [personaVulnerable, setPersonaVulnerable] = useState({
     nombre: "",
     fechaNacimiento: "",
@@ -21,6 +23,15 @@ function PersonaVulnerable() {
   const [messageType, setMessageType] = useState(null);
 
   const localhost = "http://localhost:8080";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   // Función para agregar la persona vulnerable al backend
   async function addPersonaVulnerable(e) {

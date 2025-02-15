@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function DonacionDinero() {
-  const { colaboradorContext, isColaboradorLinked } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
   const [donacion, setDonacion] = useState({
-    fechaDonacion: "",
     monto: "",
     frecuencia: "",
     formaPeriodica: false,
@@ -15,6 +16,16 @@ function DonacionDinero() {
   const [messageType, setMessageType] = useState(null);
 
   const localhost = "http://localhost:8080";
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   async function addDonacion(e) {
     e.preventDefault();
@@ -35,7 +46,6 @@ function DonacionDinero() {
         setMessage("Donación registrada exitosamente.");
         setMessageType("success");
         setDonacion({
-          fechaDonacion: "",
           monto: "",
           frecuencia: "",
           formaPeriodica: false,
@@ -58,7 +68,7 @@ function DonacionDinero() {
   };
 
   const handleDateChange = (field, value) => {
-    const formattedDate = new Date(value).toISOString().slice(0, -1);
+    const formattedDate = new Date(value).toISOString().split("T")[0];
     handleChange(field, formattedDate);
   };
 
@@ -82,27 +92,6 @@ function DonacionDinero() {
         ) : (
           <form className="needs-validation" noValidate onSubmit={addDonacion}>
             <div className="row g-3">
-              <div className="col-12">
-                <label
-                  htmlFor="fechaDonacion"
-                  className="form-label"
-                  style={{ fontSize: "1.2rem" }}
-                >
-                  Fecha de la Donación
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="fechaDonacion"
-                  required
-                  style={{ fontSize: "1.2rem" }}
-                  value={donacion.fechaDonacion}
-                  onChange={(e) =>
-                    handleDateChange("fechaDonacion", e.target.value)
-                  }
-                />
-              </div>
-
               <div className="col-12">
                 <label className="form-label" style={{ fontSize: "1.2rem" }}>
                   Monto de la donación

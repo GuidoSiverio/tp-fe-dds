@@ -4,13 +4,14 @@ import { UserContext } from "./UserContext";
 
 function Login() {
   const { loginUser } = useContext(UserContext);
-  const [error, setError] = useState(null);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
   const localhost = "http://localhost:8080";
   const navigate = useNavigate();
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   const handleChange = (key, value) => {
     setUser({
@@ -36,20 +37,19 @@ function Login() {
         loginUser(user);
         navigate("/home");
       } else {
-        const errorData = await response.json();
-        console.error("Error during login:", errorData);
-        setError(errorData.message);
+        setMessage("Error al loguearse: " + error.message);
+        setMessageType("error");
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      setError(error);
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
     }
   }
 
   async function register() {
     //e.preventDefault();
     try {
-      const response = fetch(localhost + "/register", {
+      const response = await fetch(localhost + "/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,10 +57,16 @@ function Login() {
         body: JSON.stringify(user),
       });
 
-      console.log("Register response:", response);
+      if (response.ok) {
+        setMessage("Usuario registrado exitósamente.");
+        setMessageType("success");
+      } else {
+        setMessage(await response.text());
+        setMessageType("error");
+      }
     } catch (error) {
-      console.error("Error during register:", error);
-      setError(error);
+      setMessage("Error durante la solicitud: " + error.message);
+      setMessageType("error");
     }
   }
 
@@ -163,12 +169,6 @@ function Login() {
           </label>
         </div>
 
-        <div className="checkbox mb-3" style={{ textAlign: "center" }}>
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
-        </div>
-
         <button
           className="w-25 btn btn-lg"
           type="button"
@@ -210,10 +210,14 @@ function Login() {
           Register
         </button>
 
-        {error && (
-          <p style={{ color: "red", textAlign: "center", marginTop: "15px" }}>
-            {error}
-          </p>
+        {message && (
+          <div
+            className={`alert ${
+              messageType === "success" ? "alert-success" : "alert-danger"
+            } mt-4`}
+          >
+            {message}
+          </div>
         )}
       </form>
     </div>
