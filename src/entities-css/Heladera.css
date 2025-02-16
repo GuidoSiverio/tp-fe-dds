@@ -1,0 +1,156 @@
+/* Estilos generales */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f7fc;
+  margin: 0;
+  padding: 0;
+}
+
+.Heladera-alta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: none; /* Fondo de heladera en none */
+  padding: 20px;
+}
+
+.content-heladera {
+  width: 90%;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2f4f4f; /* Borde más oscuro */
+  background: linear-gradient(135deg, #2c3e3f, #3d5a5b); /* Fondo de gradiente */
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slideIn 0.5s forwards;
+  margin-bottom: 50px;
+}
+
+/* Animación para entrada suave del formulario */
+@keyframes slideIn {
+  0% {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Cambia el color del ícono a blanco */
+}
+
+.animated-slideIn {
+  animation: slideIn 0.5s forwards;
+}
+
+.select-formulario{
+  height: 50%;
+}
+
+/* Estilos para el formulario */
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 2px solid #ffffff; /* Borde blanco en inputs */
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #344546; /* Fondo oscuro */
+  color: white; /* Color blanco para el texto */
+  transition: all 0.3s ease;
+}
+
+/* Animación para cuando el input está en foco (aumenta el tamaño del área de escritura) */
+input:focus,
+select:focus {
+  border-color: #ffffff; /* Borde blanco cuando están en foco */
+  outline: none;
+  background-color: #3c4d4f; /* Fondo en foco con mayor contraste */
+  transform: scale(1.05); /* Aumento del tamaño al enfocar */
+}
+
+/* Estilos para los labels */
+label {
+  font-weight: 500;
+  color: #ffffff; /* Color blanco para los labels */
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  text-align: left;
+}
+
+/* Botones */
+.button-recomendaciones {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: none;
+  background: linear-gradient(135deg, #4a7a78, #3b625f);
+  color: white;
+  transition: all 0.3s ease, transform 0.3s ease;
+  animation: fadeInUp 0.5s ease-in-out; /* Animación de entrada para botones */
+}
+
+.button-save {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border:none;
+  background-color: #359129;
+  color: white;
+  transition: all 0.3s ease, transform 0.3s ease;
+  animation: fadeInUp 0.5s ease-in-out; /* Animación de entrada para botones */
+}
+.button-save:hover {
+  background-color: rgb(53, 202, 34);
+  transform: translateY(-3px); /* Hover con efecto de desplazamiento */
+}
+
+.button-save:disabled {
+  background-color: #964f4c;
+  cursor: not-allowed;
+}
+
+.button-recomendaciones:hover {
+  background: #233a3a;
+  transform: translateY(-3px); /* Hover con efecto de desplazamiento */
+}
+
+
+
+
+/* Layout para el formulario */
+.row.g-3 {
+  margin-bottom: 15px;
+}
+
+.col-12 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeInTable {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animated-slideInUp {
+  animation: fadeInTable 0.3s forwards;
+}
+

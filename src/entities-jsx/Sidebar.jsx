@@ -9,7 +9,7 @@ import { UserContext } from "./UserContext";
 function Sidebar() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
-  const { logoutUser } = useContext(UserContext);
+  const { logoutUser, user } = useContext(UserContext);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -47,66 +47,91 @@ function Sidebar() {
             <i className="bi bi-house-fill"></i>
           </Link>
         </li>
-        <li>
-          <Link
-            to="/colaboradores"
-            className={`nav-link py-3 link-light ${
-              activeLink === "/colaboradores" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/colaboradores")}
-            title="Colaboradores"
-          >
-            <i className="bi bi-people-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/heladeras"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/heladeras" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/heladeras")}
-            title="Heladeras"
-          >
-            <i className="bi bi-h-square-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/contribuciones"
-            className={`nav-link py-3 link-light ${
-              activeLink === "/contribuciones" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/contribuciones")}
-            title="Contribuciones"
-          >
-            <i className="bi bi-bag-check-fill"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/tecnicos"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/tecnicos" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/tecnicos")}
-            title="Tecnicos"
-          >
-            <i className="bi bi-hammer"></i>
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/ofertas"
-            className={`nav-link py-3 link-light  ${
-              activeLink === "/ofertas" ? "active" : ""
-            }`}
-            onClick={() => handleLinkClick("/ofertas")}
-            title="Ofertas"
-          >
-            <i className="bi bi-bag-fill"></i>
-          </Link>
-        </li>
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/colaboradores"
+              className={`nav-link py-3 link-light ${
+                activeLink === "/colaboradores" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/colaboradores")}
+              title="Colaboradores"
+            >
+              <i className="bi bi-people-fill"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/heladeras"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/heladeras" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/heladeras")}
+              title="Heladeras"
+            >
+              <i className="bi bi-h-square-fill"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/infoHeladera"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/infoHeladera" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/infoHeladera")}
+              title="Informacion Heladeras"
+            >
+              <i className="bi bi-info-square-fill"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/contribuciones"
+              className={`nav-link py-3 link-light ${
+                activeLink === "/contribuciones" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/contribuciones")}
+              title="Contribuciones"
+            >
+              <i className="bi bi-bag-check-fill"></i>
+            </Link>
+          </li>
+        )}
+        {((user && user.rol === "ADMIN") ||
+          (user && user.rol === "TECNICO")) && (
+          <li>
+            <Link
+              to="/tecnicos"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/tecnicos" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/tecnicos")}
+              title="Tecnicos"
+            >
+              <i className="bi bi-hammer"></i>
+            </Link>
+          </li>
+        )}
+        {user && user.rol !== "TECNICO" && (
+          <li>
+            <Link
+              to="/ofertas"
+              className={`nav-link py-3 link-light  ${
+                activeLink === "/ofertas" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/ofertas")}
+              title="Ofertas"
+            >
+              <i className="bi bi-bag-fill"></i>
+            </Link>
+          </li>
+        )}
       </ul>
       <div className="dropdown " style={{ borderTop: "2px solid white" }}>
         <a
@@ -129,24 +154,6 @@ function Sidebar() {
           aria-labelledby="dropdownUser3"
           style={{ maxWidth: "auto", marginLeft: " 15px " }}
         >
-          <li>
-            <a className="dropdown-item" href="#">
-              New project...
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Settings
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Profile
-            </a>
-          </li>
-          <li>
-            <hr className="dropdown-divider"></hr>
-          </li>
           <li>
             <a className="dropdown-item" href="/" onClick={logoutUser}>
               Sign out

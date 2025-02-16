@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 function DistribucionVianda() {
-  const {
-    collaborator: colaborador,
-    isCollaboratorLinked: isColaboradorLinked,
-  } = useContext(UserContext);
+  const { user, colaboradorContext, isColaboradorLinked, loading } =
+    useContext(UserContext);
   const [distribucion, setDistribucion] = useState({
     heladeraOrigen: "",
     heladeraDestino: "",
@@ -21,6 +20,15 @@ function DistribucionVianda() {
   const [heladeras, setHeladeras] = useState([]); // Para almacenar las heladeras disponibles
   const localhost = "http://localhost:8080";
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      console.log("Usuario no encontrado, redirigiendo...");
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
   // Obtener las heladeras disponibles desde el backend
   async function getHeladeras() {
     try {
@@ -78,10 +86,21 @@ function DistribucionVianda() {
   }, []);
 
   useEffect(() => {
-    if (isColaboradorLinked && colaborador?.id) {
-      setDistribucion((prev) => ({ ...prev, colaboradorId: colaborador.id }));
+    if (isColaboradorLinked && colaboradorContext?.id) {
+      setDistribucion((prev) => ({
+        ...prev,
+        colaboradorId: colaboradorContext.id,
+      }));
     }
-  }, [isColaboradorLinked, colaborador]);
+  }, [isColaboradorLinked, colaboradorContext]);
+
+  const filteredHeladerasOrigen = heladeras.filter(
+    (heladera) => heladera.id !== Number(distribucion.heladeraDestino)
+  );
+
+  const filteredHeladerasDestino = heladeras.filter(
+    (heladera) => heladera.id !== Number(distribucion.heladeraOrigen)
+  );
 
   return (
     <div className="DistribucionVianda">
@@ -115,9 +134,9 @@ function DistribucionVianda() {
                   }
                 >
                   <option value="">Seleccionar...</option>
-                  {heladeras.map((heladera) => (
+                  {filteredHeladerasOrigen.map((heladera) => (
                     <option key={heladera.id} value={heladera.id}>
-                      {heladera.nombre} - {heladera.ubicacion}
+                      {heladera.nombre}
                     </option>
                   ))}
                 </select>
@@ -139,9 +158,9 @@ function DistribucionVianda() {
                   }
                 >
                   <option value="">Seleccionar...</option>
-                  {heladeras.map((heladera) => (
+                  {filteredHeladerasDestino.map((heladera) => (
                     <option key={heladera.id} value={heladera.id}>
-                      {heladera.nombre} - {heladera.ubicacion}
+                      {heladera.nombre}
                     </option>
                   ))}
                 </select>

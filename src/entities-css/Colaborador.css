@@ -1,0 +1,152 @@
+/* Colaborador.css */
+
+/* Fondo con imagen */
+
+
+/* Estilos para la sección principal */
+.Colaborador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  background: none;
+  padding: 20px;
+}
+
+/* Contenido del colaborador */
+.content-colaboradores {
+  width: 90%;
+  background: #2f4f4f; /* Gris oscuro */
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid #1e3535; /* Verde oscuro */
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slideInUp 0.3s forwards; /* Animación de deslizamiento hacia arriba */
+  margin-bottom: 50px;
+}
+
+/* Títulos y subtítulos */
+.display-4 {
+  color: #fff; /* Blanco para contraste */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Etiquetas personalizadas */
+.custom-label {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+
+
+button:focus, input:focus, textarea:focus {
+  outline: none;
+}
+
+button, input, textarea {
+  outline: 0;
+}
+
+/* Estilo de inputs con borde y enfoque */
+input {
+  border: 2px solid #2f4f4f;
+}
+
+input:focus {
+  border: 2px solid #1e3535; /* Verde oscuro al enfocarse */
+  outline: none;
+}
+
+select:focus {
+  border: 2px solid #1e3535; /* Verde oscuro al enfocarse */
+  outline: none;
+}
+
+/* Borde personalizado */
+.border-custom {
+  border-color: #2f4f4f !important;
+}
+
+/* Botones con colores personalizados */
+.btn-success {
+  background-color: #2f4f4f; /* Gris oscuro */
+  border-color: #2f4f4f;
+}
+
+.btn-success:hover {
+  background-color: #1e3535; /* Verde oscuro */
+  border-color: #1e3535;
+}
+
+.btn-warning {
+  background-color: #28a745; /* Verde */
+  border-color: #28a745;
+}
+
+.btn-warning:hover {
+  background-color: #1e7e34; /* Verde más oscuro */
+  border-color: #1e7e34;
+}
+
+.center-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Ancho personalizado para botones */
+.w-50 {
+  width: 50%;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animaciones */
+.animated {
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in-out;
+}
+
+.fadeInUp {
+  animation-name: fadeInUp;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animación de deslizamiento hacia arriba */
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividad: columnas alineadas en pantallas pequeñas */
+@media (max-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .w-50 {
+    width: 100%;
+  }
+}
