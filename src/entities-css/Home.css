@@ -64,11 +64,14 @@
     text-decoration: none;
     color: inherit;
   }
+
+
+  
+  
   .boton-secciones {
     text-align: center;
     grid-column: span 2; /* El título ocupa ambas columnas */
     margin-bottom: 20px;
-
   }
   
   .botones-contenedor {
@@ -76,7 +79,8 @@
     grid-template-columns: 1fr 1fr; /* Dos columnas */
     gap: 20px; /* Espacio entre los botones */
     justify-items: center; /* Centra los botones dentro de cada columna */
-    margin-top: 20px; /* Mueve los botones hacia arriba */
+    margin-top: 20px;
+    width: 100%;
   }
   
   .botones-izquierda,
@@ -89,6 +93,34 @@
     margin-top: -180px;
   }
   
+  /* Ajuste para cuando el usuario es TÉCNICO */
+  .rol-tecnico {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+    margin-right: 100px; /* Alinea el botón a la derecha */
+    width: 100%;
+    padding-right: 20px; /* Agrega espacio del lado derecho */
+  }
+  .secciones-boton {
+    text-align: center; /* Mantiene el texto centrado por defecto */
+  }
+  
+  .secciones-tecnico {
+    text-align: left; /* Mueve el texto a la izquierda si el usuario es TÉCNICO */
+    padding-right: 75px; /* Ajusta la cantidad de desplazamiento */
+  }
+  
+  
+  .rol-tecnico button {
+    width: auto;
+  }
+  
+  /* Mantener botones centrados para otros roles */
+  .botones-derecha:not(.rol-tecnico) {
+    align-items: center;
+  }
+  
   .btn-primary {
     width: 100%;
     padding: 15px 0;
@@ -99,6 +131,7 @@
   .btn-primary:hover {
     background-color: #0056b3;
   }
+  
   
   .btn {
     padding: 10px 20px;

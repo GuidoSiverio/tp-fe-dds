@@ -16,11 +16,11 @@ function Home() {
 
       <h2 className="pb-2 animated-slideIn" >Bienvenido a AlimentAR</h2>
       <div className="content-colaboradores ">
-        {/* Título principal */}
+        
         
 
         <div className="section-description">
-          {/* Sección con el título y la descripción */}
+          
           <div className="col-description">
             <h1 className="sub-title">AlimentAR</h1>
             <p className="lead">
@@ -30,38 +30,58 @@ function Home() {
           </div>
         </div>
         
-        {/* Botones a la izquierda */}
+        
         <div className="botones-contenedor">
           <div  className="boton-secciones">
-            <h1>Secciones</h1>
+          <h1 className={`secciones-boton ${user.rol === "TECNICO" ? "secciones-tecnico" : ""}`}>
+              Secciones</h1>
           </div>
           <div className="botones-izquierda">
-            
+          {((user && user.rol === "COLABORADOR") ||
+          (user && user.rol === "ADMIN")) && (
             <button className="btn-primary">
               <Link className="link" to="/colaboradores">Colaboradores </Link>
               </button>
+          )}
+          {((user && user.rol === "COLABORADOR") ||
+          (user && user.rol === "ADMIN")) && (
             <button className="btn-primary">
               <Link className="link" to="/heladeras">Heladeras </Link>
               </button>
+              )}
+          {((user && user.rol === "COLABORADOR") ||
+            (user && user.rol === "ADMIN")) && (
             <button className="btn-primary">
               <Link className="link" to="/infoHeladera">Información de Heladeras </Link>
             </button>
+          )}
           </div>
 
-        {/* Botones a la derecha */}
-          <div className="botones-derecha">
-            <button className="btn-primary">
-              <Link className="link" to="/contribuciones">Contribuciones </Link>
+        
+          <div className={`botones-derecha ${user.rol === "TECNICO" ? "rol-tecnico" : ""}`}>
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/contribuciones">Contribuciones</Link>
               </button>
-            <button className="btn-primary">
-              <Link className="link" to="/tecnicos">Tecnicos </Link>
-            </button>
-            <button className="btn-primary">
-              <Link className="link" to="/ofertas">Ofertas </Link>
+            )}
+            {((user && user.rol === "ADMIN") ||
+              (user && user.rol === "TECNICO")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/tecnicos">Técnicos</Link>
               </button>
+            )}
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/ofertas">Ofertas</Link>
+              </button>
+            )}
           </div>
+
         </div>
       </div>
+      {user && user.rol === "ADMIN" && (
       <table className="table table-striped table-bordered text-center">
       <thead className="table-dark align-middle ">
           <tr>
@@ -74,6 +94,7 @@ function Home() {
           <td colSpan="6">No hay información disponible.</td>
         </tr>
       </table>
+      )}
     </div>
   );
 }
