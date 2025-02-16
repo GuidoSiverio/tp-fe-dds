@@ -212,14 +212,26 @@ function InfoHeladera() {
                     </tr>
                     {/* Fila dinámica para el formulario */}
                     {activeRow === index && (
-                      <tr>
+                      <tr
+                        className={`slide-row ${
+                          activeRow === index ? "show" : ""
+                        }`}
+                      >
                         <td colSpan="6">
                           <div className="d-flex flex-column align-items-center">
                             <textarea
-                              className="form-control my-2"
+                              className="textarea-2 my-2"
+                              style={{
+                                borderRadius: "10px",
+                                padding: "10px",
+                                border: "1px solid #ccc",
+                                backgroundColor: "#f8f9fa",
+                                transition: "border-color 0.3s ease-in-out",
+                              }}
                               placeholder="Descripción del incidente"
                               value={descripcion}
                               onChange={(e) => setDescripcion(e.target.value)}
+                              rows={4}
                             />
                             <input
                               type="file"
@@ -228,7 +240,20 @@ function InfoHeladera() {
                               accept="image/*"
                               onChange={handleImageUpload}
                             />
-
+                            <input
+                              type="file"
+                              className="input-2 my-2"
+                              style={{
+                                borderRadius: "10px",
+                                padding: "10px",
+                                border: "1px solid #ccc",
+                                backgroundColor: "#f8f9fa",
+                                transition: "border-color 0.3s ease-in-out",
+                              }}
+                              id="imagen"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                            />
                             <button
                               className="btn btn-primary"
                               onClick={() => handleReportarAlerta(heladera.id)}

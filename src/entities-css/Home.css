@@ -1,0 +1,149 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .content-colaboradores {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Tres columnas con el mismo tamaño */
+    width: 90%;
+    background: #2f4f4f; /* Gris oscuro */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid #1e3535; /* Verde oscuro */
+    transform: translateY(30px);
+    opacity: 0;
+    animation: slideIn 0.5s forwards; /* Animación de deslizamiento hacia arriba */
+    margin-bottom: 50px;
+    margin-top: 50px;
+  }
+  
+  .main-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .section-description {
+    display: flex;
+    justify-content: justify;
+    align-items: center;
+    width: 100%;
+    padding: 20px; /* Espaciado para que no quede pegado a los bordes */
+  }
+  
+  .col-description {
+    max-width: 500px;
+    text-align: justify;
+  }
+  
+  .sub-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-bottom: 1px solid white;
+  }
+  
+  .lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+
+  
+  
+  .boton-secciones {
+    text-align: center;
+    grid-column: span 2; /* El título ocupa ambas columnas */
+    margin-bottom: 20px;
+  }
+  
+  .botones-contenedor {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 20px; /* Espacio entre los botones */
+    justify-items: center; /* Centra los botones dentro de cada columna */
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .botones-izquierda,
+  .botones-derecha {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: -180px;
+  }
+  
+  /* Ajuste para cuando el usuario es TÉCNICO */
+  .rol-tecnico {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+    margin-right: 100px; /* Alinea el botón a la derecha */
+    width: 100%;
+    padding-right: 20px; /* Agrega espacio del lado derecho */
+  }
+  .secciones-boton {
+    text-align: center; /* Mantiene el texto centrado por defecto */
+  }
+  
+  .secciones-tecnico {
+    text-align: left; /* Mueve el texto a la izquierda si el usuario es TÉCNICO */
+    padding-right: 75px; /* Ajusta la cantidad de desplazamiento */
+  }
+  
+  
+  .rol-tecnico button {
+    width: auto;
+  }
+  
+  /* Mantener botones centrados para otros roles */
+  .botones-derecha:not(.rol-tecnico) {
+    align-items: center;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  .btn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+  }
+  
+  .btn:hover {
+    background-color: #555;
+  }
+  

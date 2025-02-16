@@ -31,13 +31,13 @@ function Login() {
         body: JSON.stringify(user),
       });
 
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         console.log("Login response:", data);
         loginUser(user);
         navigate("/home");
       } else {
-        setMessage("Error al loguearse: " + error.message);
+        setMessage("Error al loguearse: " + data.message);
         setMessageType("error");
       }
     } catch (error) {
@@ -74,7 +74,7 @@ function Login() {
     <div
       className=""
       style={{
-        backgroundColor: "white",
+        background: "linear-gradient(135deg, #2c3e3f, #3d5a5b)",
         borderRadius: "40px",
         display: "flex",
         flexDirection: "column",

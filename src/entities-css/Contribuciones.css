@@ -10,6 +10,7 @@ body {
   .Contribuciones {
     padding: 40px;
     text-align: center;
+    
   }
   
   /* 🔥 TÍTULO MEJORADO 🔥 */
@@ -96,6 +97,8 @@ body {
     justify-content: center;
     margin-bottom: 15px;
   }
+
+  
   
   /* 📱 RESPONSIVIDAD MEJORADA 📱 */
   @media (max-width: 1024px) {
