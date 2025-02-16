@@ -68,7 +68,7 @@ function Login() {
     <div
       className=""
       style={{
-        backgroundColor: "white",
+        background: "linear-gradient(135deg, #2c3e3f, #3d5a5b)",
         borderRadius: "40px",
         display: "flex",
         flexDirection: "column",
@@ -163,11 +163,11 @@ function Login() {
           </label>
         </div>
 
-        <div className="checkbox mb-3" style={{ textAlign: "center" }}>
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
+        <div className="d-flex justify-content-center align-items-center mb-3">
+          <label className="col-6">Remember me</label>
+          <input type="checkbox" value="remember-me" />
         </div>
+
 
         <button
           className="w-25 btn btn-lg"

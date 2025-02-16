@@ -332,7 +332,7 @@ function Heladera() {
                 onClick={addHeladera} 
                 disabled={!heladera.nombre || !heladera.latitud || !heladera.longitud}
               >
-                Save
+                Guardar
               </button>
             </div>
           </div>

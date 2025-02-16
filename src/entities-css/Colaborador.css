@@ -15,7 +15,7 @@
 }
 
 /* Contenido del colaborador */
-.content-colaboradores {
+.content-colaboradores1 {
   width: 90%;
   background: #2f4f4f; /* Gris oscuro */
   border-radius: 15px;
@@ -57,12 +57,12 @@ input {
 }
 
 input:focus {
-  border: 2px solid #f7fafa; /* Verde oscuro al enfocarse */
+  border: 2px solid #000000; /* Verde oscuro al enfocarse */
   outline: none;
 }
 
 select:focus {
-  border: 2px solid #f7fafa; /* Verde oscuro al enfocarse */
+  border: 2px solid #000000; /* Verde oscuro al enfocarse */
   outline: none;
 }
 

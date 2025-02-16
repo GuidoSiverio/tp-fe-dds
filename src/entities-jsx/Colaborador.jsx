@@ -149,7 +149,7 @@ function Colaboador() {
     <div className="Colaborador">
       <Sidebar />
       <h2 className="pb-2 animated-slideIn">Alta Colaborador</h2>
-      <div className="content-colaboradores">
+      <div className="content-colaboradores1">
         
         <br />
         {isColaboradorLinked ? (
