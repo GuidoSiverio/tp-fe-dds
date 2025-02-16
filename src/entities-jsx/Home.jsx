@@ -75,124 +75,152 @@ function Home() {
           </div>
         </div>
 
-        {/* Botones a la izquierda */}
         <div className="botones-contenedor">
           <div className="boton-secciones">
-            <h1>Secciones</h1>
+            <h1
+              className={`secciones-boton ${
+                user && user.rol === "TECNICO" ? "secciones-tecnico" : ""
+              }`}
+            >
+              Secciones
+            </h1>
           </div>
           <div className="botones-izquierda">
-            <button className="btn-primary">
-              <Link className="link" to="/colaboradores">
-                Colaboradores{" "}
-              </Link>
-            </button>
-            <button className="btn-primary">
-              <Link className="link" to="/heladeras">
-                Heladeras{" "}
-              </Link>
-            </button>
-            <button className="btn-primary">
-              <Link className="link" to="/infoHeladera">
-                Información de Heladeras{" "}
-              </Link>
-            </button>
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/colaboradores">
+                  Colaboradores{" "}
+                </Link>
+              </button>
+            )}
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/heladeras">
+                  Heladeras{" "}
+                </Link>
+              </button>
+            )}
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/infoHeladera">
+                  Información de Heladeras{" "}
+                </Link>
+              </button>
+            )}
           </div>
 
-          {/* Botones a la derecha */}
-          <div className="botones-derecha">
-            <button className="btn-primary">
-              <Link className="link" to="/contribuciones">
-                Contribuciones{" "}
-              </Link>
-            </button>
-            <button className="btn-primary">
-              <Link className="link" to="/tecnicos">
-                Tecnicos{" "}
-              </Link>
-            </button>
-            <button className="btn-primary">
-              <Link className="link" to="/ofertas">
-                Ofertas{" "}
-              </Link>
-            </button>
+          <div
+            className={`botones-derecha ${
+              user && user.rol === "TECNICO" ? "rol-tecnico" : ""
+            }`}
+          >
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/contribuciones">
+                  Contribuciones
+                </Link>
+              </button>
+            )}
+            {((user && user.rol === "ADMIN") ||
+              (user && user.rol === "TECNICO")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/tecnicos">
+                  Técnicos
+                </Link>
+              </button>
+            )}
+            {((user && user.rol === "COLABORADOR") ||
+              (user && user.rol === "ADMIN")) && (
+              <button className="btn-primary">
+                <Link className="link" to="/ofertas">
+                  Ofertas
+                </Link>
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* 🔥 Nueva Sección: Reportes */}
-      <div className="reportes-section mt-5">
-        <h3>📊 Reportes de Fallas por Heladera</h3>
-        <table className="table table-striped table-bordered text-center">
-          <thead className="table-dark align-middle">
-            <tr>
-              <th>Heladera</th>
-              <th>Cantidad de Fallas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {fallasPorHeladera.length > 0 ? (
-              fallasPorHeladera.map((reporte, index) => (
-                <tr key={index}>
-                  <td>{reporte.heladera}</td>
-                  <td>{reporte.cantidadFallas}</td>
-                </tr>
-              ))
-            ) : (
+      {user && user.rol === "ADMIN" && (
+        <div className="reportes-section mt-5">
+          <h3>📊 Reportes de Fallas por Heladera</h3>
+          <table className="table table-striped table-bordered text-center">
+            <thead className="table-dark align-middle">
               <tr>
-                <td colSpan="2">No hay información disponible.</td>
+                <th>Heladera</th>
+                <th>Cantidad de Fallas</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {fallasPorHeladera.length > 0 ? (
+                fallasPorHeladera.map((reporte, index) => (
+                  <tr key={index}>
+                    <td>{reporte.heladera}</td>
+                    <td>{reporte.cantidadFallas}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No hay información disponible.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-        <h3>🍽️ Reportes de Viandas por Heladera</h3>
-        <table className="table table-striped table-bordered text-center">
-          <thead className="table-dark align-middle">
-            <tr>
-              <th>Heladera</th>
-              <th>Cantidad de Viandas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {viandasPorHeladera.length > 0 ? (
-              viandasPorHeladera.map((reporte, index) => (
-                <tr key={index}>
-                  <td>{reporte.heladera}</td>
-                  <td>{reporte.cantidadViandas}</td>
-                </tr>
-              ))
-            ) : (
+          <h3>🍽️ Reportes de Viandas por Heladera</h3>
+          <table className="table table-striped table-bordered text-center">
+            <thead className="table-dark align-middle">
               <tr>
-                <td colSpan="2">No hay información disponible.</td>
+                <th>Heladera</th>
+                <th>Cantidad de Viandas</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {viandasPorHeladera.length > 0 ? (
+                viandasPorHeladera.map((reporte, index) => (
+                  <tr key={index}>
+                    <td>{reporte.heladera}</td>
+                    <td>{reporte.cantidadViandas}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No hay información disponible.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-        <h3>👥 Reportes de Viandas por Colaborador</h3>
-        <table className="table table-striped table-bordered text-center">
-          <thead className="table-dark align-middle">
-            <tr>
-              <th>Colaborador</th>
-              <th>Cantidad de Viandas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {viandasPorColaborador.length > 0 ? (
-              viandasPorColaborador.map((reporte, index) => (
-                <tr key={index}>
-                  <td>{reporte.colaborador}</td>
-                  <td>{reporte.cantidadViandas}</td>
-                </tr>
-              ))
-            ) : (
+          <h3>👥 Reportes de Viandas por Colaborador</h3>
+          <table className="table table-striped table-bordered text-center">
+            <thead className="table-dark align-middle">
               <tr>
-                <td colSpan="2">No hay información disponible.</td>
+                <th>Colaborador</th>
+                <th>Cantidad de Viandas</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {viandasPorColaborador.length > 0 ? (
+                viandasPorColaborador.map((reporte, index) => (
+                  <tr key={index}>
+                    <td>{reporte.colaborador}</td>
+                    <td>{reporte.cantidadViandas}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No hay información disponible.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
