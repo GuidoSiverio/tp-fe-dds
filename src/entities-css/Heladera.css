@@ -41,9 +41,6 @@ body {
   }
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1); /* Cambia el color del ícono a blanco */
-}
 
 .animated-slideIn {
   animation: slideIn 0.5s forwards;
@@ -55,24 +52,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Estilos para el formulario */
 input,
-select {
+select,
+textarea {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
   border: 2px solid #ffffff; /* Borde blanco en inputs */
   border-radius: 10px;
   margin-bottom: 20px;
-  background-color: #344546; /* Fondo oscuro */
-  color: white; /* Color blanco para el texto */
+  background-color: #ffffff; /* Fondo oscuro */
+  color: rgb(0, 0, 0); /* Color blanco para el texto */
   transition: all 0.3s ease;
 }
 
 /* Animación para cuando el input está en foco (aumenta el tamaño del área de escritura) */
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   border-color: #ffffff; /* Borde blanco cuando están en foco */
   outline: none;
-  background-color: #3c4d4f; /* Fondo en foco con mayor contraste */
+  background-color: #ffffff; /* Fondo en foco con mayor contraste */
   transform: scale(1.05); /* Aumento del tamaño al enfocar */
 }
 

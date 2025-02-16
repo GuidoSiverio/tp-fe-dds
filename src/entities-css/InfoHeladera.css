@@ -9,8 +9,42 @@
   animation: fadeInTable 0.3s ease-out;
 }
 
+.content-wrapper {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+}
+
+.slide-row.show .content-wrapper {
+  height: 120px; /* Ajusta según el contenido */
+}
+
+.Tecnicos{
+
+}
+
+
+
+
 .content{
   animation: slideIn 0.5s forwards;
+}
+.textarea-2{
+  border-radius: "10px";
+  padding: "10px";
+  width: 95%;
+  border: "1px solid #ccc";
+  background-color: "#f8f9fa";
+  transition: "border-color 0.3s ease-in-out";
+}
+
+.input-2{
+  border-radius: "10px";
+  padding: "10px";
+  width: 95%;
+  border: "1px solid #ccc";
+  background-color: white;
+
 }
 
 @keyframes fadeInTable {

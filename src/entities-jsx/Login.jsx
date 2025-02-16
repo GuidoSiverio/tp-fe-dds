@@ -74,7 +74,7 @@ function Login() {
     <div
       className=""
       style={{
-        backgroundColor: "white",
+        background: "linear-gradient(135deg, #2c3e3f, #3d5a5b)",
         borderRadius: "40px",
         display: "flex",
         flexDirection: "column",
