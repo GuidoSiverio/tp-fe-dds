@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import "../entities-css/InfoHeladera.css";
 
 function InfoHeladera() {
   const [heladeras, setHeladeras] = useState([]);
@@ -151,12 +152,12 @@ function InfoHeladera() {
     <div className="infoHeladera">
       <Sidebar />
       <div className="content">
-        <h1 className="display-4 fw-normal">Información de Heladeras</h1>
+        <h2 className="pb-2">Información de Heladeras</h2>
 
         {/* Tabla de heladeras */}
         <div className="table-responsive">
-          <table className="table table-striped table-bordered text-center">
-            <thead className="table-dark">
+          <table className="table table-striped table-bordered text-center ">
+            <thead className="table-dark align-middle ">
               <tr>
                 <th>Nombre</th>
                 <th>Dirección</th>
@@ -166,27 +167,29 @@ function InfoHeladera() {
                 <th>Reportar Incidente</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
               {heladeras.length > 0 ? (
                 heladeras.map((heladera, index) => (
                   <>
                     {/* Fila principal */}
                     <tr key={index}>
-                      <td>{heladera.nombre}</td>
-                      <td>{heladera.direccion}</td>
-                      <td>{heladera.capacidad}</td>
-                      <td>{heladera.activa ? "Activa" : "Inactiva"}</td>
+                      <td class="py-3">{heladera.nombre}</td>
+                      <td class="py-3">{heladera.direccion}</td>
+                      <td class="py-3">{heladera.capacidad}</td>
+                      <td class="py-3">
+                        {heladera.activa ? "Activa" : "Inactiva"}
+                      </td>
                       <td>
                         {suscripciones.includes(heladera.id) ? (
                           <button
-                            className="btn btn-warning"
+                            className="btn-warning"
                             onClick={() => handleDesuscribirse(heladera.id)}
                           >
                             Desuscribirse
                           </button>
                         ) : (
                           <button
-                            className="btn btn-success"
+                            className="btn-suscribirse"
                             onClick={() => handleSuscribirse(heladera.id)}
                           >
                             Suscribirse
@@ -195,7 +198,7 @@ function InfoHeladera() {
                       </td>
                       <td>
                         <button
-                          className="btn btn-danger"
+                          className="btn-reportar"
                           onClick={() =>
                             setActiveRow(
                               activeRow === index ? null : index // Alternar fila activa

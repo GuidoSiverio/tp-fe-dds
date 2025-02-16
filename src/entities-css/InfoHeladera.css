@@ -1,0 +1,117 @@
+/* Tabla con fondo oscuro */
+.table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  background-color: #2d3d3a; /* Gris oscuro para la tabla */
+  color: #f0f0f0; /* Texto claro */
+  animation: fadeInTable 0.3s ease-out;
+}
+
+.content{
+  animation: slideIn 0.5s forwards;
+}
+
+@keyframes fadeInTable {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.table th, .table td {
+  padding: 15px;
+  border: 1px solid #444; /* Bordes más oscuros */
+  transition: background-color 0.31 ease; /* Animación al pasar el mouse */
+}
+
+.table th {
+  background-color: #3d4f4f; /* Fondo más oscuro para los encabezados */
+}
+
+/* Filas impares */
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #3a4e4e; /* Gris más oscuro para las filas impares */
+}
+
+/* Filas pares */
+.table-striped tbody tr:nth-child(even) {
+  background-color: #2f3f3f; /* Gris aún más oscuro para las filas pares */
+}
+
+/* Fila activa */
+tr.active-row {
+  background-color: #5b6a6a; /* Gris más claro para la fila activa */
+}
+
+/* Efecto hover para las filas */
+.table tbody tr:hover {
+  background-color: #4f6161; /* Gris intermedio cuando el mouse pasa por encima */
+}
+
+/* Botones */
+.btn-reportar {
+  background-color: #333; /* Gris oscuro */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  border-radius: 5px;
+  animation: fadeInButton 0.1s ease-out; /* Animación de los botones */
+}
+
+@keyframes fadeInButton {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.btn-reportar:disabled {
+  background-color: rgb(199, 21, 21);
+  cursor: not-allowed;
+}
+
+.btn-reportar:hover {
+  background-color: #555;
+  transform: translateY(-3px);
+}
+
+.btn-suscribirse {
+  background-color: #4a7f60; /* Verde oscuro */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn-suscribirse:hover {
+  background-color: #2e4c38;
+  transform: translateY(-3px);
+}
+
+.btn-warning {
+  background-color: #a5b10c; /* Verde oliva */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn-warning:hover {
+  background-color: #7e931a;
+  transform: translateY(-3px);
+}
+
