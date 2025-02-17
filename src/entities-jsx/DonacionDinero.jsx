@@ -84,7 +84,7 @@ function DonacionDinero() {
   return (
     <div className="DonacionDinero">
       <Sidebar />
-      <h2 className="pb-2">Registrar Donación de Dinero</h2>
+      <h2 className="pb-2 animated-slideIn">Registrar Donación de Dinero</h2>
       <div className="content-heladera">
         
         

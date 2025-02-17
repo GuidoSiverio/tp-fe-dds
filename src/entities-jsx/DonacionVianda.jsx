@@ -139,7 +139,7 @@ function DonacionVianda() {
   return (
     <div className="Vianda">
       <Sidebar />
-      <h2 className="pb-2">Donacion de Vianda</h2>
+      <h2 className="pb-2 animated-slideIn">Donacion de Vianda</h2>
       <div className="content-heladeras">
         
         

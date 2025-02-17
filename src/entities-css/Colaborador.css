@@ -26,6 +26,7 @@
   opacity: 0;
   animation: slideIn 0.5s forwards; /* Animación de deslizamiento hacia arriba */
   margin-bottom: 50px;
+  margin-top: 20px;
 }
 
 

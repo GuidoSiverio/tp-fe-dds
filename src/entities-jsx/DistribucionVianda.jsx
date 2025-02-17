@@ -105,7 +105,7 @@ function DistribucionVianda() {
   return (
     <div className="DistribucionVianda">
       <Sidebar />
-      <h2 className="pb-2">
+      <h2 className="pb-2 animated-slideIn">
           Registrar Distribución de Vianda
         </h2>
       <div className="content">

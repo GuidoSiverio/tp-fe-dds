@@ -27,6 +27,7 @@ body {
   opacity: 0;
   animation: slideIn 0.5s forwards;
   margin-bottom: 50px;
+  margin-top: 20px;
 }
 
 /* Animación para entrada suave del formulario */
@@ -92,6 +93,7 @@ label {
   font-size: 1rem;
   border-radius: 10px;
   margin-bottom: 20px;
+  
   border: none;
   background: linear-gradient(135deg, #4a7a78, #3b625f);
   color: white;

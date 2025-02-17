@@ -83,9 +83,10 @@ function PersonaVulnerable() {
   return (
     <div className="PersonaVulnerable">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Registrar Persona Vulnerable</h1>
-        <br />
+      <h2 className="pb-2 animated-slideIn">Registrar Persona Vulnerable</h2>
+      <div className="content-heladera">
+        
+       
         {!isColaboradorLinked ? (
           <h1>
             Debes ser colaborador para registrar a una persona vulnerable.

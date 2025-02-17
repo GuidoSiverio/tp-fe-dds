@@ -82,7 +82,7 @@ function RegistroEmpresa() {
   return (
     <div className="RegistroEmpresa">
       <Sidebar />
-      <h2 className="pb-2">
+      <h2 className="pb-2 animated-slideIn">
           Registrar Empresa para Ofrecer Beneficios
         </h2>
       <div className="content-heladera">
