@@ -139,22 +139,23 @@ function DonacionVianda() {
   return (
     <div className="Vianda">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Donacion de Vianda</h1>
-        <br />
+      <h2 className="pb-2">Donacion de Vianda</h2>
+      <div className="content-heladeras">
+        
+        
         {!isColaboradorLinked ? (
           <h1>Debes ser colaborador para realizar una donacion de vianda.</h1>
         ) : (
           <>
             <form className="needs-validation" noValidate onSubmit={addVianda}>
               <div className="row g-3">
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="comida" className="form-label">
                     Comida
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    
                     id="comida"
                     placeholder="Comida"
                     required
@@ -166,13 +167,13 @@ function DonacionVianda() {
                   </div>
                 </div>
 
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="date" className="form-label">
                     Fecha de caducidad
                   </label>
                   <input
                     type="date"
-                    className="form-control"
+                    
                     id="date"
                     required
                     value={vianda.fechaCaducidad}
@@ -185,14 +186,14 @@ function DonacionVianda() {
                   </div>
                 </div>
 
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="calorias" className="form-label">
                     Calorias
                   </label>
                   <div className="input-group has-validation">
                     <input
                       type="text"
-                      className="form-control"
+                      
                       id="calorias"
                       placeholder="Calorias"
                       required
@@ -202,13 +203,13 @@ function DonacionVianda() {
                   </div>
                 </div>
 
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="peso" className="form-label">
                     Peso
                   </label>
                   <input
                     type="peso"
-                    className="form-control"
+                    
                     id="peso"
                     placeholder="Peso"
                     required
@@ -218,12 +219,12 @@ function DonacionVianda() {
                 </div>
 
                 {recommendedHeladeras.length === 0 && (
-                  <div className="col-12">
+                  <div className="col-md-6">
                     <label htmlFor="heladera" className="form-label">
                       Heladera
                     </label>
                     <select
-                      className="form-select"
+                      className="select-formulario"
                       id="heladera"
                       required
                       value={vianda.heladeraId}
@@ -249,12 +250,12 @@ function DonacionVianda() {
                 )}
 
                 {recommendedHeladeras.length > 0 && (
-                  <div className="col-12">
+                  <div className="col-md-6">
                     <label htmlFor="recommendedHeladera" className="form-label">
                       Heladeras Recomendadas
                     </label>
                     <select
-                      className="form-select"
+                      className="select-formulario"
                       id="recommendedHeladera"
                       onChange={(e) =>
                         handleChange("heladeraId", e.target.value)
@@ -303,7 +304,7 @@ function DonacionVianda() {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      
                       id="longitud"
                       name="longitud"
                       value={recommendationsData.longitud}
@@ -318,7 +319,7 @@ function DonacionVianda() {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      
                       id="latitud"
                       name="latitud"
                       value={recommendationsData.latitud}

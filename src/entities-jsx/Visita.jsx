@@ -155,18 +155,19 @@ function Visita() {
   return (
     <div className="RegistrarVisita">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Registrar Visita</h1>
-        <br />
+      <h2 className="pb-2">Registrar Visita</h2>
+      <div className="content-heladera">
+        
+        
         <form className="needs-validation" noValidate>
           <div className="row g-3">
             {/* Selección de heladeras desde el backend */}
-            <div className="col-12">
-              <label htmlFor="heladeraId" className="form-label">
+            <div className="col-md-12">
+              <label htmlFor="heladeraId" >
                 Heladera
               </label>
               <select
-                className="form-control"
+                className="select-formulario"
                 id="heladeraId"
                 value={visita.heladeraId}
                 onChange={(e) => handleChange("heladeraId", e.target.value)}
@@ -181,12 +182,12 @@ function Visita() {
             </div>
 
             {/* Selección de incidentes vinculados a la heladera seleccionada */}
-            <div className="col-12">
+            <div className="col-md-12">
               <label htmlFor="incidenteId" className="form-label">
                 Incidente
               </label>
               <select
-                className="form-control"
+                className="select-formulario"
                 id="incidenteId"
                 value={visita.incidenteId}
                 onChange={(e) => handleChange("incidenteId", e.target.value)}
@@ -203,12 +204,12 @@ function Visita() {
             </div>
 
             {/* Comentario */}
-            <div className="col-12">
+            <div className="col-md-12">
               <label htmlFor="comentario" className="form-label">
                 Comentario
               </label>
               <textarea
-                className="form-control"
+                className="select-formulario"
                 id="comentario"
                 placeholder="Describe el trabajo realizado"
                 required
@@ -218,13 +219,13 @@ function Visita() {
             </div>
 
             {/* Carga de imágenes*/}
-            <div className="col-12">
+            <div className="col-md-12">
               <label htmlFor="imagen" className="form-label">
                 Subir Imagen
               </label>
               <input
                 type="file"
-                className="form-control"
+                className="select-formulario"
                 id="imagen"
                 accept="image/*"
                 onChange={handleImageUpload}
@@ -232,7 +233,7 @@ function Visita() {
             </div>
 
             {/* Checkbox de solucionado */}
-            <div className="col-12 d-flex justify-content-center">
+            <div className="col-md-12 d-flex justify-content-center">
               <div className="form-check">
                 <input
                   type="checkbox"

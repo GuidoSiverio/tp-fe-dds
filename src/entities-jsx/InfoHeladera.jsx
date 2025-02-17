@@ -235,13 +235,6 @@ function InfoHeladera() {
                             />
                             <input
                               type="file"
-                              className="form-control"
-                              id="imagen"
-                              accept="image/*"
-                              onChange={handleImageUpload}
-                            />
-                            <input
-                              type="file"
                               className="input-2 my-2"
                               style={{
                                 borderRadius: "10px",

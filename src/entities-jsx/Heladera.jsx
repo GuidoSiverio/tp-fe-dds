@@ -194,6 +194,17 @@ function Heladera() {
               />
             </div>
 
+            <div className="col-md-6">
+              <label htmlFor="direccion">Dirección</label>
+              <input
+                type="text"
+                id="direccion"
+                value={heladera.direccion}
+                onChange={(e) => handleChange("direccion", e.target.value)}
+                required
+              />
+            </div>
+
             {showRecommendations && (
               <>
                 <div className="col-md-6">
@@ -253,18 +264,9 @@ function Heladera() {
               </>
             )}
 
-            <div className="col-md-6">
-              <label htmlFor="direccion">Dirección</label>
-              <input
-                type="text"
-                id="direccion"
-                value={heladera.direccion}
-                onChange={(e) => handleChange("direccion", e.target.value)}
-                required
-              />
-            </div>
+            
 
-            <div className="col-md-6">
+            <div className="col-md-12">
               <label htmlFor="capacidad">Capacidad</label>
               <input
                 type="number"
@@ -313,28 +315,28 @@ function Heladera() {
           </div>
 
           <hr className="my-4" />
-
-          <div className="d-flex justify-content-between">
-            <button
-              className="btn btn-secondary btn-lg"
+          <div className="col-12">
+          <div className="col-6">
+              <button
+              className="button-recomendaciones col-md-12"
               type="button"
               onClick={() => setShowRecommendations(!showRecommendations)}
-            >
+              >
               Ver Recomendaciones
-            </button>
-          </div>
-          <div className="col-6">
-            <button
-              type="button"
-              className="button-save col-md-12"
-              onClick={addHeladera}
-              disabled={
-                !heladera.nombre || !heladera.latitud || !heladera.longitud
-              }
-            >
-              Save
-            </button>
-          </div>
+              </button>
+            </div>
+              <div className="col-md-6">
+              <button
+                type="button"
+                className="button-save col-md-12"
+                onClick={addHeladera} 
+                disabled={!heladera.nombre || !heladera.latitud || !heladera.longitud}
+              >
+                Guardar
+              </button>
+
+            </div>
+            </div>
         </form>
         {message && (
           <div

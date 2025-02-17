@@ -148,7 +148,7 @@ function Home() {
       {/* 🔥 Nueva Sección: Reportes */}
       {user && user.rol === "ADMIN" && (
         <div className="reportes-section mt-5">
-          <h3>📊 Reportes de Fallas por Heladera</h3>
+          <h2 className="pb-2">📊 Reportes de Fallas por Heladera</h2>
           <table className="table table-striped table-bordered text-center">
             <thead className="table-dark align-middle">
               <tr>
@@ -172,7 +172,7 @@ function Home() {
             </tbody>
           </table>
 
-          <h3>🍽️ Reportes de Viandas por Heladera</h3>
+          <h2 className="pb-2">🍽️ Reportes de Viandas por Heladera</h2>
           <table className="table table-striped table-bordered text-center">
             <thead className="table-dark align-middle">
               <tr>
@@ -196,7 +196,7 @@ function Home() {
             </tbody>
           </table>
 
-          <h3>👥 Reportes de Viandas por Colaborador</h3>
+          <h2 className="pb-2">👥 Reportes de Viandas por Colaborador</h2>
           <table className="table table-striped table-bordered text-center">
             <thead className="table-dark align-middle">
               <tr>

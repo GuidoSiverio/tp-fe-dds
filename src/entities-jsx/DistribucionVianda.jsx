@@ -105,11 +105,12 @@ function DistribucionVianda() {
   return (
     <div className="DistribucionVianda">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">
+      <h2 className="pb-2">
           Registrar Distribución de Vianda
-        </h1>
-        <br />
+        </h2>
+      <div className="content">
+
+        
         {!isColaboradorLinked ? (
           <h1>
             Debes ser colaborador para realizar una distribucion de viandas.
@@ -121,12 +122,12 @@ function DistribucionVianda() {
             onSubmit={addDistribucion}
           >
             <div className="row g-3">
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="heladeraOrigen" className="form-label">
                   Heladera de Origen
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="heladeraOrigen"
                   required
                   onChange={(e) =>
@@ -145,12 +146,12 @@ function DistribucionVianda() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="heladeraDestino" className="form-label">
                   Heladera de Destino
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="heladeraDestino"
                   required
                   onChange={(e) =>
@@ -169,13 +170,13 @@ function DistribucionVianda() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="cantidadViandas" className="form-label">
                   Cantidad de Viandas
                 </label>
                 <input
                   type="number"
-                  className="form-control"
+                  
                   id="cantidadViandas"
                   placeholder="Cantidad"
                   required
@@ -188,12 +189,12 @@ function DistribucionVianda() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="motivoDistribucion" className="form-label">
                   Motivo de la Distribución
                 </label>
                 <textarea
-                  className="form-control"
+                  
                   id="motivoDistribucion"
                   placeholder="Motivo de la distribución"
                   required
@@ -206,13 +207,13 @@ function DistribucionVianda() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="fechaDistribucion" className="form-label">
                   Fecha de la Distribución
                 </label>
                 <input
                   type="date"
-                  className="form-control"
+                  
                   id="fechaDistribucion"
                   required
                   onChange={(e) =>

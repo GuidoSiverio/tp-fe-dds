@@ -84,15 +84,16 @@ function DonacionDinero() {
   return (
     <div className="DonacionDinero">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Registrar Donación de Dinero</h1>
-        <br />
+      <h2 className="pb-2">Registrar Donación de Dinero</h2>
+      <div className="content-heladera">
+        
+        
         {!isColaboradorLinked ? (
           <h1>Debes ser colaborador para realizar una donación de dinero.</h1>
         ) : (
           <form className="needs-validation" noValidate onSubmit={addDonacion}>
             <div className="row g-3">
-              <div className="col-12">
+              <div className="col-md-6">
                 <label className="form-label" style={{ fontSize: "1.2rem" }}>
                   Monto de la donación
                 </label>
@@ -112,7 +113,6 @@ function DonacionDinero() {
                 <input
                   type="number"
                   step="0.01"
-                  className="form-control mt-2"
                   id="monto"
                   placeholder="Monto personalizado"
                   style={{ fontSize: "1.2rem" }}
@@ -121,16 +121,15 @@ function DonacionDinero() {
                 />
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label
                   htmlFor="frecuencia"
-                  className="form-label"
                   style={{ fontSize: "1.2rem" }}
                 >
                   Frecuencia de la donación
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="frecuencia"
                   required
                   style={{ fontSize: "1.2rem" }}
@@ -143,13 +142,12 @@ function DonacionDinero() {
                 </select>
               </div>
 
-              <div className="col-12 d-flex justify-content-center">
+              <div className="col-md-6 ">
                 <div
                   className="form-check form-check-lg"
                   style={{ padding: "10px", borderRadius: "5px" }}
                 >
                   <input
-                    className="form-check-input"
                     type="checkbox"
                     id="formaPeriodica"
                     style={{ transform: "scale(1.5)" }}
@@ -159,7 +157,6 @@ function DonacionDinero() {
                     }
                   />
                   <label
-                    className="form-check-label ms-2"
                     htmlFor="formaPeriodica"
                     style={{ fontSize: "1.2rem" }}
                   >

@@ -78,18 +78,18 @@ function TecnicosAlta() {
   return (
     <div className="TecnicosAlta">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Alta Técnico</h1>
-        <br />
+      <h2 className="pd-2">Alta Técnico</h2>
+      <div className="content-heladera">
+
         <form className="needs-validation" noValidate>
           <div className="row g-3">
-            <div className="col-12">
-              <label htmlFor="nombre" className="form-label">
+            <div className="col-6">
+              <label htmlFor="nombre" >
                 Nombre
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="nombre"
                 placeholder="Nombre"
                 required
@@ -98,13 +98,13 @@ function TecnicosAlta() {
               <div className="invalid-feedback">Nombre requerido.</div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="apellido" className="form-label">
                 Apellido
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="apellido"
                 placeholder="Apellido"
                 required
@@ -113,12 +113,12 @@ function TecnicosAlta() {
               <div className="invalid-feedback">Apellido requerido.</div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="tipoDocumento" className="form-label">
                 Tipo de documento
               </label>
               <select
-                className="form-control"
+                className="select-formulario"
                 id="tipoDocumento"
                 required
                 onChange={(e) => handleChange("tipoDocumento", e.target.value)}
@@ -133,13 +133,13 @@ function TecnicosAlta() {
               </div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="documento" className="form-label">
                 Numero de Documento
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="documento"
                 placeholder="Documento"
                 required
@@ -150,13 +150,13 @@ function TecnicosAlta() {
               </div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="cuil" className="form-label">
                 CUIL
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="cuil"
                 placeholder="Cuil"
                 required
@@ -165,13 +165,13 @@ function TecnicosAlta() {
               <div className="invalid-feedback">CUIL requerido.</div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="medioContacto" className="form-label">
                 Medio de Contacto
               </label>
               <select
                 type="medioDeContacto"
-                className="form-control"
+                className="select-formulario"
                 id="medioDeContacto"
                 placeholder="Medio de contacto"
                 required
@@ -188,13 +188,13 @@ function TecnicosAlta() {
 
             {tecnico.medioContacto === "WhatsApp" && (
               <>
-                <div className="col-12">
+                <div className="col-6">
                   <label htmlFor="numero" className="form-label">
                     Numero
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    
                     id="numero"
                     placeholder="Numero"
                     required
@@ -207,13 +207,13 @@ function TecnicosAlta() {
 
             {tecnico.medioContacto === "Email" && (
               <>
-                <div className="col-12">
+                <div className="col-6">
                   <label htmlFor="email" className="form-label">
                     Email
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    
                     id="email"
                     placeholder="Email"
                     required
@@ -224,13 +224,13 @@ function TecnicosAlta() {
               </>
             )}
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="areaCobertura" className="form-label">
                 Area de Cobertura
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="areaCobertura"
                 placeholder="AreaCobertura"
                 required
@@ -241,13 +241,13 @@ function TecnicosAlta() {
               </div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="user" className="form-label">
                 Usuario
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="user"
                 placeholder="Usuario"
                 required
@@ -256,13 +256,13 @@ function TecnicosAlta() {
               <div className="invalid-feedback">Usuario requerido.</div>
             </div>
 
-            <div className="col-12">
+            <div className="col-6">
               <label htmlFor="password" className="form-label">
                 Contraseña
               </label>
               <input
                 type="password"
-                className="form-control"
+                
                 id="password"
                 placeholder="Contraseña"
                 required

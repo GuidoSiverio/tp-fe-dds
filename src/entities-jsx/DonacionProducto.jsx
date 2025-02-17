@@ -82,23 +82,23 @@ function RegistroEmpresa() {
   return (
     <div className="RegistroEmpresa">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">
+      <h2 className="pb-2">
           Registrar Empresa para Ofrecer Beneficios
-        </h1>
-        <br />
+        </h2>
+      <div className="content-heladera">
+
         {!isColaboradorLinked ? (
           <h1>Debes ser colaborador para realizar una donacion de vianda.</h1>
         ) : (
           <form className="needs-validation" noValidate onSubmit={addProducto}>
             <div className="row g-3">
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="nombre" className="form-label">
                   Nombre de la oferta
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  
                   id="nombre"
                   placeholder="Nombre de la oferta"
                   required
@@ -109,12 +109,12 @@ function RegistroEmpresa() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="rubro" className="form-label">
                   Rubro
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="rubro"
                   required
                   onChange={(e) => handleChange("rubro", e.target.value)}
@@ -131,13 +131,13 @@ function RegistroEmpresa() {
                 <div className="invalid-feedback">Rubro requerido.</div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="puntosNecesarios" className="form-label">
                   Puntos necesarios
                 </label>
                 <input
                   type="number"
-                  className="form-control"
+                  
                   id="puntosNecesarios"
                   placeholder="Cantidad de puntos"
                   required
@@ -151,13 +151,13 @@ function RegistroEmpresa() {
               </div>
 
               {/* Carga de imágenes*/}
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="imagen" className="form-label">
                   Imagen ilustrativa
                 </label>
                 <input
                   type="file"
-                  className="form-control"
+                  
                   id="imagen"
                   accept="image/*"
                   onChange={handleImageUpload}

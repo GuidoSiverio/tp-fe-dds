@@ -76,9 +76,10 @@ function BajaTecnico() {
   return (
     <div className="BajaTecnico">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Dar de Baja Técnico</h1>
-        <br />
+      <h2 className="pb-2">Dar de Baja Técnico</h2>
+      <div className="content-heladera">
+        
+        
 
         <div>
           <div className="mb-3">
@@ -87,7 +88,7 @@ function BajaTecnico() {
             </label>
             <select
               id="tecnicoSelect"
-              className="form-select"
+              className="select-formulario"
               value={tecnicoId}
               onChange={(e) => setTecnicoId(e.target.value)}
             >

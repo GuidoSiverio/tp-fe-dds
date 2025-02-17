@@ -107,9 +107,10 @@ function ModificarTecnico() {
   return (
     <div className="ModificarTecnico">
       <Sidebar />
-      <div className="content">
-        <h1 className="display-4 fw-normal">Modificar Técnico</h1>
-        <br />
+      <h2 className="pb-2">Modificar Técnico</h2>
+      <div className="content-heladera">
+        
+        
 
         <div className="mb-3">
           <label htmlFor="tecnicoSelect" className="form-label">
@@ -117,7 +118,7 @@ function ModificarTecnico() {
           </label>
           <select
             id="tecnicoSelect"
-            className="form-select"
+            className="select-formulario"
             value={tecnicoId}
             onChange={(e) => setTecnicoId(e.target.value)}
           >
@@ -132,91 +133,91 @@ function ModificarTecnico() {
 
         <form className="needs-validation" noValidate>
           <div className="row g-3">
-            <div className="col-12">
+            <div className="col-md-6">
               <label htmlFor="nombre" className="form-label">
                 Nombre
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="nombre"
                 value={tecnico.nombre}
                 onChange={(e) => handleChange("nombre", e.target.value)}
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-md-6">
               <label htmlFor="apellido" className="form-label">
                 Apellido
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="apellido"
                 value={tecnico.apellido}
                 onChange={(e) => handleChange("apellido", e.target.value)}
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-md-6">
               <label htmlFor="tipoDocumento" className="form-label">
                 Tipo de Documento
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="tipoDocumento"
                 value={tecnico.tipoDocumento}
                 onChange={(e) => handleChange("tipoDocumento", e.target.value)}
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-md-6">
               <label htmlFor="documento" className="form-label">
                 Documento
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="documento"
                 value={tecnico.documento}
                 onChange={(e) => handleChange("documento", e.target.value)}
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-md-6">
               <label htmlFor="cuil" className="form-label">
                 CUIL
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="cuil"
                 value={tecnico.cuil}
                 onChange={(e) => handleChange("cuit", e.target.value)}
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-md-6">
               <label htmlFor="medioContacto" className="form-label">
                 Medio de Contacto
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="medioContacto"
                 value={tecnico.medioContacto}
                 onChange={(e) => handleChange("medioContacto", e.target.value)}
               />
             </div>
 
-            <div className="col-12">
+            <div className="col-md-12">
               <label htmlFor="areaCobertura" className="form-label">
                 Área de Cobertura
               </label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="areaCobertura"
                 value={tecnico.areaCobertura}
                 onChange={(e) => handleChange("areaCobertura", e.target.value)}

@@ -97,13 +97,13 @@ function PersonaVulnerable() {
             onSubmit={addPersonaVulnerable}
           >
             <div className="row g-3">
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="nombre" className="form-label">
                   Nombre
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  
                   id="nombre"
                   placeholder="Nombre"
                   required
@@ -112,13 +112,13 @@ function PersonaVulnerable() {
                 <div className="invalid-feedback">Nombre requerido.</div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="fechaNacimiento" className="form-label">
                   Fecha de Nacimiento
                 </label>
                 <input
                   type="date"
-                  className="form-control"
+                  
                   id="fechaNacimiento"
                   required
                   onChange={(e) =>
@@ -130,12 +130,12 @@ function PersonaVulnerable() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="situacionDeCalle" className="form-label">
                   ¿Está en situación de calle?
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="situacionDeCalle"
                   required
                   onChange={(e) =>
@@ -152,13 +152,13 @@ function PersonaVulnerable() {
               </div>
 
               {!personaVulnerable.situacionDeCalle && (
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="domicilio" className="form-label">
                     Domicilio
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    
                     id="domicilio"
                     placeholder="Domicilio"
                     onChange={(e) => handleChange("domicilio", e.target.value)}
@@ -166,12 +166,12 @@ function PersonaVulnerable() {
                 </div>
               )}
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="poseeDni" className="form-label">
                   ¿Posee documento?
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="poseeDni"
                   required
                   onChange={(e) =>
@@ -186,12 +186,12 @@ function PersonaVulnerable() {
               </div>
 
               {personaVulnerable.poseeDni && (
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="tipoDni" className="form-label">
                     Tipo de documento
                   </label>
                   <select
-                    className="form-control"
+                    
                     id="tipoDni"
                     required
                     onChange={(e) => handleChange("tipoDni", e.target.value)}
@@ -204,13 +204,13 @@ function PersonaVulnerable() {
                 </div>
               )}
               {personaVulnerable.poseeDni && (
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="numeroDni" className="form-label">
                     Numero de documento
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    
                     id="numeroDni"
                     placeholder="Numero de documento"
                     onChange={(e) => handleChange("numeroDni", e.target.value)}
@@ -218,12 +218,12 @@ function PersonaVulnerable() {
                 </div>
               )}
 
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="tieneMenoresACargo" className="form-label">
                   ¿Tiene menores a cargo?
                 </label>
                 <select
-                  className="form-select"
+                  className="select-formulario"
                   id="tieneMenoresACargo"
                   required
                   onChange={(e) =>
@@ -243,13 +243,13 @@ function PersonaVulnerable() {
               </div>
 
               {personaVulnerable.tieneMenoresACargo && (
-                <div className="col-12">
+                <div className="col-md-6">
                   <label htmlFor="cantidadMenoresACargo" className="form-label">
                     Cantidad de menores a cargo
                   </label>
                   <input
                     type="number"
-                    className="form-control"
+                    
                     id="cantidadMenoresACargo"
                     placeholder="Cantidad de menores"
                     required
@@ -264,13 +264,13 @@ function PersonaVulnerable() {
               )}
 
               {/* Campo tarjeta: obligatorio y solo 11 caracteres */}
-              <div className="col-12">
+              <div className="col-md-6">
                 <label htmlFor="tarjeta" className="form-label">
                   Tarjeta Asociada
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  
                   id="tarjeta"
                   placeholder="Ingrese una tarjeta"
                   required

@@ -17,7 +17,7 @@ body {
 }
 
 .content-heladera {
-  width: 90%;
+  width: 100%;
   border-radius: 15px;
   padding: 40px;
   box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
@@ -87,7 +87,7 @@ label {
 
 /* Botones */
 .button-recomendaciones {
-  width: 100%;
+  width: 98%;
   padding: 12px;
   font-size: 1rem;
   border-radius: 10px;
@@ -100,7 +100,7 @@ label {
 }
 
 .button-save {
-  width: 100%;
+  width: 98%;
   padding: 12px;
   font-size: 1rem;
   border-radius: 10px;
